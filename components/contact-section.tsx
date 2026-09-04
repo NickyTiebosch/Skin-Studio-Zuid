@@ -25,11 +25,26 @@ const gegevens = [
   { label: "Openingstijden", value: OPENINGSTIJDEN_TEKST },
 ] as { label: string; value: string; href?: string; analytics?: string }[]
 
-export function ContactSection() {
+export function ContactSection({
+  standaardBehandeling = "",
+  titel,
+  intro,
+}: {
+  /** Vult het behandelingsveld voor, bijvoorbeeld vanaf een behandelpagina. */
+  standaardBehandeling?: string
+  titel?: string
+  intro?: string
+} = {}) {
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [form, setForm] = useState({ name: "", email: "", phone: "", treatment: "", message: "" })
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    treatment: standaardBehandeling,
+    message: "",
+  })
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -81,11 +96,12 @@ export function ContactSection() {
               Maak een afspraak
             </span>
             <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-8 leading-tight">
-              Jouw transformatie begint hier
+              {titel ?? "Jouw transformatie begint hier"}
             </h2>
             <div className="w-10 h-px mb-10" style={{ backgroundColor: "var(--rose-gold)" }} />
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-12">
-              Neem contact met ons op voor een vrijblijvende kennismaking of om direct een afspraak te plannen. Onze specialisten adviseren u graag over de meest geschikte behandeling.
+              {intro ??
+                "Neem contact met ons op voor een vrijblijvende kennismaking of om direct een afspraak te plannen. Onze specialisten adviseren u graag over de meest geschikte behandeling."}
             </p>
 
             <div className="flex flex-col gap-8">

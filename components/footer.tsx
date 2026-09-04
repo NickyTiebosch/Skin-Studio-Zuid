@@ -1,13 +1,7 @@
 import Link from "next/link"
 import { Instagram, MapPin, Phone, Mail } from "lucide-react"
 import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM } from "@/lib/contact"
-
-const navigatie = [
-  { label: "Behandelingen", href: "/#behandelingen" },
-  { label: "De Studio", href: "/#studio" },
-  { label: "Producten", href: "/#producten" },
-  { label: "Contact", href: "/#contact" },
-]
+import { behandelingsnavigatie, hoofdnavigatie } from "@/lib/navigatie"
 
 export function Footer() {
   return (
@@ -47,7 +41,7 @@ export function Footer() {
                 Navigatie
               </p>
               <ul className="flex flex-col gap-3">
-                {navigatie.map((item) => (
+                {hoofdnavigatie.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
@@ -68,13 +62,13 @@ export function Footer() {
                 Behandelingen
               </p>
               <ul className="flex flex-col gap-3">
-                {["Gezichtsbehandeling", "Laserontharing", "Kalahari Rituelen", "Consult"].map((item) => (
-                  <li key={item}>
+                {behandelingsnavigatie.map((item) => (
+                  <li key={item.label}>
                     <Link
-                      href="/#contact"
+                      href={item.href}
                       className="font-sans text-xs text-[color:var(--cream)]/60 hover:text-[color:var(--cream)] transition-colors duration-200"
                     >
-                      {item}
+                      {item.label}
                     </Link>
                   </li>
                 ))}

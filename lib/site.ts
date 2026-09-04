@@ -1,4 +1,5 @@
 import { ADRES, BEDRIJFSNAAM, EMAIL, INSTAGRAM, TELEFOON_HREF } from "./contact"
+import type { Behandeling, VeelgesteldeVraag } from "./behandelingen"
 
 /**
  * De canonieke locatie van de site. Zoekmachines gebruiken dit om te bepalen
@@ -81,5 +82,68 @@ export function bedrijfsSchema() {
         },
       },
     ],
+  }
+}
+
+/**
+ * Structured data voor één behandeling.
+ *
+ * De `provider`-verwijzing knoopt deze dienst aan het organisatie-schema uit
+ * `bedrijfsSchema()` via het `@id` dat daar al bestaat. Zonder die verwijzing
+ * zouden het twee losse feiten zijn; nu weet een zoekmachine dat déze kliniek
+ * déze behandeling aanbiedt.
+ *
+ * Er staat bewust geen `offers` met prijs in: die is niet bekend, en een
+ * verzonnen prijs in structured data is erger dan geen prijs.
+ */
+export function behandelingSchema(behandeling: Behandeling) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}/${behandeling.slug}#dienst`,
+    name: behandeling.tag,
+    description: behandeling.schemaBeschrijving,
+    url: `${SITE_URL}/${behandeling.slug}`,
+    serviceType: behandeling.tag,
+    provider: { "@id": `${SITE_URL}/#organisatie` },
+    areaServed: {
+      "@type": "City",
+      name: ADRES.plaats,
+    },
+  }
+}
+
+/**
+ * Vraag-en-antwoordblokken in machineleesbare vorm. Dit is waar AI-assistenten
+ * en de antwoordblokken van Google hun materiaal uit halen — de vragen moeten
+ * dus letterlijk overeenkomen met wat er op de pagina staat.
+ */
+export function faqSchema(vragen: VeelgesteldeVraag[], paginaUrl: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${paginaUrl}#faq`,
+    mainEntity: vragen.map((v) => ({
+      "@type": "Question",
+      name: v.vraag,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: v.antwoord,
+      },
+    })),
+  }
+}
+
+/** Navigatiepad, zodat zoekresultaten laten zien waar de pagina zit. */
+export function kruimelpadSchema(kruimels: { naam: string; pad: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: kruimels.map((k, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: k.naam,
+      item: `${SITE_URL}${k.pad}`,
+    })),
   }
 }

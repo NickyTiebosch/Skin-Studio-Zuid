@@ -13,6 +13,7 @@ import {
 export const metadata: Metadata = {
   title: "Privacybeleid",
   description: `Hoe ${BEDRIJFSNAAM} omgaat met persoonsgegevens die via de website worden achtergelaten.`,
+  alternates: { canonical: "/privacybeleid" },
   robots: { index: true, follow: true },
 }
 
