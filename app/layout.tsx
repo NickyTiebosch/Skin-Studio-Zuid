@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Raleway, Great_Vibes } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE_BESCHRIJVING, SITE_NAAM, SITE_URL, bedrijfsSchema } from '@/lib/site'
+import { CookieBanner } from '@/components/cookie-banner'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -100,6 +101,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(bedrijfsSchema()) }}
         />
         {children}
+        <CookieBanner />
+        {/* Vercel Analytics telt cookieloos en heeft dus geen toestemming nodig. */}
         <Analytics />
       </body>
     </html>

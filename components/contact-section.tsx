@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { CheckCircle } from "lucide-react"
+import { meld } from "@/lib/analytics"
 import {
   ADRES,
   EMAIL,
@@ -51,6 +53,10 @@ export function ContactSection() {
         return
       }
       setSubmitted(true)
+      // Het formulier wordt inline vervangen door een bedanktekst; de URL
+      // verandert dus niet. Zonder deze melding zou er geen enkel signaal zijn
+      // waaraan een geslaagde aanvraag te herkennen valt.
+      meld("generate_lead", { behandeling: form.treatment || "niet opgegeven" })
     } catch {
       setError("Er ging iets mis. Probeer het later opnieuw.")
     } finally {
@@ -121,12 +127,14 @@ export function ContactSection() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+                    <label htmlFor="contact-naam" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                       Naam *
                     </label>
                     <input
                       required
+                      id="contact-naam"
                       name="name"
+                      autoComplete="name"
                       value={form.name}
                       onChange={handleChange}
                       className="bg-transparent border-b border-border py-3 font-sans text-sm text-foreground outline-none focus:border-[color:var(--rose-gold)] transition-colors duration-200"
@@ -134,11 +142,14 @@ export function ContactSection() {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+                    <label htmlFor="contact-telefoon" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                       Telefoon
                     </label>
                     <input
+                      id="contact-telefoon"
+                      type="tel"
                       name="phone"
+                      autoComplete="tel"
                       value={form.phone}
                       onChange={handleChange}
                       className="bg-transparent border-b border-border py-3 font-sans text-sm text-foreground outline-none focus:border-[color:var(--rose-gold)] transition-colors duration-200"
@@ -148,13 +159,15 @@ export function ContactSection() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+                  <label htmlFor="contact-email" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                     E-mailadres *
                   </label>
                   <input
                     required
+                    id="contact-email"
                     type="email"
                     name="email"
+                    autoComplete="email"
                     value={form.email}
                     onChange={handleChange}
                     className="bg-transparent border-b border-border py-3 font-sans text-sm text-foreground outline-none focus:border-[color:var(--rose-gold)] transition-colors duration-200"
@@ -163,10 +176,11 @@ export function ContactSection() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+                  <label htmlFor="contact-behandeling" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                     Gewenste behandeling
                   </label>
                   <select
+                    id="contact-behandeling"
                     name="treatment"
                     value={form.treatment}
                     onChange={handleChange}
@@ -181,10 +195,11 @@ export function ContactSection() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+                  <label htmlFor="contact-bericht" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                     Bericht
                   </label>
                   <textarea
+                    id="contact-bericht"
                     name="message"
                     value={form.message}
                     onChange={handleChange}
@@ -195,7 +210,9 @@ export function ContactSection() {
                 </div>
 
                 {error && (
-                  <p className="font-sans text-sm text-destructive">{error}</p>
+                  <p role="alert" className="font-sans text-sm text-destructive">
+                    {error}
+                  </p>
                 )}
                 <button
                   type="submit"
@@ -205,6 +222,17 @@ export function ContactSection() {
                 >
                   {sending ? "Bezig met versturen…" : "Verstuur aanvraag"}
                 </button>
+                <p className="font-sans text-xs leading-relaxed text-muted-foreground">
+                  Wij gebruiken uw gegevens alleen om contact met u op te nemen
+                  over deze aanvraag. Lees hoe wij daarmee omgaan in ons{" "}
+                  <Link
+                    href="/privacybeleid"
+                    className="underline underline-offset-2 hover:text-foreground transition-colors"
+                  >
+                    privacybeleid
+                  </Link>
+                  .
+                </p>
               </form>
             )}
           </div>
