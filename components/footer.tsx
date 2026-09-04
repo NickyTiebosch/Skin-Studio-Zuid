@@ -1,5 +1,13 @@
 import Link from "next/link"
 import { Instagram, MapPin, Phone, Mail } from "lucide-react"
+import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM } from "@/lib/contact"
+
+const navigatie = [
+  { label: "Behandelingen", href: "#behandelingen" },
+  { label: "De Studio", href: "#studio" },
+  { label: "Producten", href: "#producten" },
+  { label: "Contact", href: "#contact" },
+]
 
 export function Footer() {
   return (
@@ -25,7 +33,7 @@ export function Footer() {
               </span>
             </div>
             <p className="font-sans text-xs leading-relaxed text-[color:var(--cream)]/60">
-              Exclusieve kliniek voor gezichtsbehandelingen en laserontharing in Amsterdam Zuid. Waar wetenschap en sereniteit samenkomen.
+              Exclusieve kliniek voor gezichtsbehandelingen en laserontharing in <span className="whitespace-nowrap">&apos;s-Hertogenbosch</span>. Waar wetenschap en sereniteit samenkomen.
             </p>
           </div>
 
@@ -39,13 +47,13 @@ export function Footer() {
                 Navigatie
               </p>
               <ul className="flex flex-col gap-3">
-                {["Behandelingen", "De Studio", "Producten", "Contact"].map((item) => (
-                  <li key={item}>
+                {navigatie.map((item) => (
+                  <li key={item.label}>
                     <Link
-                      href={`#${item.toLowerCase().replace(" ", "-")}`}
+                      href={item.href}
                       className="font-sans text-xs text-[color:var(--cream)]/60 hover:text-[color:var(--cream)] transition-colors duration-200"
                     >
-                      {item}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
@@ -84,20 +92,28 @@ export function Footer() {
                 <li className="flex items-start gap-2">
                   <MapPin size={12} className="mt-0.5 shrink-0 text-[color:var(--cream)]/60" />
                   <span className="font-sans text-xs text-[color:var(--cream)]/60">
-                    Hildebrandstraat 8, <span className="whitespace-nowrap">&apos;s-Hertogenbosch</span>
+                    {ADRES.straat}, <span className="whitespace-nowrap">&apos;s-Hertogenbosch</span>
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone size={12} className="shrink-0 text-[color:var(--cream)]/60" />
-                  <span className="font-sans text-xs text-[color:var(--cream)]/60">
-                    073 689 6423
-                  </span>
+                  <a
+                    href={TELEFOON_HREF}
+                    data-analytics="click_telefoon"
+                    className="font-sans text-xs text-[color:var(--cream)]/60 hover:text-[color:var(--cream)] transition-colors duration-200"
+                  >
+                    {TELEFOON_WEERGAVE}
+                  </a>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail size={12} className="shrink-0 text-[color:var(--cream)]/60" />
-                  <span className="font-sans text-xs text-[color:var(--cream)]/60">
-                    info@skinstudiozuid.nl
-                  </span>
+                  <a
+                    href={`mailto:${EMAIL}`}
+                    data-analytics="click_email"
+                    className="font-sans text-xs text-[color:var(--cream)]/60 hover:text-[color:var(--cream)] transition-colors duration-200"
+                  >
+                    {EMAIL}
+                  </a>
                 </li>
               </ul>
             </div>
@@ -123,7 +139,7 @@ export function Footer() {
               Algemene voorwaarden
             </Link>
             <Link
-              href="https://www.instagram.com/skinstudio_zuid"
+              href={INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram van Skin Studio Zuid"

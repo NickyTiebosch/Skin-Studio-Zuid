@@ -2,6 +2,26 @@
 
 import { useState } from "react"
 import { CheckCircle } from "lucide-react"
+import {
+  ADRES,
+  EMAIL,
+  EMAIL_HREF,
+  OPENINGSTIJDEN_TEKST,
+  TELEFOON_HREF,
+  TELEFOON_WEERGAVE,
+} from "@/lib/contact"
+
+const gegevens = [
+  { label: "Adres", value: `${ADRES.straat}, ${ADRES.plaats}` },
+  {
+    label: "Telefoon",
+    value: TELEFOON_WEERGAVE,
+    href: TELEFOON_HREF,
+    analytics: "click_telefoon",
+  },
+  { label: "E-mail", value: EMAIL, href: EMAIL_HREF, analytics: "click_email" },
+  { label: "Openingstijden", value: OPENINGSTIJDEN_TEKST },
+] as { label: string; value: string; href?: string; analytics?: string }[]
 
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
@@ -63,12 +83,7 @@ export function ContactSection() {
             </p>
 
             <div className="flex flex-col gap-8">
-              {[
-                { label: "Adres", value: "Hildebrandstraat 8, 's-Hertogenbosch" },
-                { label: "Telefoon", value: "073 689 6423" },
-                { label: "E-mail", value: "info@skinstudiozuid.nl" },
-                { label: "Openingstijden", value: "Op afspraak" },
-              ].map((item) => (
+              {gegevens.map((item) => (
                 <div key={item.label} className="flex flex-col gap-1">
                   <p
                     className="font-sans text-xs tracking-[0.2em] uppercase"
@@ -76,7 +91,17 @@ export function ContactSection() {
                   >
                     {item.label}
                   </p>
-                  <p className="font-sans text-sm text-foreground">{item.value}</p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      data-analytics={item.analytics}
+                      className="font-sans text-sm text-foreground hover:text-[color:var(--rose-gold)] transition-colors duration-200 w-fit"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="font-sans text-sm text-foreground">{item.value}</p>
+                  )}
                 </div>
               ))}
             </div>
