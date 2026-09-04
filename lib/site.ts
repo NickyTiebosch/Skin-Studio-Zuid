@@ -1,5 +1,6 @@
 import { ADRES, BEDRIJFSNAAM, EMAIL, INSTAGRAM, TELEFOON_HREF } from "./contact"
 import type { Behandeling, VeelgesteldeVraag } from "./behandelingen"
+import { laagstePrijsVoor } from "./tarieven"
 
 /**
  * De canonieke locatie van de site. Zoekmachines gebruiken dit om te bepalen
@@ -110,6 +111,21 @@ export function behandelingSchema(behandeling: Behandeling) {
       "@type": "City",
       name: ADRES.plaats,
     },
+    // Laserontharing wordt per lichaamsdeel geprijsd, dus één bedrag op de
+    // dienst zou misleiden. Een vanaf-prijs met verwijzing naar de volledige
+    // lijst is wat hier klopt.
+    ...(laagstePrijsVoor(behandeling.slug) !== undefined
+      ? {
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "EUR",
+            price: String(laagstePrijsVoor(behandeling.slug)),
+            description: "Vanaf-prijs; tarief hangt af van het te behandelen gebied.",
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}/tarieven`,
+          },
+        }
+      : {}),
   }
 }
 

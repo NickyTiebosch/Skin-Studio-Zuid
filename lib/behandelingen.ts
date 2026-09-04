@@ -247,3 +247,4 @@ export const behandelingen: Behandeling[] = [
 export function behandelingBySlug(slug: string): Behandeling | undefined {
   return behandelingen.find((b) => b.slug === slug)
 }
+

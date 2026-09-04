@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { SITE_URL } from "@/lib/site"
 import { behandelingen } from "@/lib/behandelingen"
+import { heeftTarieven } from "@/lib/tarieven"
 
 /**
  * Groeit mee met de site: elke nieuwe pagina hoort hier een regel te krijgen,
@@ -24,6 +25,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),
+    // Alleen in de sitemap zodra er echt tarieven op staan; de pagina zelf
+    // staat tot die tijd op noindex en dat mag geen tegenstrijdig signaal geven.
+    ...(heeftTarieven()
+      ? [
+          {
+            url: `${SITE_URL}/tarieven`,
+            lastModified: bijgewerkt,
+            changeFrequency: "monthly" as const,
+            priority: 0.9,
+          },
+        ]
+      : []),
     {
       url: `${SITE_URL}/boeken`,
       lastModified: bijgewerkt,

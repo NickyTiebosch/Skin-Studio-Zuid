@@ -99,3 +99,62 @@ missen de pagina's precies datgene waar bezoekers naar zoeken:
   gezocht. Bewust niet gewijzigd omdat het een merkuitspraak is. De
   behandelpagina's ondervangen dit nu deels, want die hebben wél een kop met
   behandeling en plaats.
+
+---
+
+## Tarieven — aangeleverd 4 september 2026
+
+De mannenprijzen zijn overgenomen van de twee flyers (prijslijst en
+kuuractie). Ze staan in `lib/tarieven.ts`, dus corrigeren kan op één plek.
+
+### Drie dingen die niet stroken met de website
+
+Deze zijn belangrijker dan de prijzen zelf, want ze raken teksten die al
+online staan.
+
+| Wat | Op de flyer | Op de website |
+|---|---|---|
+| **Telefoonnummer** | 073-2032756 | 073 689 6423 |
+| **De laser** | "Professionele Diode Ice Laser" | "Atres Triple Wave, drie golflengtes" |
+| **De gezichtsbehandeling** | "Hydrafacial" | "Atres HydraSpa" |
+
+**Het telefoonnummer is het meest urgente.** Er staat nu een ander nummer op
+de site dan op het drukwerk. Eén van de twee is verkeerd, en zolang dat zo is
+belt een deel van de mensen naar het verkeerde nummer. Ik heb de site niet
+aangepast omdat ik niet kan bepalen welk nummer het juiste is.
+
+**De laser vraagt om opheldering.** De behandelpagina legt uit dat de Atres
+Triple Wave drie golflengtes combineert, en waarom dat uitmaakt voor lichte
+haartjes en een donkere huid. Een diode-laser werkt doorgaans met één
+golflengte. Als de flyer klopt, moet die uitleg van de site af — dan klopt de
+belangrijkste onderbouwing van de pagina niet. Mogelijke verklaringen: er
+staan twee apparaten in de studio, de flyer is ouder, of "Diode Ice Laser" is
+de handelsnaam van hetzelfde apparaat. Graag uitzoeken vóórdat hier
+advertentiebudget op gezet wordt.
+
+**Hydrafacial versus HydraSpa** is een kleinere kwestie, maar Hydrafacial is
+een beschermde merknaam van een andere fabrikant. Als de behandeling met een
+Atres-apparaat wordt gedaan, is "Hydrafacial" op het drukwerk mogelijk niet
+de juiste benaming.
+
+### Twee prijzen die ik moeilijk kon lezen
+
+Op de foto weerkaatste het licht precies over twee regels. Zoals ik ze heb
+overgenomen:
+
+- Gehele billen — € 60
+- Intieme zone compleet (incl. bilnaad) — € 250
+
+Even nalopen of dat klopt.
+
+### Wat er nog ontbreekt
+
+- **De vrouwenprijzen voor laserontharing.** De sectie staat al klaar in
+  `lib/tarieven.ts` met een lege lijst; zodra de bedragen er zijn verschijnt
+  die tabel vanzelf.
+- **Behandelduur per behandeling.** Staat op geen van beide flyers. Dit is
+  technisch onmisbaar voor het boekingssysteem: zonder duur kan geen enkel
+  systeem tijdsloten berekenen. Dit is nu het enige dat het boekingssysteem
+  nog blokkeert.
+- **Geldigheid van de kuuractie.** Er staat geen einddatum op de flyer. Als
+  de actie afloopt, moet iemand eraan denken de site bij te werken.

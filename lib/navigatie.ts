@@ -26,6 +26,7 @@ export const hoofdnavigatie = [
  */
 export const behandelingsnavigatie = [
   ...behandelingen.map((b) => ({ label: b.tag, href: `/${b.slug}` })),
+  { label: "Tarieven", href: "/tarieven" },
   { label: "Kalahari producten", href: "/#producten" },
-  { label: "Vrijblijvend consult", href: "/boeken" },
+  { label: "Vrijblijvend consult", href: "/boeken?behandeling=consult" },
 ]

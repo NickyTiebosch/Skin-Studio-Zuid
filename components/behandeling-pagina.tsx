@@ -166,6 +166,30 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
         </div>
       </section>
 
+      {/* Naar de tarieven */}
+      <section className="px-6 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <Link
+            href="/tarieven"
+            className="flex items-center justify-between gap-6 p-6 md:p-8 border transition-colors duration-200 hover:border-[color:var(--rose-gold)]"
+            style={{ borderColor: "var(--border)" }}
+          >
+            <div>
+              <span
+                className="font-sans text-xs tracking-[0.2em] uppercase block mb-2"
+                style={{ color: "var(--rose-gold)" }}
+              >
+                Wat kost het
+              </span>
+              <span className="font-serif text-xl text-foreground">
+                Tarieven en behandelduur
+              </span>
+            </div>
+            <ArrowRight size={20} style={{ color: "var(--rose-gold)" }} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
       {/* Naar de andere behandeling */}
       {andere.length > 0 && (
         <section className="px-6 pb-16 md:pb-24">
