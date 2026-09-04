@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Raleway, Great_Vibes } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { WhatsAppFloat } from '@/components/whatsapp-float'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -54,7 +53,6 @@ export default function RootLayout({
     <html lang="nl" className={`${playfair.variable} ${raleway.variable} ${greatVibes.variable}`}>
       <body className="font-sans antialiased">
         {children}
-        <WhatsAppFloat />
         <Analytics />
       </body>
     </html>

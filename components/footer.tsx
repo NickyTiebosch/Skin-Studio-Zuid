@@ -123,7 +123,9 @@ export function Footer() {
               Algemene voorwaarden
             </Link>
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/skinstudio_zuid"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Instagram van Skin Studio Zuid"
               className="text-[color:var(--cream)]/40 hover:text-[color:var(--cream)] transition-colors"
             >
