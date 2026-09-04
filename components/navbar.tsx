@@ -17,10 +17,10 @@ export function Navbar() {
   }, [])
 
   const links = [
-    { label: "Behandelingen", href: "#behandelingen" },
-    { label: "De Studio", href: "#studio" },
-    { label: "Producten", href: "#producten" },
-    { label: "Contact", href: "#contact" },
+    { label: "Behandelingen", href: "/#behandelingen" },
+    { label: "De Studio", href: "/#studio" },
+    { label: "Producten", href: "/#producten" },
+    { label: "Contact", href: "/#contact" },
   ]
 
   return (
@@ -63,7 +63,7 @@ export function Navbar() {
         {/* CTA */}
         <div className="hidden md:block">
           <Link
-            href="#contact"
+            href="/#contact"
             className="font-sans text-xs tracking-[0.2em] uppercase px-6 py-3 border transition-colors duration-200"
             style={{
               borderColor: "var(--rose-gold)",
@@ -108,7 +108,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/#contact"
             onClick={() => setMenuOpen(false)}
             className="font-sans text-xs tracking-[0.2em] uppercase px-6 py-3 border text-center"
             style={{ borderColor: "var(--rose-gold)", color: "var(--rose-gold)" }}

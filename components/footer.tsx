@@ -3,10 +3,10 @@ import { Instagram, MapPin, Phone, Mail } from "lucide-react"
 import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM } from "@/lib/contact"
 
 const navigatie = [
-  { label: "Behandelingen", href: "#behandelingen" },
-  { label: "De Studio", href: "#studio" },
-  { label: "Producten", href: "#producten" },
-  { label: "Contact", href: "#contact" },
+  { label: "Behandelingen", href: "/#behandelingen" },
+  { label: "De Studio", href: "/#studio" },
+  { label: "Producten", href: "/#producten" },
+  { label: "Contact", href: "/#contact" },
 ]
 
 export function Footer() {
@@ -71,7 +71,7 @@ export function Footer() {
                 {["Gezichtsbehandeling", "Laserontharing", "Kalahari Rituelen", "Consult"].map((item) => (
                   <li key={item}>
                     <Link
-                      href="#contact"
+                      href="/#contact"
                       className="font-sans text-xs text-[color:var(--cream)]/60 hover:text-[color:var(--cream)] transition-colors duration-200"
                     >
                       {item}
@@ -127,16 +127,10 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="#"
+              href="/privacybeleid"
               className="font-sans text-xs text-[color:var(--cream)]/40 hover:text-[color:var(--cream)]/60 transition-colors"
             >
               Privacybeleid
-            </Link>
-            <Link
-              href="#"
-              className="font-sans text-xs text-[color:var(--cream)]/40 hover:text-[color:var(--cream)]/60 transition-colors"
-            >
-              Algemene voorwaarden
             </Link>
             <Link
               href={INSTAGRAM}

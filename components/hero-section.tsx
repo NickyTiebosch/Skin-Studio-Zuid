@@ -33,14 +33,14 @@ export function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="#contact"
+            href="/#contact"
             className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 text-[color:var(--cream)]"
             style={{ backgroundColor: "var(--rose-gold)" }}
           >
             Afspraak maken
           </Link>
           <Link
-            href="#behandelingen"
+            href="/#behandelingen"
             className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 border border-[color:var(--cream)]/50 text-[color:var(--cream)] hover:border-[color:var(--cream)] transition-colors duration-300"
           >
             Ontdek behandelingen

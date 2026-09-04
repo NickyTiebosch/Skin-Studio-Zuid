@@ -66,7 +66,7 @@ export function ProductsSection() {
             </ul>
 
             <Link
-              href="#contact"
+              href="/#contact"
               className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase mt-8"
               style={{ color: "var(--rose-gold)" }}
             >

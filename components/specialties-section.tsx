@@ -150,7 +150,7 @@ export function SpecialtiesSection() {
                     {item.detail}
                   </span>
                   <Link
-                    href="#contact"
+                    href="/#contact"
                     className="flex items-center gap-2 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200 group/link"
                     style={{ color: "var(--rose-gold)" }}
                   >

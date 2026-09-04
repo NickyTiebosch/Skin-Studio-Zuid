@@ -157,4 +157,24 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* De navigatiebalk staat vast bovenaan en is 5rem hoog (h-20). Zonder deze
+     marge springt een anchor-link precies achter de balk, waardoor de kop van
+     de sectie onzichtbaar blijft. */
+  :target,
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Respecteer de systeeminstelling van bezoekers die bewegingseffecten
+     uitzetten; vloeiend scrollen kan bij hen klachten geven. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
