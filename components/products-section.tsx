@@ -34,6 +34,7 @@ export function ProductsSection() {
               src="/images/kalahari-products.jpg"
               alt="Kalahari skincare producten op een luxe plank"
               fill
+              sizes="(max-width: 1024px) 100vw, 640px"
               className="object-cover object-center"
             />
           </div>

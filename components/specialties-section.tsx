@@ -90,6 +90,7 @@ export function SpecialtiesSection() {
                   src={item.image}
                   alt={item.imageAlt}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 640px"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
                 <div

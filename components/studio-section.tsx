@@ -36,6 +36,7 @@ export function StudioSection() {
                 src={StudioImage}
                 alt="Interieur van Skin Studio Zuid met visgraatvloer en latjeswand"
                 fill
+                sizes="(max-width: 1024px) 100vw, 640px"
                 className="object-cover object-center"
               />
               {/* Warme filter overlay */}

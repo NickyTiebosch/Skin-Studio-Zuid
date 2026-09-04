@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
-import Logo from "@/Images/Gemini_Generated_Image_lszs4rlszs4rlszs-fotor-bg-remover-202603101188.png"
+import Logo from "@/Images/logo-skin-studio-zuid.png"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)

@@ -12,6 +12,7 @@ export function HeroSection() {
         alt="Luxe behandelkamer Skin Studio Zuid"
         fill
         priority
+        sizes="100vw"
         className="object-cover object-center"
       />
 
