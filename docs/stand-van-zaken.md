@@ -18,6 +18,10 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
   `/boeken`, `/privacybeleid`. Elke pagina heeft precies één `<h1>`. Op
   `/boeken` is dat sinds 6 september de kop van `ContactSection` (prop
   `kopNiveau`); op de homepage blijft diezelfde kop een `<h2>` onder de hero.
+- Menu in de balk: Gezichtsbehandelingen · Laserontharing · Tarieven · De Studio ·
+  Contact, sinds 6 september; daarvóór vier ankers naar homepage-secties. De
+  balk verschijnt vanaf 1280px, daaronder het hamburgermenu — gemeten, zie de
+  toelichting in `components/navbar.tsx`. "Producten" staat in de footer.
 - SEO/GEO-fundament: sitemap, robots met AI-crawlers expliciet toegelaten,
   JSON-LD (`BeautySalon`, `Service`, `FAQPage`, `BreadcrumbList`), canonicals,
   OpenGraph, `llms.txt`. De absolute URL's in `public/llms.txt` staan op de

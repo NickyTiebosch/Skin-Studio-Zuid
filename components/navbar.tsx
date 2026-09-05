@@ -45,8 +45,14 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-10">
+        {/* Desktop nav.
+            Pas vanaf xl (1280px). De vijf labels in kapitalen met brede
+            spatiëring zijn samen 684px, plus logo (72px) en knop (191px): op
+            1024px blijft er geen tussenruimte over en breken "De Studio" en de
+            knop over twee regels. Op 768px brak het oude menu met vier items
+            ook al zo. Daaronder toont de balk het hamburgermenu. Gemeten op
+            6 september 2026. */}
+        <ul className="hidden xl:flex items-center gap-10">
           {hoofdnavigatie.map((link) => (
             <li key={link.href}>
               <Link
@@ -64,7 +70,7 @@ export function Navbar() {
         </ul>
 
         {/* CTA */}
-        <div className="hidden md:block">
+        <div className="hidden xl:block">
           <Link
             href="/boeken"
             className="ssz-cta font-sans text-xs tracking-[0.2em] uppercase px-6 py-3"
@@ -75,7 +81,7 @@ export function Navbar() {
 
         {/* Mobile menu toggle */}
         <button
-          className="md:hidden text-foreground"
+          className="xl:hidden text-foreground"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Sluit menu" : "Open menu"}
         >
@@ -85,7 +91,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[color:var(--sand-light)] border-t border-border px-6 py-8 flex flex-col gap-6">
+        <div className="xl:hidden bg-[color:var(--sand-light)] border-t border-border px-6 py-8 flex flex-col gap-6">
           {hoofdnavigatie.map((link) => (
             <Link
               key={link.href}

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Instagram, MapPin, Phone, Mail } from "lucide-react"
 import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM } from "@/lib/contact"
-import { behandelingsnavigatie, hoofdnavigatie } from "@/lib/navigatie"
+import { behandelingsnavigatie, sectienavigatie } from "@/lib/navigatie"
 
 export function Footer() {
   return (
@@ -41,7 +41,7 @@ export function Footer() {
                 Navigatie
               </p>
               <ul className="flex flex-col gap-3">
-                {hoofdnavigatie.map((item) => (
+                {sectienavigatie.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
