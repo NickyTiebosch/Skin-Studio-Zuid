@@ -8,8 +8,8 @@ omschakeling een HTTPS-waarschuwing krijgen.
 
 Niets meer te ontkoppelen. Er is geen `netlify.toml`, geen `_redirects`, geen
 `_headers` en geen `netlify.bat`. Er is één lockfile (`pnpm-lock.yaml`),
-`packageManager` staat op `pnpm@10.33.0`, `engines` en `.nvmrc` zetten Node op
-22, en `images.unoptimized` is weg — die stond er als workaround voor Netlify
+`packageManager` staat op `pnpm@10.33.0`, `engines.node` zet Node op 22, en
+`images.unoptimized` is weg — die stond er als workaround voor Netlify
 en zou op Vercel alleen schade doen.
 
 De enige API-route (`app/api/contact/route.ts`) gebruikt alleen
@@ -25,8 +25,13 @@ vanzelf op basis van de lockfile.
 
 ### 2. Node-versie
 
-Zet de Node-versie op **22**. `engines` en `.nvmrc` sturen dit al, maar
-controleer het: Vercel schakelt Node 20 uit per 1 oktober 2026.
+Controleer na de eerste deploy in **Settings → Node.js Version** dat er 22
+staat. Vercel schakelt Node 20 uit per 1 oktober 2026.
+
+Let op: **Vercel leest `.nvmrc` niet** — dat doet Netlify. Op Vercel stuurt
+`engines.node` in `package.json` de keuze, en anders de instelling in het
+dashboard. Het `.nvmrc`-bestand staat er voor lokaal werk en voor andere
+tooling; vertrouw er hier niet op.
 
 ### 3. Environment variables
 
