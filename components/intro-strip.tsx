@@ -1,22 +1,50 @@
+const items = [
+  "Kalahari Producten",
+  "ATRES Technologie",
+  "Gecertificeerde specialisten",
+  "Sapphire ICE-koeling",
+]
+
+/**
+ * De strip schuift horizontaal mee met de scroll.
+ *
+ * Bewust scroll-gestuurd en niet vanzelf lopend: content die uit zichzelf
+ * langer dan vijf seconden beweegt moet volgens WCAG 2.2.2 te pauzeren zijn,
+ * en dan zou hier een pauzeknop bij moeten. Beweging die alleen reageert op de
+ * scroll van de bezoeker valt daar niet onder — die stopt immers zodra hij
+ * ophoudt met scrollen.
+ *
+ * De rij staat er twee keer in zodat er tijdens het verschuiven geen gat aan
+ * de rechterkant valt. De tweede kopie is `aria-hidden`, zodat een schermlezer
+ * de opsomming niet dubbel voorleest.
+ */
 export function IntroStrip() {
   return (
-    <section className="bg-[color:var(--walnut)] py-10 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-px" style={{ backgroundColor: "var(--rose-gold)" }} />
-          <p className="font-sans text-xs tracking-[0.25em] uppercase text-[color:var(--cream)]/70">
-            Kalahari Producten
-          </p>
-        </div>
-        <p className="font-serif text-lg md:text-xl text-[color:var(--cream)] text-center text-balance">
-          Gecertificeerde specialisten in huidverzorging & laserontharing
-        </p>
-        <div className="flex items-center gap-4">
-          <p className="font-sans text-xs tracking-[0.25em] uppercase text-[color:var(--cream)]/70">
-            ATRES Technologie
-          </p>
-          <div className="w-8 h-px" style={{ backgroundColor: "var(--rose-gold)" }} />
-        </div>
+    <section
+      className="bg-[color:var(--walnut)] py-8 overflow-hidden"
+      aria-label="Waar Skin Studio Zuid mee werkt"
+    >
+      <div className="ssz-loper flex items-center gap-10 md:gap-16 whitespace-nowrap w-max">
+        {[0, 1].map((kopie) => (
+          <div
+            key={kopie}
+            className="flex items-center gap-10 md:gap-16"
+            aria-hidden={kopie === 1 ? "true" : undefined}
+          >
+            {items.map((item) => (
+              <div key={item} className="flex items-center gap-10 md:gap-16">
+                <span className="ssz-caps font-serif text-xl md:text-3xl text-[color:var(--cream)]">
+                  {item}
+                </span>
+                <span
+                  className="block w-1.5 h-1.5 rotate-45 shrink-0"
+                  style={{ backgroundColor: "var(--rose-gold)" }}
+                  aria-hidden="true"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   )

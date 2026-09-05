@@ -44,7 +44,10 @@ export default function Tarieven() {
   const groepen = gevuldeTariefgroepen()
 
   return (
-    <main className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-hidden">
+      {/* Leesvoortgang: scroll-gestuurd, `scale` in plaats van `width` zodat
+          het buiten de hoofdthread om gaat. */}
+      <div className="ssz-leesbalk" aria-hidden="true" />
       <Navbar />
       <TarievenMelder />
 
@@ -75,12 +78,12 @@ export default function Tarieven() {
           </nav>
 
           <span
-            className="font-sans text-xs tracking-[0.4em] uppercase mb-5 block"
+            className="ssz-caps font-sans text-sm mb-5 block"
             style={{ color: "var(--rose-gold)" }}
           >
             Wat kost het
           </span>
-          <h1 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
+          <h1 className="ssz-display font-serif text-3xl md:text-5xl text-foreground mb-6 leading-tight">
             Tarieven in {ADRES.plaats}
           </h1>
           <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
@@ -97,7 +100,7 @@ export default function Tarieven() {
           <div className="flex flex-col gap-14 mt-16">
             {groepen.map((groep) => (
               <section key={groep.id}>
-                <h2 className="font-serif text-2xl text-foreground mb-2">
+                <h2 className="ssz-display font-serif text-2xl text-foreground mb-2">
                   {groep.titel}
                 </h2>
                 {groep.toelichting && (
@@ -126,7 +129,7 @@ export default function Tarieven() {
                               </span>
                             )}
                           </th>
-                          <td className="py-3 text-right whitespace-nowrap align-top">
+                          <td className="ssz-cijfers py-3 text-right whitespace-nowrap align-top">
                             {regel.vanPrijs && (
                               <span className="text-muted-foreground line-through mr-3 opacity-60">
                                 &euro; {regel.vanPrijs}
@@ -148,7 +151,7 @@ export default function Tarieven() {
           {/* Kuren */}
           {kuren.length > 0 && (
             <section className="mt-16 pt-12 border-t" style={{ borderColor: "var(--border)" }}>
-              <h2 className="font-serif text-2xl text-foreground mb-2">
+              <h2 className="ssz-display font-serif text-2xl text-foreground mb-2">
                 Kuurprijzen
               </h2>
               <p className="font-sans text-xs text-muted-foreground mb-8">
@@ -169,10 +172,10 @@ export default function Tarieven() {
                       {kuur.omvat}
                     </p>
 
-                    <p className="font-sans text-xs text-muted-foreground mb-1">
+                    <p className="ssz-cijfers font-sans text-xs text-muted-foreground mb-1">
                       Normaal &euro; {kuur.normalePrijsPerBehandeling} per behandeling
                     </p>
-                    <p className="font-serif text-3xl text-foreground mb-1">
+                    <p className="ssz-cijfers font-serif text-3xl text-foreground mb-1">
                       &euro; {kuur.kuurprijs}
                     </p>
                     <p className="font-sans text-xs text-muted-foreground mb-5">
@@ -186,12 +189,12 @@ export default function Tarieven() {
                         style={{ borderColor: "var(--border)" }}
                       >
                         <p
-                          className="font-sans text-xs tracking-[0.15em] uppercase mb-1"
+                          className="ssz-caps font-sans text-sm mb-1"
                           style={{ color: "var(--rose-gold)" }}
                         >
                           Bij afname in één keer
                         </p>
-                        <p className="font-serif text-xl text-foreground">
+                        <p className="ssz-cijfers font-serif text-xl text-foreground">
                           &euro; {kuur.prijsBijEenmaligeAfname}
                           <span className="font-sans text-xs text-muted-foreground ml-2">
                             &euro; {kuur.perBehandelingBijEenmaligeAfname} per behandeling
@@ -213,7 +216,7 @@ export default function Tarieven() {
           <div className="mt-16 flex flex-wrap gap-4">
             <Link
               href="/boeken?behandeling=consult"
-              className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
+              className="ssz-caps ssz-veeg font-sans text-sm px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
               style={{ backgroundColor: "var(--rose-gold)" }}
             >
               Gratis intakegesprek
@@ -221,7 +224,7 @@ export default function Tarieven() {
             <a
               href={TELEFOON_HREF}
               data-analytics="click_telefoon"
-              className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 border transition-colors duration-200"
+              className="ssz-caps font-sans text-sm px-8 py-4 border transition-colors duration-200"
               style={{ borderColor: "var(--rose-gold)", color: "var(--rose-gold)" }}
             >
               Bel {TELEFOON_WEERGAVE}
@@ -230,7 +233,7 @@ export default function Tarieven() {
 
           <div className="mt-16 pt-10 border-t" style={{ borderColor: "var(--border)" }}>
             <p
-              className="font-sans text-xs tracking-[0.2em] uppercase mb-5"
+              className="ssz-caps font-sans text-sm mb-5"
               style={{ color: "var(--rose-gold)" }}
             >
               Meer over de behandelingen

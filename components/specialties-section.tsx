@@ -8,35 +8,46 @@ export function SpecialtiesSection() {
     <section id="behandelingen" className="pt-16 pb-12 md:pt-24 md:pb-16 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
+        <div className="ssz-op flex flex-col items-center text-center mb-12 md:mb-16">
           <span
-            className="font-sans text-xs tracking-[0.4em] uppercase mb-4"
+            className="ssz-caps font-sans text-sm mb-4"
             style={{ color: "var(--rose-gold)" }}
           >
             Onze specialisaties
           </span>
-          <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance max-w-xl">
+          <h2 className="ssz-display font-serif text-3xl md:text-5xl text-foreground max-w-xl">
             Behandelingen op maat
           </h2>
-          <div className="w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
+          <div className="ssz-lijn w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="ssz-trap grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {behandelingen.map((item, index) => (
             <div
               key={item.slug}
-              className="group relative overflow-hidden"
-              style={{ backgroundColor: index % 2 === 0 ? "var(--sand)" : "var(--walnut)" }}
+              className="ssz-op ssz-til ssz-goudrand group relative overflow-hidden"
+              style={
+                {
+                  "--vlak": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
+                } as React.CSSProperties
+              }
             >
-              {/* Image */}
-              <div className="relative h-80 overflow-hidden">
+              {/* Beeld: een doek schuift weg en legt de foto bloot. */}
+              <div
+                className="ssz-doek relative h-80 overflow-hidden"
+                style={
+                  {
+                    "--doek": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
+                  } as React.CSSProperties
+                }
+              >
                 <Image
                   src={item.image}
                   alt={item.imageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 640px"
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="ssz-drift object-cover object-center"
                 />
                 <div
                   className="absolute inset-0"
@@ -52,19 +63,19 @@ export function SpecialtiesSection() {
               {/* Content */}
               <div className="p-6 md:p-8">
                 <p
-                  className="font-sans text-xs tracking-[0.3em] uppercase mb-4"
+                  className="ssz-caps font-sans text-sm mb-4"
                   style={{ color: "var(--rose-gold)" }}
                 >
                   {item.tag}
                 </p>
                 <h3
-                  className="font-serif text-2xl md:text-3xl mb-4 text-balance"
+                  className="ssz-display font-serif text-2xl md:text-3xl mb-4"
                   style={{ color: index % 2 === 0 ? "var(--foreground)" : "var(--cream)" }}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className="font-sans text-sm leading-relaxed mb-4"
+                  className="ssz-lopend font-sans text-sm leading-relaxed mb-4"
                   style={{ color: index % 2 === 0 ? "var(--muted-foreground)" : "var(--cream)" }}
                 >
                   {item.description}
@@ -90,14 +101,14 @@ export function SpecialtiesSection() {
 
                 <div className="flex items-center justify-between">
                   <span
-                    className="font-sans text-xs tracking-[0.2em] uppercase"
+                    className="ssz-caps font-sans text-sm"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     {item.detail}
                   </span>
                   <Link
                     href={`/${item.slug}`}
-                    className="flex items-center gap-2 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200 group/link"
+                    className="ssz-caps ssz-streep flex items-center gap-2 font-sans text-sm transition-colors duration-200 group/link"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     Meer info
@@ -113,7 +124,7 @@ export function SpecialtiesSection() {
         </div>
 
         {/* Waarom deze combinatie? */}
-        <div className="mt-12 md:mt-16 max-w-3xl mx-auto">
+        <div className="ssz-op mt-12 md:mt-16 max-w-3xl mx-auto">
           <div
             className="relative rounded-2xl px-6 py-8 md:px-10 md:py-10 text-center"
             style={{
@@ -122,16 +133,16 @@ export function SpecialtiesSection() {
             }}
           >
             <div
-              className="w-12 h-px mx-auto mb-6"
+              className="ssz-lijn w-12 h-px mx-auto mb-6"
               style={{ backgroundColor: "var(--rose-gold)" }}
             />
             <h3
-              className="font-serif text-2xl md:text-4xl mb-4 text-balance leading-tight"
+              className="ssz-display font-serif text-2xl md:text-4xl mb-4 leading-tight"
               style={{ color: "var(--rose-gold)" }}
             >
               Waarom deze combinatie?
             </h3>
-            <p className="font-sans text-sm md:text-base leading-relaxed text-muted-foreground text-balance max-w-2xl mx-auto">
+            <p className="ssz-lopend font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">
               Een gezonde huid begint bij een goede basis. Terwijl de laser zorgt voor een blijvend gladde huid, zorgt de HydraSpa voor de optimale conditie en stevigheid van je huid. Of je nu komt voor ontharing of voor huidverjonging; wij bieden een op maat gemaakt behandelplan met de meest innovatieve apparatuur van 2026.
             </p>
             <div

@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Raleway, Great_Vibes } from 'next/font/google'
+import { Playfair, Raleway } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SITE_BESCHRIJVING, SITE_NAAM, SITE_URL, bedrijfsSchema } from '@/lib/site'
 import { CookieBanner } from '@/components/cookie-banner'
 import './globals.css'
 
-const playfair = Playfair_Display({
+// Playfair in plaats van Playfair Display: dezelfde familie, maar mét een
+// optische as. Daardoor worden bij een grote kop de dunne lijnen dunner en het
+// contrast tussen dik en dun hoger — precies het visuele signaal dat een
+// display-serif duur laat ogen. Playfair Display heeft die as niet.
+// De gewichten wijzen naar hetzelfde variabele bestand, dus dit kost niets
+// extra ten opzichte van wat er al geladen werd.
+const playfair = Playfair({
   subsets: ['latin'],
   variable: '--font-playfair',
   weight: ['400', '500', '600', '700'],
@@ -17,11 +23,36 @@ const raleway = Raleway({
   weight: ['300', '400', '500', '600'],
 })
 
-const greatVibes = Great_Vibes({
-  subsets: ['latin'],
-  variable: '--font-script-family',
-  weight: ['400'],
-})
+// Great Vibes is verwijderd: 29,6 kB die vooraf geladen werd voor een
+// lettertype dat nergens gebruikt werd. De klasse `font-script` kwam in geen
+// enkel bestand voor, en dat gewicht concurreerde wél met de hero-afbeelding
+// om bandbreedte.
+
+/**
+ * Terugvaloptie voor browsers zonder scroll-tijdlijn.
+ *
+ * `animation-timeline` werkt in Chrome en Edge, en in Safari pas vanaf versie
+ * 26. Firefox ondersteunt het niet. Zonder dit script zou daar helemaal geen
+ * beweging te zien zijn, terwijl de rest van de bezoekers hem wel krijgt.
+ *
+ * Het staat bewust inline en niet in een apart bestand: de klasse moet gezet
+ * zijn vóórdat de browser voor het eerst tekent, anders zie je de inhoud eerst
+ * verschijnen en dan alsnog wegspringen. Een extra bestand ophalen kost precies
+ * die tijd. Browsers die de scroll-tijdlijn wél kennen stoppen bij de eerste
+ * regel en doen verder niets.
+ *
+ * Belangrijk: dit script kan alleen iets verbergen. Draait het niet — geen
+ * JavaScript, een fout, een crawler — dan blijft de hele pagina zichtbaar.
+ */
+const TERUGVAL = `(function(){
+if(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()'))return;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var d=document.documentElement;d.classList.add('ssz-js');
+addEventListener('DOMContentLoaded',function(){
+var o=new IntersectionObserver(function(es){es.forEach(function(e){
+if(e.isIntersecting){e.target.classList.add('ssz-in');o.unobserve(e.target)}})},
+{rootMargin:'0px 0px -10% 0px'});
+d.querySelectorAll('.ssz-op,.ssz-lijn,.ssz-doek,.ssz-regel-binnen').forEach(function(el){o.observe(el)})})})()`
 
 export const metadata: Metadata = {
   // Zonder metadataBase kan Next relatieve verwijzingen naar afbeeldingen niet
@@ -91,8 +122,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="nl" className={`${playfair.variable} ${raleway.variable} ${greatVibes.variable}`}>
+    <html lang="nl" className={`${playfair.variable} ${raleway.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: TERUGVAL }} />
+      </head>
       <body className="font-sans antialiased">
+        {/* Zonder deze link moet wie met het toetsenbord navigeert eerst de
+            hele navigatiebalk doorlopen voordat hij bij de inhoud is. */}
+        <a href="#inhoud" className="ssz-overslaan font-sans text-sm">
+          Naar de inhoud
+        </a>
         {/* Vertelt zoekmachines en AI-assistenten expliciet wat voor bedrijf
             dit is, waar het zit en wat het aanbiedt, in plaats van dat ze het
             uit de lopende tekst moeten afleiden. */}

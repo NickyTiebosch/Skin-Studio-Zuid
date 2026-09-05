@@ -92,11 +92,14 @@ export function CookieBanner() {
             className="max-w-3xl mx-auto p-6 md:p-7 shadow-lg flex flex-col md:flex-row md:items-center gap-5"
             style={{ backgroundColor: "var(--walnut)" }}
           >
+            {/* Kort gehouden, en dat is niet alleen een tekstkeuze. Dit blok
+                verschijnt pas na de hydratie, dus laat. Werd het te groot, dan
+                nam het de meting van de Largest Contentful Paint over van de
+                kop in de hero — met een verschil van anderhalve seconde. Een
+                cookiemelding hoort sowieso kort te zijn. */}
             <p className="font-sans text-xs leading-relaxed text-[color:var(--cream)]/80 flex-1">
-              Wij meten graag hoe de website gebruikt wordt, zodat we hem kunnen
-              verbeteren. Daarvoor gebruiken we Google Analytics, dat cookies
-              plaatst. Weigert u, dan werkt de site precies hetzelfde. Meer
-              hierover leest u in ons{" "}
+              We meten met Google Analytics hoe de site gebruikt wordt. Weigeren
+              kan zonder gevolgen &mdash; zie het{" "}
               <Link
                 href="/privacybeleid"
                 className="underline underline-offset-2 hover:text-[color:var(--cream)]"

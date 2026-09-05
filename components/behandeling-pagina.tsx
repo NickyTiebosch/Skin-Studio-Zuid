@@ -25,7 +25,8 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
   const andere = behandelingen.filter((b) => b.slug !== behandeling.slug)
 
   return (
-    <main className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-hidden">
+      <div className="ssz-leesbalk" aria-hidden="true" />
       <Navbar />
 
       <script
@@ -58,23 +59,23 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
           </nav>
 
           <span
-            className="font-sans text-xs tracking-[0.4em] uppercase mb-5 block"
+            className="ssz-caps font-sans text-sm mb-5 block"
             style={{ color: "var(--rose-gold)" }}
           >
             {behandeling.detail}
           </span>
-          <h1 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
+          <h1 className="ssz-display font-serif text-3xl md:text-5xl text-foreground mb-6 leading-tight">
             {behandeling.paginaTitel}
           </h1>
-          <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
-          <p className="font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl">
+          <div className="ssz-lijn w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
+          <p className="ssz-lopend font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl">
             {behandeling.description}
           </p>
 
           <div className="flex flex-wrap gap-4 mt-10">
             <Link
               href={`/boeken?behandeling=${behandeling.formulierWaarde}`}
-              className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
+              className="ssz-caps ssz-veeg font-sans text-sm px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
               style={{ backgroundColor: "var(--rose-gold)" }}
             >
               Afspraak maken
@@ -82,7 +83,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
             <a
               href={TELEFOON_HREF}
               data-analytics="click_telefoon"
-              className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 border transition-colors duration-200"
+              className="ssz-caps font-sans text-sm px-8 py-4 border transition-colors duration-200"
               style={{ borderColor: "var(--rose-gold)", color: "var(--rose-gold)" }}
             >
               Bel {TELEFOON_WEERGAVE}
@@ -105,10 +106,10 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
       {/* Uitleg */}
       <section className="px-6 pb-16 md:pb-24">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">
+          <h2 className="ssz-display ssz-op font-serif text-2xl md:text-3xl text-foreground mb-8">
             Hoe het werkt
           </h2>
-          <div className="flex flex-col gap-6 font-sans text-sm leading-relaxed text-muted-foreground">
+          <div className="ssz-op ssz-lopend flex flex-col gap-6 font-sans text-sm leading-relaxed text-muted-foreground">
             {behandeling.uitleg.map((alinea) => (
               <p key={alinea.slice(0, 40)}>{alinea}</p>
             ))}
@@ -120,10 +121,10 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
       {behandeling.benefits && (
         <section className="px-6 pb-16 md:pb-24" style={{ backgroundColor: "var(--sand)" }}>
           <div className="max-w-2xl mx-auto pt-16 md:pt-24">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">
+            <h2 className="ssz-display ssz-op font-serif text-2xl md:text-3xl text-foreground mb-8">
               {behandeling.benefitsHeading ?? "De voordelen op een rij"}
             </h2>
-            <ul className="flex flex-col gap-6">
+            <ul className="ssz-op flex flex-col gap-6">
               {behandeling.benefits.map((voordeel) => (
                 <li key={voordeel.label} className="flex gap-4">
                   <Check
@@ -150,10 +151,10 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
       {/* Veelgestelde vragen */}
       <section className="px-6 py-16 md:py-24">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-10">
+          <h2 className="ssz-display ssz-op font-serif text-2xl md:text-3xl text-foreground mb-10">
             Veelgestelde vragen
           </h2>
-          <div className="flex flex-col gap-8">
+          <div className="ssz-op flex flex-col gap-8">
             {behandeling.faq.map((item) => (
               <div key={item.vraag}>
                 <h3 className="font-serif text-lg text-foreground mb-2">{item.vraag}</h3>
@@ -176,7 +177,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
           >
             <div>
               <span
-                className="font-sans text-xs tracking-[0.2em] uppercase block mb-2"
+                className="ssz-caps font-sans text-sm block mb-2"
                 style={{ color: "var(--rose-gold)" }}
               >
                 Wat kost het
@@ -203,7 +204,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
               >
                 <div>
                   <span
-                    className="font-sans text-xs tracking-[0.2em] uppercase block mb-2"
+                    className="ssz-caps font-sans text-sm block mb-2"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     Ook bij Skin Studio Zuid

@@ -103,7 +103,6 @@
 @theme inline {
   --font-sans: var(--font-raleway), 'Georgia', sans-serif;
   --font-serif: var(--font-playfair), 'Georgia', serif;
-  --font-script: var(--font-script-family), cursive;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-sand: var(--sand);
   --color-sand-light: var(--sand-light);
@@ -180,21 +179,32 @@
 }
 
 /* ==========================================================================
-   Bouwstenen voor de stijlvoorbeelden op /stijl
+   Effectlaag
    --------------------------------------------------------------------------
-   Tijdelijk. Zodra er een richting gekozen is verhuist het gekozen deel naar
-   de echte componenten en kan de rest hier weg.
+   Vier regels die overal hieronder gelden. Ze zijn niet vrijblijvend: elk van
+   de vier voorkomt een concrete fout die anders pas in productie opvalt.
 
-   Twee regels gelden overal hieronder:
+   1. DE ZICHTBARE TOESTAND IS DE BASIS. Een browser zonder
+      `animation-timeline` (Firefox, Safari < 26) negeert die regel maar leest
+      de `animation`-regel wél. Stond `opacity: 0` in een basisregel, dan bleef
+      die tekst daar permanent onzichtbaar — voor bezoekers én voor crawlers.
+      Alles wat inhoud verbergt staat dus binnen @supports, of achter
+      `html.ssz-js` (zie punt 2).
 
-   1. De ZICHTBARE toestand is de basis; beweging is de uitzondering. Alles wat
-      inhoud verbergt staat binnen @supports (animation-timeline: view()) én
-      binnen @media (prefers-reduced-motion: no-preference). Firefox kent
-      animation-timeline nog niet maar leest de animation-regel wél: zou
-      opacity:0 in de basisregel staan, dan bleef die tekst daar permanent
-      onzichtbaar — voor bezoekers én voor crawlers.
-   2. Er wordt alleen transform en opacity geanimeerd. Dat zijn de twee
-      eigenschappen die de browser buiten de hoofdthread om afhandelt.
+   2. BROWSERS ZONDER SCROLL-TIJDLIJN KRIJGEN DEZELFDE BEWEGING. Een klein
+      inline script in app/layout.tsx zet `html.ssz-js` wanneer
+      CSS.supports negatief uitvalt, en een IntersectionObserver zet daar
+      `.ssz-in` op. Zonder dat script gebeurt er niets en blijft alles staan.
+
+   3. ALLEEN `transform` EN `opacity`. Dat zijn de twee eigenschappen die de
+      browser buiten de hoofdthread om afhandelt. Alles wat de lay-out raakt
+      kost frames en verschuift de buren.
+
+   4. NOOIT `opacity` OP HET LCP-ELEMENT. Gemeten op de homepage is dat de
+      `<h1>` van de hero — niet de foto. Een element dat op onzichtbaar begint
+      telt pas als geladen zodra het verschijnt, en dat is precies het cijfer
+      waar Google op let. De kop beweegt daarom met een masker: puur
+      `transform`, dekking blijft ongewijzigd.
    ========================================================================== */
 
 @property --ssz-glans {
@@ -204,7 +214,9 @@
 }
 
 @layer components {
-  /* --- Typografie ------------------------------------------------------- */
+  /* ======================================================================
+     1. Typografie
+     ====================================================================== */
 
   /* Echte kleine kapitalen in plaats van opgeblazen hoofdletters. Bij een
      serif is dat het verschil tussen getekende glyphs en geschaalde caps. */
@@ -213,46 +225,60 @@
     letter-spacing: 0.18em;
   }
 
-  /* Cijfers die netjes onder elkaar staan: nodig in prijstabellen, want
-     zonder tabular-nums is een 1 smaller dan een 8 en lopen de kolommen scheef. */
+  /* Bedragen en tijden: zonder tabular-nums is een 1 smaller dan een 8 en
+     lopen de kolommen in een prijstabel zichtbaar scheef. */
   .ssz-cijfers {
     font-variant-numeric: lining-nums tabular-nums;
   }
 
-  /* Mediaevalcijfers lopen mee met de onderkast — redactioneel, rustiger. */
-  .ssz-cijfers-tekst {
-    font-variant-numeric: oldstyle-nums proportional-nums;
-  }
-
   /* Grote display-koppen willen strakkere tracking, kleine tekst juist ruimere. */
   .ssz-display {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.028em;
     text-wrap: balance;
-    font-feature-settings: 'kern' 1;
   }
 
   .ssz-lopend {
     text-wrap: pretty;
   }
 
-  /* --- Beweging --------------------------------------------------------- */
+  /* ======================================================================
+     2. Beweging — basistoestand
+     Alles zichtbaar. Zie regel 1 bovenaan.
+     ====================================================================== */
 
-  .ssz-reveal,
-  .ssz-reveal-traag,
+  .ssz-op,
   .ssz-lijn,
-  .ssz-drift {
+  .ssz-drift,
+  .ssz-doek::after,
+  .ssz-loper {
     opacity: 1;
     transform: none;
   }
 
-  @keyframes ssz-reveal-in {
+  .ssz-regel-binnen {
+    display: block;
+    transform: none;
+  }
+
+  @keyframes ssz-op-in {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(56px) scale(0.985);
     }
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* Regel voor regel van onder een masker vandaan. Alleen transform, dus
+     bruikbaar op de kop die als LCP-element gemeten wordt. */
+  @keyframes ssz-regel-op {
+    from {
+      transform: translateY(105%);
+    }
+    to {
+      transform: translateY(0);
     }
   }
 
@@ -265,14 +291,71 @@
     }
   }
 
-  /* Zeer trage beeldverschuiving. Blijft ruim onder de 10% die als grens
-     geldt voordat parallax vestibulair vervelend wordt. */
+  /* Trage beeldbeweging. Blijft ruim onder de 10% die als grens geldt
+     voordat parallax vestibulair vervelend wordt. */
   @keyframes ssz-drift-mee {
     from {
-      transform: translateY(-3.5%) scale(1.09);
+      transform: translateY(-4%) scale(1.1);
     }
     to {
-      transform: translateY(3.5%) scale(1.09);
+      transform: translateY(4%) scale(1.1);
+    }
+  }
+
+  /* Hero-foto zoomt langzaam in terwijl je wegscrollt. De dekking blijft
+     ongemoeid, dus dit raakt de laadtijdmeting niet. */
+  @keyframes ssz-hero-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.14);
+    }
+  }
+
+  /* De hero-inhoud gaat iets sneller omhoog dan de foto: dat geeft diepte. */
+  @keyframes ssz-hero-weg {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-80px);
+      opacity: 0.15;
+    }
+  }
+
+  /* Doek dat wegschuift en het beeld eronder blootlegt. */
+  @keyframes ssz-doek-weg {
+    from {
+      transform: scaleY(1);
+    }
+    to {
+      transform: scaleY(0);
+    }
+  }
+
+  /* Horizontale loper, gestuurd door de scroll in plaats van door een timer:
+     automatisch bewegende content moet volgens WCAG 2.2.2 pauzeerbaar zijn,
+     scroll-gestuurde beweging niet. */
+  @keyframes ssz-loper-mee {
+    from {
+      transform: translateX(6%);
+    }
+    to {
+      transform: translateX(-26%);
+    }
+  }
+
+  @keyframes ssz-puls {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.35;
+    }
+    50% {
+      transform: translateY(9px);
+      opacity: 0.9;
     }
   }
 
@@ -280,24 +363,52 @@
     transform-origin: left center;
   }
 
+  /* Masker waarbinnen een regel omhoog komt. */
+  .ssz-regel {
+    display: block;
+    overflow: hidden;
+    /* Anders knipt het masker de staarten van de p, g en j af. */
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .ssz-doek {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .ssz-doek::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    transform-origin: bottom center;
+    background-color: var(--doek, var(--sand));
+  }
+
+  /* ======================================================================
+     3. Beweging — de scroll-tijdlijn (Chrome, Edge, Safari 26+)
+     ====================================================================== */
+
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
-      .ssz-reveal {
-        animation: ssz-reveal-in linear both;
+      .ssz-op {
+        animation: ssz-op-in linear both;
         animation-timeline: view();
-        animation-range: entry 12% cover 34%;
+        animation-range: entry 6% cover 32%;
       }
 
-      .ssz-reveal-traag {
-        animation: ssz-reveal-in linear both;
+      .ssz-regel-binnen {
+        animation: ssz-regel-op linear both;
         animation-timeline: view();
-        animation-range: entry 5% cover 48%;
+        animation-range: entry 0% cover 18%;
       }
 
       .ssz-lijn {
         animation: ssz-lijn-uit linear both;
         animation-timeline: view();
-        animation-range: entry 20% cover 30%;
+        animation-range: entry 14% cover 28%;
       }
 
       .ssz-drift {
@@ -305,23 +416,156 @@
         animation-timeline: view();
         animation-range: cover;
       }
+
+      .ssz-doek::after {
+        animation: ssz-doek-weg linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 40%;
+      }
+
+      .ssz-loper {
+        animation: ssz-loper-mee linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+
+      .ssz-hero-media {
+        animation: ssz-hero-zoom linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+
+      .ssz-hero-inhoud {
+        animation: ssz-hero-weg linear both;
+        animation-timeline: view();
+        animation-range: exit -10% exit 90%;
+      }
+
+      /* Trapsgewijs: bij een scroll-tijdlijn werkt animation-delay niet, dus
+         de vertraging zit in een verschoven animation-range per kind. */
+      .ssz-trap > *:nth-child(1) {
+        animation-range: entry 6% cover 30%;
+      }
+      .ssz-trap > *:nth-child(2) {
+        animation-range: entry 12% cover 36%;
+      }
+      .ssz-trap > *:nth-child(3) {
+        animation-range: entry 18% cover 42%;
+      }
+      .ssz-trap > *:nth-child(4) {
+        animation-range: entry 24% cover 48%;
+      }
+
+      .ssz-regel:nth-of-type(2) .ssz-regel-binnen {
+        animation-range: entry 0% cover 24%;
+      }
+      .ssz-regel:nth-of-type(3) .ssz-regel-binnen {
+        animation-range: entry 0% cover 30%;
+      }
     }
   }
 
-  /* Wie beweging heeft uitgezet krijgt geen niets, maar een korte fade. Dat
-     communiceert dezelfde toestandswisseling zonder positieverandering. */
+  /* ======================================================================
+     4. Beweging — de terugvaloptie (Firefox, Safari < 26)
+     Alleen actief wanneer het inline script in app/layout.tsx `ssz-js` heeft
+     gezet, dus alleen wanneer vaststaat dat er JavaScript draait én de
+     scroll-tijdlijn ontbreekt. Zonder dat script blijft alles zichtbaar.
+     ====================================================================== */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ssz-js .ssz-op {
+      opacity: 0;
+      transform: translateY(56px) scale(0.985);
+      transition:
+        opacity 900ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .ssz-js .ssz-regel-binnen {
+      transform: translateY(105%);
+      transition: transform 1000ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .ssz-js .ssz-lijn {
+      transform: scaleX(0);
+      transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .ssz-js .ssz-doek::after {
+      transform: scaleY(1);
+      transition: transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .ssz-js .ssz-op.ssz-in,
+    .ssz-js .ssz-regel-binnen.ssz-in,
+    .ssz-js .ssz-lijn.ssz-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    .ssz-js .ssz-doek.ssz-in::after {
+      transform: scaleY(0);
+    }
+
+    /* Trapsgewijs kan hier wél met een gewone vertraging. */
+    .ssz-js .ssz-trap > *:nth-child(2) {
+      transition-delay: 120ms;
+    }
+    .ssz-js .ssz-trap > *:nth-child(3) {
+      transition-delay: 240ms;
+    }
+    .ssz-js .ssz-trap > *:nth-child(4) {
+      transition-delay: 360ms;
+    }
+
+    .ssz-js .ssz-regel:nth-of-type(2) .ssz-regel-binnen {
+      transition-delay: 90ms;
+    }
+    .ssz-js .ssz-regel:nth-of-type(3) .ssz-regel-binnen {
+      transition-delay: 180ms;
+    }
+  }
+
+  /* ======================================================================
+     5. Wie beweging heeft uitgezet
+     Geen nul beweging, maar geen positieverandering: een korte fade
+     communiceert dezelfde toestandswisseling zonder vestibulaire trigger.
+     ====================================================================== */
+
   @media (prefers-reduced-motion: reduce) {
-    .ssz-reveal,
-    .ssz-reveal-traag {
+    .ssz-op,
+    .ssz-regel-binnen,
+    .ssz-lijn,
+    .ssz-drift,
+    .ssz-loper,
+    .ssz-hero-media,
+    .ssz-hero-inhoud {
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
       transition: opacity 150ms ease;
     }
+
+    .ssz-doek::after {
+      animation: none !important;
+      transform: scaleY(0) !important;
+    }
+
+    .ssz-puls {
+      animation: none !important;
+    }
   }
 
-  /* --- Oppervlak -------------------------------------------------------- */
+  /* ======================================================================
+     6. Oppervlak
+     ====================================================================== */
 
-  /* Verlopende scrim in plaats van een egaal vlak over de hele foto: de
-     bovenkant van het beeld blijft helder, de strook achter de tekst wordt
-     donker genoeg voor de contrastnorm. */
+  /* Verlopend in plaats van een egaal vlak over de hele foto, maar wel zwaar
+     genoeg. De waardes hieronder zijn gemeten en niet geschat: de norm rekent
+     per pixel, dus je moet de lichtste pixel direct achter een letter nemen.
+     Met een lichter verloop kwam de kop op 1,93:1 uit, waar 3:1 nodig is voor
+     grote tekst en 4,5:1 voor het kleine label erboven. De hero-foto is licht,
+     en dat vergeeft een subtiele scrim niet. */
   .ssz-scrim::after {
     content: '';
     position: absolute;
@@ -329,9 +573,29 @@
     pointer-events: none;
     background: linear-gradient(
       to top,
-      oklch(0.18 0.03 55 / 0.82) 0%,
-      oklch(0.18 0.03 55 / 0.58) 38%,
-      oklch(0.18 0.03 55 / 0.22) 68%,
+      oklch(0.17 0.03 55 / 0.93) 0%,
+      oklch(0.17 0.03 55 / 0.89) 35%,
+      oklch(0.17 0.03 55 / 0.84) 62%,
+      oklch(0.17 0.03 55 / 0.62) 86%,
+      oklch(0.17 0.03 55 / 0.42) 100%
+    );
+  }
+
+  /* Aparte band achter de navigatiebalk. Die staat boven het lichtste deel van
+     de foto, en de menu-items zijn daar wit — zonder deze band haalt dat het
+     contrast niet. Het verloop is kort genoeg om de bovenkant van het beeld
+     niet dicht te smeren. */
+  .ssz-kopband {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: 190px;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      oklch(0.17 0.03 55 / 0.72) 0%,
+      oklch(0.17 0.03 55 / 0.42) 55%,
       transparent 100%
     );
   }
@@ -342,8 +606,9 @@
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.04;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
@@ -356,9 +621,9 @@
     mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
   }
 
-  /* Gouden rand die bij hover langzaam van hoek verandert. Kan alleen omdat
-     @property de browser vertelt dat --ssz-glans een hoek is; zonder die
-     declaratie is een verloop niet animeerbaar. */
+  /* Gouden rand die bij hover van hoek verandert. Kan alleen omdat @property
+     de browser vertelt dat --ssz-glans een hoek is; zonder die declaratie is
+     een verloop niet animeerbaar. */
   .ssz-goudrand {
     --ssz-glans: 120deg;
     border: 1px solid transparent;
@@ -366,9 +631,9 @@
       linear-gradient(var(--vlak, var(--cream)), var(--vlak, var(--cream))) padding-box,
       linear-gradient(
           var(--ssz-glans),
-          color-mix(in oklch, var(--rose-gold) 18%, transparent),
+          color-mix(in oklch, var(--rose-gold) 14%, transparent),
           var(--rose-gold) 48%,
-          color-mix(in oklch, var(--rose-gold) 18%, transparent)
+          color-mix(in oklch, var(--rose-gold) 14%, transparent)
         )
         border-box;
     transition: --ssz-glans 900ms ease;
@@ -379,21 +644,253 @@
     --ssz-glans: 300deg;
   }
 
-  /* Optillen bij hover via transform, niet via margin of height: die laatste
-     twee verschuiven de buren en kosten een layout-berekening per frame. */
+  /* Optillen via transform, niet via margin of height: die laatste twee
+     verschuiven de buren en kosten een layout-berekening per frame. */
   .ssz-til {
     transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   .ssz-til:hover,
   .ssz-til:focus-within {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
+  }
+
+  /* Onderstreping die van links uitgroeit. Werkt op hover én op
+     toetsenbordfocus — dat laatste ontbrak overal. */
+  .ssz-streep {
+    position: relative;
+  }
+
+  .ssz-streep::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.35em;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(var(--streep, 0));
+    transform-origin: left center;
+    transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .ssz-streep:hover,
+  .ssz-streep:focus-visible {
+    --streep: 1;
+  }
+
+  .ssz-streep-aan::after {
+    --streep: 1;
+  }
+
+  /* Gouden veeg over een knop bij hover.
+
+     `display: inline-block` is hier geen opmaakkeuze maar een voorwaarde:
+     `overflow: hidden` heeft geen enkel effect op een inline element, en dan
+     schuift de veeg gewoon links naast de knop het scherm op. Dat gebeurde bij
+     de knop in de navigatiebalk, die als kale <a> nog inline was. Knoppen die
+     al flex- of grid-item zijn negeren deze regel, want die worden sowieso
+     geblokkeerd. */
+  .ssz-veeg {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .ssz-veeg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      color-mix(in oklch, white 30%, transparent) 50%,
+      transparent 80%
+    );
+    transform: translateX(-110%);
+    transition: transform 750ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .ssz-veeg:hover::before,
+  .ssz-veeg:focus-visible::before {
+    transform: translateX(110%);
+  }
+
+  /* Leesvoortgang. `scale` in plaats van `width`: width triggert layout op
+     elke frame, scale draait op de compositor. */
+  .ssz-leesbalk {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    z-index: 60;
+    transform-origin: left center;
+    scale: 0 1;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--rose-gold) 45%, transparent),
+      var(--rose-gold)
+    );
+  }
+
+  @keyframes ssz-vul {
+    to {
+      scale: 1 1;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .ssz-leesbalk {
+      animation: ssz-vul linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  .ssz-puls {
+    animation: ssz-puls 2600ms ease-in-out infinite;
+  }
+
+  /* ======================================================================
+     7. Toegankelijkheid
+     ====================================================================== */
+
+  /* Er was nergens zichtbare terugkoppeling voor wie met het toetsenbord
+     navigeert. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--rose-gold);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  .ssz-overslaan {
+    position: absolute;
+    left: 1rem;
+    top: -100%;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--cream);
+    color: var(--foreground);
+    transition: top 200ms ease;
+  }
+
+  .ssz-overslaan:focus {
+    top: 1rem;
+  }
+
+  /* De overlay van een paginaovergang vangt anders kliks af tijdens de
+     overgang — een bekende valkuil bij View Transitions. */
+  ::view-transition {
+    pointer-events: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ssz-til:hover,
-    .ssz-til:focus-within {
-      transform: none;
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
     }
+  }
+}
+
+/* ==========================================================================
+   De hero-introductie
+   --------------------------------------------------------------------------
+   Deze animaties lopen op tijd en niet op de scroll-tijdlijn, om twee redenen.
+   Ten eerste staat de hero bij het laden al volledig in beeld, waardoor een
+   scroll-tijdlijn meteen op zijn eindstand zou staan en er dus niets te zien
+   zou zijn. Ten tweede werkt een tijdgestuurde animatie in élke browser, dus
+   ook in Firefox — juist voor het eerste wat een bezoeker ziet is dat winst.
+
+   De kop beweegt uitsluitend met `transform` achter een masker. Op de
+   homepage is de `<h1>` het element waarop de laadtijd gemeten wordt; een
+   fade zou die meting rechtstreeks verslechteren.
+   ========================================================================== */
+
+@layer components {
+  /* De hero-kop komt van 46% omhoog en niet van 105%, en dat is een
+     meetkwestie, geen smaakkwestie.
+
+     Gemeten: met een volledige maskering (105%) is de <h1> bij de eerste
+     tekening onzichtbaar. Chrome telt hem dan niet meer als LCP-element en
+     valt terug op iets dat veel later verschijnt — de Largest Contentful
+     Paint sprong daardoor van 1,3 naar 3,0 seconde. Bij 46% is meer dan de
+     helft van elke regel meteen zichtbaar, telt de kop gewoon mee, en is de
+     opkomende beweging nog altijd duidelijk te zien. */
+  @keyframes ssz-regel-op-hero {
+    from {
+      transform: translateY(46%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ssz-intro .ssz-regel-binnen {
+      animation: ssz-regel-op-hero 900ms cubic-bezier(0.16, 0.84, 0.32, 1) both;
+    }
+
+    .ssz-intro .ssz-regel:nth-of-type(2) .ssz-regel-binnen {
+      animation-delay: 90ms;
+    }
+
+    .ssz-intro .ssz-regel:nth-of-type(3) .ssz-regel-binnen {
+      animation-delay: 180ms;
+    }
+
+    .ssz-intro-op {
+      animation: ssz-op-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .ssz-intro-lijn {
+      animation: ssz-lijn-uit 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      transform-origin: left center;
+    }
+
+    .ssz-vertraag-1 {
+      animation-delay: 420ms;
+    }
+    .ssz-vertraag-2 {
+      animation-delay: 560ms;
+    }
+    .ssz-vertraag-3 {
+      animation-delay: 700ms;
+    }
+    .ssz-vertraag-4 {
+      animation-delay: 840ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ssz-intro .ssz-regel-binnen,
+    .ssz-intro-op,
+    .ssz-intro-lijn {
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+@layer components {
+  /* De knop in de navigatiebalk. Stond eerder als inline JavaScript op
+     onMouseEnter/onMouseLeave, waardoor wie met het toetsenbord navigeert
+     geen enkele terugkoppeling kreeg. */
+  .ssz-cta {
+    border: 1px solid var(--rose-gold);
+    color: var(--rose-gold);
+    background-color: transparent;
+    transition:
+      background-color 320ms ease,
+      color 320ms ease;
+  }
+
+  .ssz-cta:hover,
+  .ssz-cta:focus-visible {
+    background-color: var(--rose-gold);
+    color: var(--cream);
   }
 }

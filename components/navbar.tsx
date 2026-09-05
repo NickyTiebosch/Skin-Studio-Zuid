@@ -30,7 +30,7 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         vast
-          ? "bg-[color:var(--sand-light)]/95 backdrop-blur-sm border-b border-[color:var(--border)]"
+          ? "bg-[color:var(--sand-light)]/95 md:bg-[color:var(--sand-light)]/75 md:backdrop-blur-md md:backdrop-saturate-150 border-b border-[color:var(--border)]"
           : "bg-transparent"
       }`}
     >
@@ -51,7 +51,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`font-sans text-sm tracking-[0.2em] uppercase transition-colors duration-200 ${
+                className={`ssz-caps ssz-streep font-sans text-sm transition-colors duration-200 ${
                   vast
                     ? "text-muted-foreground hover:text-foreground"
                     : "text-white hover:text-white/90"
@@ -67,21 +67,7 @@ export function Navbar() {
         <div className="hidden md:block">
           <Link
             href="/boeken"
-            className="font-sans text-xs tracking-[0.2em] uppercase px-6 py-3 border transition-colors duration-200"
-            style={{
-              borderColor: "var(--rose-gold)",
-              color: "var(--rose-gold)",
-            }}
-            onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLElement).style.backgroundColor =
-                "var(--rose-gold)"
-              ;(e.currentTarget as HTMLElement).style.color = "var(--cream)"
-            }}
-            onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLElement).style.backgroundColor =
-                "transparent"
-              ;(e.currentTarget as HTMLElement).style.color = "var(--rose-gold)"
-            }}
+            className="ssz-caps ssz-cta ssz-veeg font-sans text-sm px-6 py-3"
           >
             Afspraak maken
           </Link>
@@ -105,7 +91,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-sans text-sm tracking-[0.2em] uppercase text-muted-foreground"
+              className="ssz-caps font-sans text-sm text-muted-foreground"
             >
               {link.label}
             </Link>
@@ -113,8 +99,7 @@ export function Navbar() {
           <Link
             href="/boeken"
             onClick={() => setMenuOpen(false)}
-            className="font-sans text-xs tracking-[0.2em] uppercase px-6 py-3 border text-center"
-            style={{ borderColor: "var(--rose-gold)", color: "var(--rose-gold)" }}
+            className="ssz-caps ssz-cta font-sans text-sm px-6 py-3 text-center"
           >
             Afspraak maken
           </Link>
