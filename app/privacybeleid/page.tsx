@@ -111,8 +111,9 @@ export default function Privacybeleid() {
               <ul className="flex flex-col gap-3 list-disc pl-5">
                 <li>
                   <span className="text-foreground">Vercel</span> — host de website
-                  en verzamelt geanonimiseerde bezoekcijfers. Hierbij worden geen
-                  cookies geplaatst en worden bezoekers niet individueel gevolgd.
+                  en verzamelt geanonimiseerde bezoekcijfers en laadtijden.
+                  Hierbij worden geen cookies geplaatst en worden bezoekers niet
+                  individueel gevolgd.
                 </li>
                 <li>
                   <span className="text-foreground">FormSubmit</span> — verwerkt de
