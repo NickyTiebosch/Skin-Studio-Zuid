@@ -8,7 +8,7 @@ omschakeling een HTTPS-waarschuwing krijgen.
 
 Niets meer te ontkoppelen. Er is geen `netlify.toml`, geen `_redirects`, geen
 `_headers` en geen `netlify.bat`. Er is één lockfile (`pnpm-lock.yaml`),
-`packageManager` staat op `pnpm@10.33.0`, `engines.node` zet Node op 22, en
+`packageManager` staat op `pnpm@10.33.0`, `engines.node` zet Node op 24, en
 `images.unoptimized` is weg — die stond er als workaround voor Netlify
 en zou op Vercel alleen schade doen.
 
@@ -25,8 +25,13 @@ vanzelf op basis van de lockfile.
 
 ### 2. Node-versie
 
-Controleer na de eerste deploy in **Settings → Node.js Version** dat er 22
-staat. Vercel schakelt Node 20 uit per 1 oktober 2026.
+De site draait op **Node 24**. Bij de eerste deploy stond het dashboard al op
+24.x, terwijl `engines.node` nog `>=22` zei en `.nvmrc` 22: een range laat de
+keuze aan het dashboard. Sinds de controle van 6 september 2026 staat
+`engines.node` op `24.x`, zodat de code bepaalt wat Vercel gebruikt, en zegt
+`.nvmrc` hetzelfde. De draagbare Node in `install.ps1` en `start-dev.ps1` was
+altijd al 24. Vercel schakelt Node 20 uit per 1 oktober 2026; 22 en 24
+blijven.
 
 Let op: **Vercel leest `.nvmrc` niet** — dat doet Netlify. Op Vercel stuurt
 `engines.node` in `package.json` de keuze, en anders de instelling in het
@@ -53,6 +58,9 @@ Netlify blijft gewoon live. Loop op de Vercel-URL langs:
 - `/sitemap.xml` — moet zes URL's bevatten
 - `/robots.txt` — moet de AI-crawlers expliciet toelaten
 
+Klopt dit allemaal, dan kan Netlify al los — zie stap 9. Dat hoeft niet op
+het domein te wachten.
+
 ### 5. TTL verlagen
 
 Zet de TTL van de bestaande DNS-records op **60 seconden** en wacht tot de
@@ -74,12 +82,19 @@ Pas nu de A- en CNAME-records omzetten naar Vercel.
 
 Zet `NEXT_PUBLIC_SITE_URL` op het echte domein en deploy opnieuw. Werk
 daarna **`public/llms.txt`** met de hand bij: daar staan absolute URL's in die
-niet uit de code komen.
+niet uit de code komen. Die staan sinds 6 september 2026 op de Vercel-URL
+(daarvóór op het dode `skinstudiozuid.nl`); zoek op
+`skin-studio-zuid.vercel.app`.
 
 ### 9. Opruimen
 
 TTL terug omhoog, en Netlify loskoppelen van de repo zodat er niet twee
 plekken tegelijk bouwen.
+
+**Netlify hoeft niet op het domein te wachten.** Zolang het draait staat er
+een tweede, indexeerbare kopie van de site online waarvan alle canonicals, de
+`Host` in `robots.txt` en de sitemap naar `skinstudiozuid.nl` wijzen — een
+adres dat niet resolvet. Zodra stap 4 in orde is kan het los.
 
 ## Hoe het adres bepaald wordt
 
@@ -99,14 +114,26 @@ die alles weigert. Preview-URL's zijn publiek bereikbaar en bevatten dezelfde
 teksten als productie; zonder die uitzondering kunnen ze naast het echte
 domein in de index belanden en daarmee met zichzelf concurreren.
 
-## Let op: het domein is nooit geverifieerd
+## Let op: het domein is geregistreerd, maar de delegatie is kapot
 
 De terugval `https://skinstudiozuid.nl` is ooit afgeleid van het e-mailadres
-in de oorspronkelijke code (`info@skinstudiozuid.nl`) en is **niet
-gecontroleerd**. Er is gemeld dat dat adres niet werkt.
+in de oorspronkelijke code (`info@skinstudiozuid.nl`). Op 6 september 2026
+uitgezocht via de .nl-servers en SIDN's RDAP: het domein is op 20 maart 2025
+geregistreerd via TransIP (registrar team.blue nl B.V.; houder afgeschermd)
+en laatst gewijzigd op 18 december 2025. De .nl-servers delegeren het aan
+`ns0.mailhet.nu` en `ns1.mailhet.nu`. Die servers bestaan, maar antwoorden
+voor dit domein met "Query refused": de zone staat er niet meer. Daardoor is
+er geen A-record én geen MX-record — niet alleen de site, ook mail naar
+`info@skinstudiozuid.nl` is onbereikbaar.
 
-Zolang dat niet is uitgezocht: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
+Zolang dat niet is hersteld: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
 pakt de code de Vercel-URL en wijst alles in elk geval naar iets dat bestaat.
+
+Voor de omschakeling betekent dit dat stap 5 en 6 vervallen: er is geen
+werkende oude site die tijdens de omschakeling stuk kan gaan. Wie het
+TransIP-account heeft, zet de nameservers om (naar TransIP's eigen DNS met de
+records die Vercel toont bij het toevoegen van het domein, of naar Vercel DNS)
+en voegt MX-records toe voor de mailbox die de kliniek gebruikt.
 
 ## Verificatie achteraf
 
