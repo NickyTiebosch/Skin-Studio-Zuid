@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Raleway } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { SITE_BESCHRIJVING, SITE_NAAM, SITE_URL, bedrijfsSchema } from '@/lib/site'
+import { IS_PREVIEW, SITE_BESCHRIJVING, SITE_NAAM, SITE_URL, bedrijfsSchema } from '@/lib/site'
 import { CookieBanner } from '@/components/cookie-banner'
 import './globals.css'
 
@@ -78,19 +78,24 @@ export const metadata: Metadata = {
     title: 'Gezichtsbehandelingen & laserontharing in Den Bosch',
     description: SITE_BESCHRIJVING,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      // Zonder deze drie toont Google alleen een kleine thumbnail en een
-      // afgeknot fragment.
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
-  },
+  // Een preview-deploy op Vercel is publiek bereikbaar en bevat dezelfde
+  // teksten als productie. Zonder deze uitzondering kan zo'n URL naast het
+  // echte domein in de index belanden en daarmee met zichzelf concurreren.
+  robots: IS_PREVIEW
+    ? { index: false, follow: false }
+    : {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          // Zonder deze drie toont Google alleen een kleine thumbnail en een
+          // afgeknot fragment.
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        },
+      },
   icons: {
     icon: [
       {

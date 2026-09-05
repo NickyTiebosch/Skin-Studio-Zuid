@@ -2,15 +2,53 @@ import { ADRES, BEDRIJFSNAAM, EMAIL, INSTAGRAM, TELEFOON_HREF } from "./contact"
 import type { Behandeling, VeelgesteldeVraag } from "./behandelingen"
 import { laagstePrijsVoor } from "./tarieven"
 
+/** Draait deze build als preview-omgeving op Vercel? */
+export const IS_PREVIEW = process.env.VERCEL_ENV === "preview"
+
 /**
- * De canonieke locatie van de site. Zoekmachines gebruiken dit om te bepalen
- * welke URL de "echte" is; zonder dit worden preview-omgevingen en het
- * productiedomein als aparte sites gezien, wat de vindbaarheid verdunt.
+ * De canonieke locatie van de site.
  *
- * Via NEXT_PUBLIC_SITE_URL te overschrijven voor lokaal werk of previews.
+ * Zoekmachines gebruiken dit om te bepalen welke URL de "echte" is. Die waarde
+ * voedt de canonicals, de sitemap, robots.txt, de OpenGraph-tags en de
+ * structured data — staat hij verkeerd, dan wijst álles naar het verkeerde
+ * adres tegelijk.
+ *
+ * Vandaar een keten in plaats van één vaste waarde. Er waren twee concrete
+ * manieren waarop dat misging:
+ *
+ * 1. Het vaste adres hieronder is ooit afgeleid van het e-mailadres in de
+ *    oorspronkelijke code en nooit geverifieerd. Werkt dat domein niet, dan
+ *    vertelt elke pagina aan Google dat de echte versie op een dood adres
+ *    staat. Op Vercel is dat niet meer nodig: het platform weet zelf op welke
+ *    URL het draait.
+ * 2. Preview-deploys zijn publiek bereikbaar. Zonder deze keten zou een
+ *    preview zichzelf als het productiedomein presenteren en daarmee met de
+ *    echte site gaan concurreren in de index. Nu wijst een preview naar
+ *    zichzelf, en `IS_PREVIEW` zet hem bovendien op noindex.
+ *
+ * Deze variabelen worden alleen in server-componenten gelezen (metadata,
+ * sitemap, robots, JSON-LD), dus ze hoeven niet publiek gemaakt te worden.
  */
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://skinstudiozuid.nl"
+function bepaalSiteUrl(): string {
+  // 1. Expliciet gezet wint altijd: het echte domein, zodra dat bekend is.
+  const expliciet = process.env.NEXT_PUBLIC_SITE_URL
+  if (expliciet) return expliciet.replace(/\/$/, "")
+
+  // 2. Productie op Vercel: het domein dat aan het project hangt.
+  const productie = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (process.env.VERCEL_ENV === "production" && productie) {
+    return `https://${productie}`
+  }
+
+  // 3. Preview of ontwikkeling op Vercel: verwijs naar deze deploy zelf.
+  const deploy = process.env.VERCEL_URL
+  if (deploy) return `https://${deploy}`
+
+  // 4. Buiten Vercel: de laatste terugval.
+  return "https://skinstudiozuid.nl"
+}
+
+export const SITE_URL = bepaalSiteUrl()
 
 export const SITE_NAAM = BEDRIJFSNAAM
 

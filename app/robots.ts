@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { SITE_URL } from "@/lib/site"
+import { IS_PREVIEW, SITE_URL } from "@/lib/site"
 
 /**
  * De crawlers van AI-assistenten worden hier bewust NIET geblokkeerd.
@@ -11,6 +11,12 @@ import { SITE_URL } from "@/lib/site"
  * expliciet toe in plaats van het aan de standaardinstelling over te laten.
  */
 export default function robots(): MetadataRoute.Robots {
+  // Een preview-deploy op Vercel is publiek bereikbaar. Zou die geïndexeerd
+  // worden, dan concurreert hij met het echte domein om dezelfde teksten.
+  if (IS_PREVIEW) {
+    return { rules: [{ userAgent: "*", disallow: "/" }] }
+  }
+
   return {
     rules: [
       {
