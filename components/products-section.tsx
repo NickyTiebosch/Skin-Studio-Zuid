@@ -15,22 +15,20 @@ export function ProductsSection() {
         {/* Header */}
         <div className="ssz-op flex flex-col items-center text-center mb-12 md:mb-16">
           <span
-            className="ssz-caps font-sans text-sm mb-4"
+            className="font-sans text-xs tracking-[0.4em] uppercase mb-4"
             style={{ color: "var(--rose-gold)" }}
           >
             Onze producten
           </span>
-          <h2 className="ssz-display font-serif text-3xl md:text-5xl text-foreground max-w-xl">
+          <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance max-w-xl">
             De Kalahari collectie
           </h2>
-          <div className="ssz-lijn w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
+          <div className="w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
         </div>
 
         {/* Content grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
-          {/* Het doek schuift weg en legt de foto bloot. Puur transform,
-              dus het draait buiten de hoofdthread om. */}
           <div
             className="ssz-doek relative h-[420px] md:h-[520px] overflow-hidden"
             style={{ "--doek": "var(--background)" } as React.CSSProperties}
@@ -46,7 +44,7 @@ export function ProductsSection() {
 
           {/* Product list */}
           <div className="ssz-op">
-            <p className="ssz-lopend font-sans text-sm leading-relaxed text-muted-foreground mb-8">
+            <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-8">
               De Kalahari productlijn is geïnspireerd op de krachtige, helende planten uit de Afrikaanse woestijn. Elk product is samengesteld met de zuiverste ingrediënten en wetenschappelijk bewezen actieve stoffen.
             </p>
             <ul className="flex flex-col divide-y divide-border">
@@ -73,7 +71,7 @@ export function ProductsSection() {
 
             <Link
               href="/boeken"
-              className="ssz-caps ssz-streep inline-flex items-center gap-3 font-sans text-sm mt-8"
+              className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase mt-8"
               style={{ color: "var(--rose-gold)" }}
             >
               Bestel via de studio

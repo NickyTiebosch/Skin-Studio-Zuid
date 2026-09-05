@@ -11,15 +11,15 @@ export function SpecialtiesSection() {
         {/* Section header */}
         <div className="ssz-op flex flex-col items-center text-center mb-12 md:mb-16">
           <span
-            className="ssz-caps font-sans text-sm mb-4"
+            className="font-sans text-xs tracking-[0.4em] uppercase mb-4"
             style={{ color: "var(--rose-gold)" }}
           >
             Onze specialisaties
           </span>
-          <h2 className="ssz-display font-serif text-3xl md:text-5xl text-foreground max-w-xl">
+          <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance max-w-xl">
             Behandelingen op maat
           </h2>
-          <div className="ssz-lijn w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
+          <div className="w-12 h-px mt-6" style={{ backgroundColor: "var(--rose-gold)" }} />
         </div>
 
         {/* Cards */}
@@ -66,19 +66,19 @@ export function SpecialtiesSection() {
               {/* Content */}
               <div className="p-6 md:p-8">
                 <p
-                  className="ssz-caps font-sans text-sm mb-4"
+                  className="font-sans text-xs tracking-[0.3em] uppercase mb-4"
                   style={{ color: "var(--rose-gold)" }}
                 >
                   {item.tag}
                 </p>
                 <h3
-                  className="ssz-display font-serif text-2xl md:text-3xl mb-4"
+                  className="font-serif text-2xl md:text-3xl mb-4 text-balance"
                   style={{ color: index % 2 === 0 ? "var(--foreground)" : "var(--cream)" }}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className="ssz-lopend font-sans text-sm leading-relaxed mb-4"
+                  className="font-sans text-sm leading-relaxed mb-4"
                   style={{ color: index % 2 === 0 ? "var(--muted-foreground)" : "var(--cream)" }}
                 >
                   {item.description}
@@ -104,14 +104,14 @@ export function SpecialtiesSection() {
 
                 <div className="flex items-center justify-between">
                   <span
-                    className="ssz-caps font-sans text-sm"
+                    className="font-sans text-xs tracking-[0.2em] uppercase"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     {item.detail}
                   </span>
                   <Link
                     href={`/${item.slug}`}
-                    className="ssz-caps ssz-streep flex items-center gap-2 font-sans text-sm transition-colors duration-200 group/link"
+                    className="ssz-streep flex items-center gap-2 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200 group/link"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     Meer info
@@ -136,16 +136,16 @@ export function SpecialtiesSection() {
             }}
           >
             <div
-              className="ssz-lijn w-12 h-px mx-auto mb-6"
+              className="w-12 h-px mx-auto mb-6"
               style={{ backgroundColor: "var(--rose-gold)" }}
             />
             <h3
-              className="ssz-display font-serif text-2xl md:text-4xl mb-4 leading-tight"
+              className="font-serif text-2xl md:text-4xl mb-4 text-balance leading-tight"
               style={{ color: "var(--rose-gold)" }}
             >
               Waarom deze combinatie?
             </h3>
-            <p className="ssz-lopend font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">
+            <p className="font-sans text-sm md:text-base leading-relaxed text-muted-foreground text-balance max-w-2xl mx-auto">
               Een gezonde huid begint bij een goede basis. Terwijl de laser zorgt voor een blijvend gladde huid, zorgt de HydraSpa voor de optimale conditie en stevigheid van je huid. Of je nu komt voor ontharing of voor huidverjonging; wij bieden een op maat gemaakt behandelplan met de meest innovatieve apparatuur van 2026.
             </p>
             <div

@@ -27,11 +27,11 @@ export function WhyUsSection() {
     >
       <div className="max-w-6xl mx-auto">
         <header className="ssz-op text-center mb-12 md:mb-16">
-          <h2 className="ssz-display font-serif italic text-3xl md:text-5xl text-foreground max-w-2xl mx-auto leading-tight">
+          <h2 className="font-serif italic text-3xl md:text-5xl text-foreground text-balance max-w-2xl mx-auto leading-tight">
             Waarom kiezen voor Skin Studio Zuid?
           </h2>
           <div
-            className="ssz-lijn w-12 h-px mx-auto mt-6"
+            className="w-12 h-px mx-auto mt-6"
             style={{ backgroundColor: "var(--rose-gold)" }}
           />
         </header>
@@ -56,7 +56,7 @@ export function WhyUsSection() {
               <h3 className="font-sans text-lg md:text-xl font-medium tracking-tight text-foreground mb-3">
                 {item.title}
               </h3>
-              <p className="ssz-lopend font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-sm mx-auto">
+              <p className="font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-sm mx-auto">
                 {item.text}
               </p>
             </article>
