@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og"
 import { ADRES, BEDRIJFSNAAM } from "@/lib/contact"
+import { OG_AFBEELDING } from "@/lib/site"
 
 /**
  * Het voorbeeld dat verschijnt wanneer iemand de site deelt in WhatsApp,
@@ -8,8 +9,8 @@ import { ADRES, BEDRIJFSNAAM } from "@/lib/contact"
  *
  * Wordt bij de build één keer gegenereerd, dus het kost geen laadtijd.
  */
-export const alt = `${BEDRIJFSNAAM} — gezichtsbehandelingen en laserontharing in ${ADRES.plaats}`
-export const size = { width: 1200, height: 630 }
+export const alt = OG_AFBEELDING.alt
+export const size = { width: OG_AFBEELDING.width, height: OG_AFBEELDING.height }
 export const contentType = "image/png"
 
 export default function OpengraphImage() {

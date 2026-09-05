@@ -4,14 +4,15 @@ import { Footer } from "@/components/footer"
 import { ContactSection } from "@/components/contact-section"
 import { behandelingen } from "@/lib/behandelingen"
 import { ADRES } from "@/lib/contact"
+import { OPENGRAPH_BASIS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Afspraak maken",
   description: `Maak een afspraak bij Skin Studio Zuid in ${ADRES.plaats} voor een gezichtsbehandeling, laserontharing of een vrijblijvend consult.`,
   alternates: { canonical: "/boeken" },
   openGraph: {
+    ...OPENGRAPH_BASIS,
     type: "website",
-    locale: "nl_NL",
     url: "/boeken",
     title: "Afspraak maken bij Skin Studio Zuid",
     description: `Plan een afspraak in ${ADRES.plaats} voor een gezichtsbehandeling of laserontharing.`,

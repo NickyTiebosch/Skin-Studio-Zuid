@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer"
 import { TarievenMelder } from "@/components/tarieven-melder"
 import { behandelingen } from "@/lib/behandelingen"
 import { ADRES, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
-import { SITE_URL, kruimelpadSchema } from "@/lib/site"
+import { OPENGRAPH_BASIS, SITE_URL, kruimelpadSchema } from "@/lib/site"
 import {
   KUUR_ADVIES,
   KUUR_VOORWAARDEN,
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     ? { index: true, follow: true }
     : { index: false, follow: true },
   openGraph: {
+    ...OPENGRAPH_BASIS,
     type: "website",
-    locale: "nl_NL",
     url: "/tarieven",
     title: "Tarieven — Skin Studio Zuid",
     description: `Wat laserontharing en gezichtsbehandelingen kosten bij Skin Studio Zuid in ${ADRES.plaats}.`,

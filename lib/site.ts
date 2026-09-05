@@ -57,6 +57,34 @@ export const SITE_BESCHRIJVING =
   "en laserontharing, met de Atres Triple Wave laser en de Atres HydraSpa."
 
 /**
+ * De deelafbeelding. `app/opengraph-image.tsx` rendert hem; dit is de ene plek
+ * met de gegevens erover. Het pad heeft geen cache-hash zoals de versie die
+ * Next.js zelf op de homepage zet, dus verandert de afbeelding, dan tonen
+ * chat-apps mogelijk nog even de oude.
+ */
+export const OG_AFBEELDING = {
+  url: `${SITE_URL}/opengraph-image`,
+  width: 1200,
+  height: 630,
+  alt: `${BEDRIJFSNAAM} — gezichtsbehandelingen en laserontharing in ${ADRES.plaats}`,
+}
+
+/**
+ * Basis voor `openGraph` op een pagina met eigen metadata.
+ *
+ * Next.js voegt `openGraph` van een pagina niet samen met die van de layout,
+ * maar vervangt hem. Een pagina met een eigen `openGraph` verloor daardoor
+ * `siteName` én de afbeelding: een gedeelde link naar /laserontharing toonde
+ * in WhatsApp geen voorbeeld. Vastgesteld op 6 september 2026. Spreid dit uit
+ * en vul `type`, `url`, `title` en `description` aan.
+ */
+export const OPENGRAPH_BASIS = {
+  locale: "nl_NL",
+  siteName: SITE_NAAM,
+  images: [OG_AFBEELDING],
+}
+
+/**
  * Structured data over het bedrijf, in JSON-LD.
  *
  * Dit is de belangrijkste hefboom van de hele SEO-inzet: het vertelt Google
@@ -78,7 +106,7 @@ export function bedrijfsSchema() {
     url: SITE_URL,
     telephone: TELEFOON_HREF.replace("tel:", ""),
     email: EMAIL,
-    image: `${SITE_URL}/opengraph-image`,
+    image: OG_AFBEELDING.url,
     address: {
       "@type": "PostalAddress",
       streetAddress: ADRES.straat,
