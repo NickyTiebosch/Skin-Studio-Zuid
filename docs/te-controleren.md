@@ -158,3 +158,32 @@ Even nalopen of dat klopt.
   nog blokkeert.
 - **Geldigheid van de kuuractie.** Er staat geen einddatum op de flyer. Als
   de actie afloopt, moet iemand eraan denken de site bij te werken.
+
+---
+
+## Het boekingssysteem — besloten en nog open
+
+**Besloten:** de agenda blijft **Apple/iCloud**, gekoppeld via **Cal.com**. Het
+gratis plan van Cal.com volstaat en praat via CalDAV met `caldav.icloud.com`:
+het leest bezette tijden én schrijft de boeking terug.
+
+Wat daar bij hoort, zodat niemand later verrast wordt:
+
+- **De koppeling werkt met een app-specifiek wachtwoord.** Wordt het Apple
+  ID-wachtwoord ooit gewijzigd of gereset, dan trekt Apple *alle*
+  app-specifieke wachtwoorden in en stopt de koppeling — zonder melding.
+  Daarom hoort er een periodieke controle op: staat de koppeling nog?
+- **Apple stuurt geen seintje bij wijzigingen.** Er zit dus altijd wat
+  vertraging tussen "zij zet iets in haar agenda" en "het systeem weet het".
+- **Blokkeren doet ze in haar eigen agenda.** Een afspraak of hele-dag-event
+  maakt dat slot automatisch onboekbaar. Let op: een onbeantwoorde
+  hele-dag-uitnodiging kan een hele werkdag dichtzetten.
+- **Privé-afspraken moeten óók in de gekoppelde agenda staan**, anders blijft
+  dat slot boekbaar.
+
+**Nog nodig voordat er gebouwd kan worden:** de **behandelduur per
+behandeling**. Dat is het enige dat nu nog blokkeert.
+
+**Niet in het boekingsformulier zetten:** vragen over huidtype, medicijngebruik
+of zwangerschap. Dat zijn gezondheidsgegevens onder artikel 9 AVG, met een
+zwaarder regime. De medische intake hoort apart, niet in het formulier.
