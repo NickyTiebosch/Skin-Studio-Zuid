@@ -13,7 +13,7 @@ export function ProductsSection() {
     <section id="producten" className="py-16 md:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
+        <div className="ssz-op flex flex-col items-center text-center mb-12 md:mb-16">
           <span
             className="font-sans text-xs tracking-[0.4em] uppercase mb-4"
             style={{ color: "var(--rose-gold)" }}
@@ -29,17 +29,21 @@ export function ProductsSection() {
         {/* Content grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
-          <div className="relative h-[420px] md:h-[520px] overflow-hidden">
+          <div
+            className="ssz-doek relative h-[420px] md:h-[520px] overflow-hidden"
+            style={{ "--doek": "var(--background)" } as React.CSSProperties}
+          >
             <Image
               src="/images/kalahari-products.jpg"
               alt="Kalahari skincare producten op een luxe plank"
               fill
-              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 640px"
+              className="ssz-drift object-cover object-center"
             />
           </div>
 
           {/* Product list */}
-          <div>
+          <div className="ssz-op">
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-8">
               De Kalahari productlijn is geïnspireerd op de krachtige, helende planten uit de Afrikaanse woestijn. Elk product is samengesteld met de zuiverste ingrediënten en wetenschappelijk bewezen actieve stoffen.
             </p>
@@ -66,7 +70,7 @@ export function ProductsSection() {
             </ul>
 
             <Link
-              href="#contact"
+              href="/boeken"
               className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase mt-8"
               style={{ color: "var(--rose-gold)" }}
             >

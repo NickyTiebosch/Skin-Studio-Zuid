@@ -1,69 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-
-type Specialty = {
-  id: string
-  tag: string
-  title: string
-  description: string
-  detail: string
-  image: string
-  imageAlt: string
-  benefits?: { label: string; text: string }[]
-  benefitsHeading?: string
-}
-
-const specialties: Specialty[] = [
-  {
-    id: "gezichtsbehandelingen",
-    tag: "Gezichtsbehandelingen",
-    title: "Huidverbetering & Lift",
-    description:
-      'De Atres HydraSpa is de ultieme "all-in-one" behandeling voor een schone, volle en gelifte huid. Het gaat veel verder dan een standaard facial door de combinatie van drie krachtige technieken:',
-    benefits: [
-      {
-        label: "Deep Cleanse & Hydrate",
-        text: "Met de Vortex-technologie zuigen we onzuiverheden uit de poriën, terwijl we de huid tegelijkertijd verzadigen met hoogwaardige serums.",
-      },
-      {
-        label: "Directe Lift & Verstrakking",
-        text: "Door gebruik te maken van Radiofrequentie (RF) stimuleren we de diepe collageenlagen. Dit zorgt voor een onmiddellijke verstrakking van de huid en een natuurlijke lift van de gezichtscontouren.",
-      },
-      {
-        label: "Anti-Aging Boost",
-        text: "Ultrasone trillingen zorgen ervoor dat actieve werkstoffen dieper in de huid doordringen voor een langdurig verjongend effect.",
-      },
-    ],
-    benefitsHeading: "De drie technieken:",
-    detail: "Kalahari Productlijn",
-    image: "/images/facial-treatment.jpg",
-    imageAlt: "Luxe gezichtsbehandeling bij Skin Studio Zuid",
-  },
-  {
-    id: "laserontharing",
-    tag: "Laserontharing",
-    title: "Definitieve Ontharing met de Atres Triple Wave",
-    description:
-      "In onze kliniek werken wij uitsluitend met de beste technologie. De Atres is een medisch gecertificeerde laser die drie verschillende golflengtes combineert. Waar oudere lasers vaak moeite hebben met lichte haartjes of een donkere huid, biedt de Atres een veilige en effectieve oplossing voor elk huid- en haartype.",
-    benefits: [
-      { label: "Effectief", text: "Pakt de haarwortel in de kern aan voor blijvend resultaat." },
-      { label: "Vrijwel pijnloos", text: "Door de actieve koeling in de laserkop." },
-      { label: "Snel", text: "Kortere behandeltijden door de geavanceerde In-Motion techniek." },
-      { label: "Veilig", text: "Geschikt voor behandelingen het hele jaar door." },
-    ],
-    detail: "ATRES Technologie",
-    image: "/images/laser-treatment.jpg",
-    imageAlt: "Professionele laserontharing bij Skin Studio Zuid",
-  },
-]
+import { behandelingen } from "@/lib/behandelingen"
+import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang"
 
 export function SpecialtiesSection() {
   return (
     <section id="behandelingen" className="pt-16 pb-12 md:pt-24 md:pb-16 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-16">
+        <div className="ssz-op flex flex-col items-center text-center mb-12 md:mb-16">
           <span
             className="font-sans text-xs tracking-[0.4em] uppercase mb-4"
             style={{ color: "var(--rose-gold)" }}
@@ -77,21 +23,35 @@ export function SpecialtiesSection() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {specialties.map((item, index) => (
+        <div className="ssz-trap grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {behandelingen.map((item, index) => (
             <div
-              key={item.id}
-              className="group relative overflow-hidden"
-              style={{ backgroundColor: index % 2 === 0 ? "var(--sand)" : "var(--walnut)" }}
+              key={item.slug}
+              className="ssz-op ssz-til ssz-goudrand group relative overflow-hidden"
+              style={
+                {
+                  "--vlak": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
+                } as React.CSSProperties
+              }
             >
-              {/* Image */}
-              <div className="relative h-80 overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.imageAlt}
-                  fill
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                />
+              {/* Beeld: een doek schuift weg en legt de foto bloot. */}
+              <div
+                className="ssz-doek relative h-80 overflow-hidden"
+                style={
+                  {
+                    "--doek": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
+                  } as React.CSSProperties
+                }
+              >
+                <Paginaovergang naam={behandelingOvergang(item.slug)}>
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 640px"
+                    className="ssz-drift object-cover object-center"
+                  />
+                </Paginaovergang>
                 <div
                   className="absolute inset-0"
                   style={{
@@ -150,8 +110,8 @@ export function SpecialtiesSection() {
                     {item.detail}
                   </span>
                   <Link
-                    href="#contact"
-                    className="flex items-center gap-2 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200 group/link"
+                    href={`/${item.slug}`}
+                    className="ssz-streep flex items-center gap-2 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200 group/link"
                     style={{ color: "var(--rose-gold)" }}
                   >
                     Meer info
@@ -167,7 +127,7 @@ export function SpecialtiesSection() {
         </div>
 
         {/* Waarom deze combinatie? */}
-        <div className="mt-12 md:mt-16 max-w-3xl mx-auto">
+        <div className="ssz-op mt-12 md:mt-16 max-w-3xl mx-auto">
           <div
             className="relative rounded-2xl px-6 py-8 md:px-10 md:py-10 text-center"
             style={{

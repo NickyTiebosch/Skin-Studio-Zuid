@@ -4,7 +4,7 @@ export function QuoteSection() {
       className="py-16 md:py-24 px-6"
       style={{ backgroundColor: "var(--walnut)" }}
     >
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="ssz-op max-w-4xl mx-auto text-center">
         <div
           className="w-12 h-px mx-auto mb-8"
           style={{ backgroundColor: "var(--rose-gold)" }}

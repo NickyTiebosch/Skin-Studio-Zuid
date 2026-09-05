@@ -26,7 +26,7 @@ export function WhyUsSection() {
       style={{ backgroundColor: "var(--sand)" }}
     >
       <div className="max-w-6xl mx-auto">
-        <header className="text-center mb-12 md:mb-16">
+        <header className="ssz-op text-center mb-12 md:mb-16">
           <h2 className="font-serif italic text-3xl md:text-5xl text-foreground text-balance max-w-2xl mx-auto leading-tight">
             Waarom kiezen voor Skin Studio Zuid?
           </h2>
@@ -36,11 +36,11 @@ export function WhyUsSection() {
           />
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10">
+        <div className="ssz-trap grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10">
           {reasons.map((item) => (
             <article
               key={item.title}
-              className="flex flex-col items-center text-center"
+              className="ssz-op flex flex-col items-center text-center"
             >
               <div
                 className="mb-5 flex h-12 w-12 items-center justify-center rounded-full"

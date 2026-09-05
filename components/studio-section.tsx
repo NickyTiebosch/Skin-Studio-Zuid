@@ -7,7 +7,7 @@ export function StudioSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
           {/* Text side */}
-          <div>
+          <div className="ssz-op">
             <span
               className="font-sans text-sm tracking-[0.4em] uppercase mb-4 block"
               style={{ color: "var(--rose-gold)" }}
@@ -17,7 +17,7 @@ export function StudioSection() {
             <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
               Waar wetenschap en schoonheid samenkomen.
             </h2>
-            <div className="w-10 h-px mb-6" style={{ backgroundColor: "var(--rose-gold)" }} />
+            <div className="ssz-lijn w-10 h-px mb-6" style={{ backgroundColor: "var(--rose-gold)" }} />
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
               Welkom bij de skinstudio van de toekomst. Bij Skin Studio Zuid draait alles om huidoptimalisatie op het hoogste niveau. Onze studio is ontstaan uit een passie voor huidverbetering en innovatie. Wij geloven dat echte resultaten niet pijnlijk hoeven te zijn.
             </p>
@@ -31,12 +31,16 @@ export function StudioSection() {
 
           {/* Image side */}
           <div className="relative">
-            <div className="relative h-[500px] md:h-[620px] overflow-hidden">
+            <div
+              className="ssz-doek relative h-[500px] md:h-[620px] overflow-hidden"
+              style={{ "--doek": "var(--sand)" } as React.CSSProperties}
+            >
               <Image
                 src={StudioImage}
                 alt="Interieur van Skin Studio Zuid met visgraatvloer en latjeswand"
                 fill
-                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 640px"
+                className="ssz-drift object-cover object-center"
               />
               {/* Warme filter overlay */}
               <div
