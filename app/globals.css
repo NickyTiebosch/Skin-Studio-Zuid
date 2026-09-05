@@ -178,3 +178,222 @@
     }
   }
 }
+
+/* ==========================================================================
+   Bouwstenen voor de stijlvoorbeelden op /stijl
+   --------------------------------------------------------------------------
+   Tijdelijk. Zodra er een richting gekozen is verhuist het gekozen deel naar
+   de echte componenten en kan de rest hier weg.
+
+   Twee regels gelden overal hieronder:
+
+   1. De ZICHTBARE toestand is de basis; beweging is de uitzondering. Alles wat
+      inhoud verbergt staat binnen @supports (animation-timeline: view()) én
+      binnen @media (prefers-reduced-motion: no-preference). Firefox kent
+      animation-timeline nog niet maar leest de animation-regel wél: zou
+      opacity:0 in de basisregel staan, dan bleef die tekst daar permanent
+      onzichtbaar — voor bezoekers én voor crawlers.
+   2. Er wordt alleen transform en opacity geanimeerd. Dat zijn de twee
+      eigenschappen die de browser buiten de hoofdthread om afhandelt.
+   ========================================================================== */
+
+@property --ssz-glans {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 120deg;
+}
+
+@layer components {
+  /* --- Typografie ------------------------------------------------------- */
+
+  /* Echte kleine kapitalen in plaats van opgeblazen hoofdletters. Bij een
+     serif is dat het verschil tussen getekende glyphs en geschaalde caps. */
+  .ssz-caps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.18em;
+  }
+
+  /* Cijfers die netjes onder elkaar staan: nodig in prijstabellen, want
+     zonder tabular-nums is een 1 smaller dan een 8 en lopen de kolommen scheef. */
+  .ssz-cijfers {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Mediaevalcijfers lopen mee met de onderkast — redactioneel, rustiger. */
+  .ssz-cijfers-tekst {
+    font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+
+  /* Grote display-koppen willen strakkere tracking, kleine tekst juist ruimere. */
+  .ssz-display {
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    font-feature-settings: 'kern' 1;
+  }
+
+  .ssz-lopend {
+    text-wrap: pretty;
+  }
+
+  /* --- Beweging --------------------------------------------------------- */
+
+  .ssz-reveal,
+  .ssz-reveal-traag,
+  .ssz-lijn,
+  .ssz-drift {
+    opacity: 1;
+    transform: none;
+  }
+
+  @keyframes ssz-reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes ssz-lijn-uit {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Zeer trage beeldverschuiving. Blijft ruim onder de 10% die als grens
+     geldt voordat parallax vestibulair vervelend wordt. */
+  @keyframes ssz-drift-mee {
+    from {
+      transform: translateY(-3.5%) scale(1.09);
+    }
+    to {
+      transform: translateY(3.5%) scale(1.09);
+    }
+  }
+
+  .ssz-lijn {
+    transform-origin: left center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .ssz-reveal {
+        animation: ssz-reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 12% cover 34%;
+      }
+
+      .ssz-reveal-traag {
+        animation: ssz-reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 48%;
+      }
+
+      .ssz-lijn {
+        animation: ssz-lijn-uit linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 30%;
+      }
+
+      .ssz-drift {
+        animation: ssz-drift-mee linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+
+  /* Wie beweging heeft uitgezet krijgt geen niets, maar een korte fade. Dat
+     communiceert dezelfde toestandswisseling zonder positieverandering. */
+  @media (prefers-reduced-motion: reduce) {
+    .ssz-reveal,
+    .ssz-reveal-traag {
+      transition: opacity 150ms ease;
+    }
+  }
+
+  /* --- Oppervlak -------------------------------------------------------- */
+
+  /* Verlopende scrim in plaats van een egaal vlak over de hele foto: de
+     bovenkant van het beeld blijft helder, de strook achter de tekst wordt
+     donker genoeg voor de contrastnorm. */
+  .ssz-scrim::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      oklch(0.18 0.03 55 / 0.82) 0%,
+      oklch(0.18 0.03 55 / 0.58) 38%,
+      oklch(0.18 0.03 55 / 0.22) 68%,
+      transparent 100%
+    );
+  }
+
+  /* Filmkorrel als herhaalde tegel. Bewust geen live SVG-filter: dat wordt
+     per pixel berekend en kost op mobiel frames. */
+  .ssz-korrel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Beeld dat aan de onderkant oplost in het vlak eronder. Goedkoper dan een
+     blur en netter dan een overlay-div met een verloop. */
+  .ssz-vervaag-onder {
+    -webkit-mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+  }
+
+  /* Gouden rand die bij hover langzaam van hoek verandert. Kan alleen omdat
+     @property de browser vertelt dat --ssz-glans een hoek is; zonder die
+     declaratie is een verloop niet animeerbaar. */
+  .ssz-goudrand {
+    --ssz-glans: 120deg;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--vlak, var(--cream)), var(--vlak, var(--cream))) padding-box,
+      linear-gradient(
+          var(--ssz-glans),
+          color-mix(in oklch, var(--rose-gold) 18%, transparent),
+          var(--rose-gold) 48%,
+          color-mix(in oklch, var(--rose-gold) 18%, transparent)
+        )
+        border-box;
+    transition: --ssz-glans 900ms ease;
+  }
+
+  .ssz-goudrand:hover,
+  .ssz-goudrand:focus-within {
+    --ssz-glans: 300deg;
+  }
+
+  /* Optillen bij hover via transform, niet via margin of height: die laatste
+     twee verschuiven de buren en kosten een layout-berekening per frame. */
+  .ssz-til {
+    transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .ssz-til:hover,
+  .ssz-til:focus-within {
+    transform: translateY(-6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ssz-til:hover,
+    .ssz-til:focus-within {
+      transform: none;
+    }
+  }
+}

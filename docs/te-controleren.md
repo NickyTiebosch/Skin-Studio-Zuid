@@ -112,16 +112,16 @@ kuuractie). Ze staan in `lib/tarieven.ts`, dus corrigeren kan op één plek.
 Deze zijn belangrijker dan de prijzen zelf, want ze raken teksten die al
 online staan.
 
-| Wat | Op de flyer | Op de website |
-|---|---|---|
-| **Telefoonnummer** | 073-2032756 | 073 689 6423 |
-| **De laser** | "Professionele Diode Ice Laser" | "Atres Triple Wave, drie golflengtes" |
-| **De gezichtsbehandeling** | "Hydrafacial" | "Atres HydraSpa" |
+| Wat | Op de flyer | Op de website | Stand |
+|---|---|---|---|
+| **Telefoonnummer** | 073-2032756 | 073 689 6423 | **Opgelost** |
+| **De laser** | "Professionele Diode Ice Laser" | "Atres Triple Wave, drie golflengtes" | Open |
+| **De gezichtsbehandeling** | "Hydrafacial" | "Atres HydraSpa" | Open |
 
-**Het telefoonnummer is het meest urgente.** Er staat nu een ander nummer op
-de site dan op het drukwerk. Eén van de twee is verkeerd, en zolang dat zo is
-belt een deel van de mensen naar het verkeerde nummer. Ik heb de site niet
-aangepast omdat ik niet kan bepalen welk nummer het juiste is.
+**Het telefoonnummer is opgehelderd.** Het nummer op de site (073 689 6423) is
+het juiste; de flyer is oud. Er hoeft dus niets aan de site te veranderen. Wel
+goed om te weten voor wie nog drukwerk uitdeelt: daar staat een nummer op dat
+niet meer klopt.
 
 **De laser vraagt om opheldering.** De behandelpagina legt uit dat de Atres
 Triple Wave drie golflengtes combineert, en waarom dat uitmaakt voor lichte
