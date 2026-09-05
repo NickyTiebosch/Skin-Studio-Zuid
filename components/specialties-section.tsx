@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { behandelingen } from "@/lib/behandelingen"
+import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang"
 
 export function SpecialtiesSection() {
   return (
@@ -42,13 +43,15 @@ export function SpecialtiesSection() {
                   } as React.CSSProperties
                 }
               >
-                <Image
-                  src={item.image}
-                  alt={item.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 640px"
-                  className="ssz-drift object-cover object-center"
-                />
+                <Paginaovergang naam={behandelingOvergang(item.slug)}>
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 640px"
+                    className="ssz-drift object-cover object-center"
+                  />
+                </Paginaovergang>
                 <div
                   className="absolute inset-0"
                   style={{

@@ -12,6 +12,7 @@ import {
   kruimelpadSchema,
 } from "@/lib/site"
 import { TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
+import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang"
 
 /**
  * De opmaak die /laserontharing en /gezichtsbehandelingen delen.
@@ -92,15 +93,19 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
         </div>
       </header>
 
+      {/* Dezelfde naam als op de homepage-kaart, zodat de foto doorgroeit in
+          plaats van dat de pagina omklapt. */}
       <div className="relative h-72 md:h-[28rem] mb-16 md:mb-24">
-        <Image
-          src={behandeling.image}
-          alt={behandeling.imageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+        <Paginaovergang naam={behandelingOvergang(behandeling.slug)}>
+          <Image
+            src={behandeling.image}
+            alt={behandeling.imageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </Paginaovergang>
       </div>
 
       {/* Uitleg */}
