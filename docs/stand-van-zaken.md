@@ -9,7 +9,7 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 | Omgeving | Adres | Status |
 |---|---|---|
 | Vercel (nieuw) | `skin-studio-zuid.vercel.app` | Productie, bouwt van `main`. Op 6 september volledig nagelopen, in orde |
-| Netlify (oud) | `skin-studio-zuid.netlify.app` | **Draait nog en kan nu los.** Indexeerbaar, met canonicals, robots-`Host` en sitemap naar het dode `skinstudiozuid.nl` |
+| Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
 | Eigen domein | `skinstudiozuid.nl` | **Geregistreerd maar dood.** Bij TransIP (registrar team.blue), gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren ("Query refused"). Geen A- en geen MX-record |
 
 ## Wat er staat
@@ -62,10 +62,7 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    heeft. De bezoeker ziet "verzonden", de kliniek krijgt niets. Zet het
    tijdelijk op een mailbox die wél werkt en klik daar één keer op de
    activatiemail van formsubmit. Dit blokkeert boekingen, dus vóór alles.
-2. **Netlify loskoppelen.** Nu, niet pas bij het domein — zie stap 9 in
-   `docs/vercel.md`. Controleer eerst of de Netlify-URL nog ergens staat
-   (Instagram-bio, Google Business Profile) en zet die om naar de Vercel-URL.
-3. **Het domein repareren.** `skinstudiozuid.nl` staat bij TransIP
+2. **Het domein repareren.** `skinstudiozuid.nl` staat bij TransIP
    (geregistreerd 20 maart 2025, laatst gewijzigd 18 december 2025). Wie het
    TransIP-account heeft — de kliniek of de vorige websitebouwer — logt in en
    zet de nameservers om: naar TransIP's eigen DNS met de records die Vercel
@@ -73,17 +70,17 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    Omdat er nu niets resolvet, is er geen oude site die tijdens de
    omschakeling stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen.
    Daarna `NEXT_PUBLIC_SITE_URL` zetten en `public/llms.txt` bijwerken.
-4. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
+3. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
    komen voor de mailbox die de kliniek echt gebruikt (TransIP-mailbox,
    Google Workspace, Microsoft 365 — te kiezen). Uitzoeken bij de kliniek: is
    er ooit een mailbox voor `info@skinstudiozuid.nl` geweest, en zo ja waar?
    Pas daarna kan het formulier terug naar dat adres.
-5. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Pas zinvol als het domein er is.
-6. **Boekingssysteem.** Besloten: Apple/iCloud-agenda via Cal.com. Wacht
+5. **Boekingssysteem.** Besloten: Apple/iCloud-agenda via Cal.com. Wacht
    uitsluitend nog op de **behandelduur per behandeling** — zonder duur kan
    geen enkel systeem tijdsloten berekenen.
-7. **Van de kliniek**: vrouwenprijzen laserontharing, openingstijden, wie er
+6. **Van de kliniek**: vrouwenprijzen laserontharing, openingstijden, wie er
    behandelt met certificering, en de twee tegenstrijdigheden tussen flyer en
    site (Diode Ice Laser versus Atres Triple Wave, Hydrafacial versus
    HydraSpa) — die laatste vóór er advertentiebudget op gaat. Zie

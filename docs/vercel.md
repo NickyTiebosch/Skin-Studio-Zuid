@@ -96,6 +96,9 @@ een tweede, indexeerbare kopie van de site online waarvan alle canonicals, de
 `Host` in `robots.txt` en de sitemap naar `skinstudiozuid.nl` wijzen — een
 adres dat niet resolvet. Zodra stap 4 in orde is kan het los.
 
+Gedaan: Netlify is op 6 september 2026 verwijderd. De site geeft 404 en er
+staan geen webhooks meer op de repo.
+
 ## Hoe het adres bepaald wordt
 
 `lib/site.ts` kiest `SITE_URL` in deze volgorde. Die waarde voedt de
