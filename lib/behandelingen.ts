@@ -171,6 +171,10 @@ export const behandelingen: Behandeling[] = [
       "Tijdens de behandeling koelt de laserkop de huid actief. Die koeling " +
         "beschermt de bovenste huidlaag en maakt de behandeling comfortabel: de " +
         "meeste mensen ervaren niet meer dan een korte, warme tik.",
+      "Een traject begint altijd met een intake in de studio. Daar bekijken " +
+        "we uw huid en haartype, bespreken we wat u mag verwachten en stellen " +
+        "we het behandelplan op. Pas daarna leggen we de data van de sessies " +
+        "vast, met tussenpozen die passen bij de groeifase van uw haar.",
     ],
     benefits: [
       {
@@ -238,6 +242,15 @@ export const behandelingen: Behandeling[] = [
           "allemaal tegelijk in dezelfde groeifase bevinden. Tijdens de intake " +
           "maken we een inschatting die bij uw situatie past en bespreken we het " +
           "behandelplan met u door.",
+      },
+      {
+        vraag: "Kan ik direct een behandeling inplannen?",
+        antwoord:
+          "Nee, we beginnen altijd met een intake. Die is gratis en " +
+          "vrijblijvend: we bekijken uw huid en haartype, bespreken het " +
+          "verwachte aantal sessies en stellen samen het behandelplan op. " +
+          "Daarna leggen we de data van de behandelingen vast. Een intake " +
+          "vraagt u aan via het contactformulier.",
       },
     ],
   },

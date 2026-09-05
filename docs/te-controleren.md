@@ -24,11 +24,17 @@ Alles staat in `lib/behandelingen.ts`, dus corrigeren kan op één plek.
 | "De techniek is het effectiefst bij haren in de groeifase, en die fase verschilt per haar. Daarom bestaat een behandeling altijd uit meerdere sessies." | Feitelijk juist en de reden dat kuren nodig zijn. Bevestig dat jullie dit ook zo communiceren. |
 | "Elke golflengte dringt tot een andere diepte door en werkt beter op een ander type haar of huid." | Dit is de reden dat een triple wave-laser meerwaarde heeft. Laat de leverancier van de Atres dit desgewenst bevestigen. |
 | "De meeste mensen ervaren niet meer dan een korte, warme tik." | Dit is mijn formulering van "vrijwel pijnloos" uit de bestaande tekst. Vervang gerust door hoe jullie klanten het zelf beschrijven. |
+| "Een traject begint altijd met een intake in de studio. (…) Pas daarna leggen we de data van de sessies vast." | Toegevoegd op 6 september 2026 op verzoek van Nicky. Bevestig dat dit de vaste werkwijze is. |
 
 ### Veelgestelde vragen
 
-Vijf vragen met antwoorden. Twee daarvan verwijzen bewust door naar de intake
+Zes vragen met antwoorden. Twee daarvan verwijzen bewust door naar de intake
 in plaats van een getal te noemen:
+
+- **"Kan ik direct een behandeling inplannen?"** — nieuw sinds 6 september
+  2026: er is altijd eerst een intake, "gratis en vrijblijvend" (zo staat het
+  ook op de tarievenpagina), en daarna worden de data vastgelegd. Bevestig de
+  formulering; klopt "vrijblijvend" niet helemaal, dan hoort dat woord eruit.
 
 - **"Hoeveel behandelingen heb ik nodig?"** — het antwoord zegt dat het per
   persoon en lichaamsdeel verschilt en tijdens de intake wordt ingeschat. **Als
