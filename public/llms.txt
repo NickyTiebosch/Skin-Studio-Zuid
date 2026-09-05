@@ -41,12 +41,12 @@ Cream. Verkrijgbaar via de studio.
 
 ## Pagina's
 
-- https://skinstudiozuid.nl/ — overzicht van behandelingen, studio en contact
-- https://skinstudiozuid.nl/laserontharing — definitieve ontharing met de Atres Triple Wave, inclusief veelgestelde vragen
-- https://skinstudiozuid.nl/gezichtsbehandelingen — huidverbetering met de Atres HydraSpa, inclusief veelgestelde vragen
-- https://skinstudiozuid.nl/tarieven — tarieven en behandelduur
-- https://skinstudiozuid.nl/boeken — een afspraak aanvragen
-- https://skinstudiozuid.nl/privacybeleid — hoe de kliniek met gegevens omgaat
+- https://skin-studio-zuid.vercel.app/ — overzicht van behandelingen, studio en contact
+- https://skin-studio-zuid.vercel.app/laserontharing — definitieve ontharing met de Atres Triple Wave, inclusief veelgestelde vragen
+- https://skin-studio-zuid.vercel.app/gezichtsbehandelingen — huidverbetering met de Atres HydraSpa, inclusief veelgestelde vragen
+- https://skin-studio-zuid.vercel.app/tarieven — tarieven en behandelduur
+- https://skin-studio-zuid.vercel.app/boeken — een afspraak aanvragen
+- https://skin-studio-zuid.vercel.app/privacybeleid — hoe de kliniek met gegevens omgaat
 
 ## Tarieven
 
