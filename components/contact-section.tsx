@@ -29,12 +29,19 @@ export function ContactSection({
   standaardBehandeling = "",
   titel,
   intro,
+  kopNiveau = "h2",
 }: {
   /** Vult het behandelingsveld voor, bijvoorbeeld vanaf een behandelpagina. */
   standaardBehandeling?: string
   titel?: string
   intro?: string
+  /**
+   * Op de homepage is de kop een h2 onder de hero; op /boeken is deze sectie
+   * de hele pagina en hoort de kop de h1 te zijn.
+   */
+  kopNiveau?: "h1" | "h2"
 } = {}) {
+  const Kop = kopNiveau
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -95,9 +102,9 @@ export function ContactSection({
             >
               Maak een afspraak
             </span>
-            <h2 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-8 leading-tight">
+            <Kop className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-8 leading-tight">
               {titel ?? "Jouw transformatie begint hier"}
-            </h2>
+            </Kop>
             <div className="w-10 h-px mb-10" style={{ backgroundColor: "var(--rose-gold)" }} />
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-12">
               {intro ??

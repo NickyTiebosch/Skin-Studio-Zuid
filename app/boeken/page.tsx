@@ -69,6 +69,7 @@ export default async function Boeken({
       </div>
 
       <ContactSection
+        kopNiveau="h1"
         standaardBehandeling={voorgevuld}
         titel={
           gekozen
