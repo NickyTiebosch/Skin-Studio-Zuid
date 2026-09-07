@@ -1,8 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
+import { format } from "date-fns"
+import { AfspraakKiezer } from "@/components/afspraak-kiezer"
+import {
+  STANDAARD_DAGDEEL,
+  type DagdeelId,
+  afspraakVoor,
+  formatteerDatum,
+} from "@/lib/agenda"
 import { meld } from "@/lib/analytics"
 import {
   ADRES,
@@ -30,6 +38,7 @@ export function ContactSection({
   titel,
   intro,
   kopNiveau = "h2",
+  metAgenda = false,
 }: {
   /** Vult het behandelingsveld voor, bijvoorbeeld vanaf een behandelpagina. */
   standaardBehandeling?: string
@@ -40,6 +49,11 @@ export function ContactSection({
    * de hele pagina en hoort de kop de h1 te zijn.
    */
   kopNiveau?: "h1" | "h2"
+  /**
+   * Toont de aanvraagkalender zodra een boekbare behandeling is gekozen. Staat
+   * aan op /boeken; op de homepage blijft het een kort contactformulier.
+   */
+  metAgenda?: boolean
 } = {}) {
   const Kop = kopNiveau
   const [submitted, setSubmitted] = useState(false)
@@ -52,6 +66,28 @@ export function ContactSection({
     treatment: standaardBehandeling,
     message: "",
   })
+  const [datum, setDatum] = useState<Date | undefined>(undefined)
+  const [dagdeel, setDagdeel] = useState<DagdeelId>(STANDAARD_DAGDEEL)
+  const boekingGestart = useRef(false)
+
+  // De kalender rekent met "vandaag" en die kan op de server (UTC) een andere
+  // dag zijn dan bij de bezoeker. Daarom pas tekenen na het laden, zodat de
+  // server en de browser nooit een verschillende kalender opleveren.
+  const [geladen, setGeladen] = useState(false)
+  useEffect(() => {
+    setGeladen(true)
+  }, [])
+
+  const afspraak = metAgenda ? afspraakVoor(form.treatment) : undefined
+
+  function kiesDatum(nieuweDatum: Date | undefined) {
+    setDatum(nieuweDatum)
+    setError(null)
+    if (nieuweDatum && !boekingGestart.current) {
+      boekingGestart.current = true
+      meld("booking_started", { behandeling: form.treatment })
+    }
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -60,13 +96,22 @@ export function ContactSection({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (afspraak && !datum) {
+      setError("Kies een datum voor uw afspraak.")
+      return
+    }
     setSending(true)
     setError(null)
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          ...(afspraak && datum
+            ? { date: format(datum, "yyyy-MM-dd"), daypart: dagdeel }
+            : {}),
+        }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -79,6 +124,9 @@ export function ContactSection({
       // verandert dus niet. Zonder deze melding zou er geen enkel signaal zijn
       // waaraan een geslaagde aanvraag te herkennen valt.
       meld("generate_lead", { behandeling: form.treatment || "niet opgegeven" })
+      if (afspraak && datum) {
+        meld("booking_completed", { behandeling: form.treatment, dagdeel })
+      }
     } catch {
       setError("Er ging iets mis. Probeer het later opnieuw.")
     } finally {
@@ -143,7 +191,9 @@ export function ContactSection({
                 <CheckCircle size={40} style={{ color: "var(--rose-gold)" }} />
                 <h3 className="font-serif text-2xl text-foreground">Bedankt!</h3>
                 <p className="font-sans text-sm text-muted-foreground leading-relaxed">
-                  Uw aanvraag is ontvangen. Wij nemen zo spoedig mogelijk contact met u op.
+                  {afspraak && datum
+                    ? `Uw aanvraag voor ${afspraak.naam.toLowerCase()} op ${formatteerDatum(datum)} is ontvangen. Wij bevestigen de afspraak per e-mail of telefoon.`
+                    : "Uw aanvraag is ontvangen. Wij nemen zo spoedig mogelijk contact met u op."}
                 </p>
               </div>
             ) : (
@@ -212,10 +262,20 @@ export function ContactSection({
                     <option value="">Maak een keuze</option>
                     <option value="gezichtsbehandeling">Gezichtsbehandeling</option>
                     <option value="laserontharing">Laserontharing</option>
-                    <option value="consult">Vrijblijvend consult</option>
+                    <option value="consult">Gratis intakegesprek</option>
                     <option value="overig">Overig</option>
                   </select>
                 </div>
+
+                {geladen && afspraak && (
+                  <AfspraakKiezer
+                    afspraak={afspraak}
+                    datum={datum}
+                    onDatum={kiesDatum}
+                    dagdeel={dagdeel}
+                    onDagdeel={setDagdeel}
+                  />
+                )}
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="contact-bericht" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
@@ -243,7 +303,11 @@ export function ContactSection({
                   className="mt-4 font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{ backgroundColor: "var(--rose-gold)" }}
                 >
-                  {sending ? "Bezig met versturen…" : "Verstuur aanvraag"}
+                  {sending
+                    ? "Bezig met versturen…"
+                    : afspraak
+                      ? "Vraag afspraak aan"
+                      : "Verstuur aanvraag"}
                 </button>
                 <p className="font-sans text-xs leading-relaxed text-muted-foreground">
                   Wij gebruiken uw gegevens alleen om contact met u op te nemen

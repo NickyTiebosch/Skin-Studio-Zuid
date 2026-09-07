@@ -1,4 +1,13 @@
 import { NextResponse } from "next/server"
+import {
+  STANDAARD_DAGDEEL,
+  afspraakVoor,
+  formatteerDatum,
+  formatteerDatumKort,
+  isDagdeel,
+  labelDagdeel,
+  parseAfspraakdatum,
+} from "@/lib/agenda"
 
 /**
  * Bestemming van het contactformulier.
@@ -17,25 +26,55 @@ const FORMSUBMIT_URL = `https://formsubmit.co/${CONTACT_EMAIL}`
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, treatment, message } = body as {
+    const { name, email, phone, treatment, message, date, daypart } = body as {
       name?: string
       email?: string
       phone?: string
       treatment?: string
       message?: string
+      /** yyyy-MM-dd, alleen vanaf de aanvraagkalender op /boeken. */
+      date?: string
+      daypart?: string
     }
 
-    // Formsubmit.co: geen account nodig. Bij de eerste aanvraag krijgt
-    // info@skinstudiozuid.nl een activatiemail – één keer op de link klikken,
-    // daarna komen alle aanvragen in die mailbox.
+    // Een datum hoort alleen bij een boekbare behandeling. Is er wel een datum
+    // meegestuurd maar klopt hij niet (verleden, ander formaat), dan is dat
+    // een fout in de aanvraag en geen reden om hem stilletjes weg te laten.
+    const afspraak = afspraakVoor(treatment)
+    const datum = afspraak && date !== undefined ? parseAfspraakdatum(date) : undefined
+    if (afspraak && date !== undefined && !datum) {
+      return NextResponse.json(
+        { error: "Kies een datum die nog komt." },
+        { status: 400 }
+      )
+    }
+    const dagdeel = isDagdeel(daypart) ? daypart : STANDAARD_DAGDEEL
+
+    const onderwerp =
+      afspraak && datum
+        ? `Afspraakaanvraag: ${afspraak.naam} op ${formatteerDatumKort(datum)}` +
+          (dagdeel !== "geen-voorkeur" ? ` (${labelDagdeel(dagdeel).toLowerCase()})` : "")
+        : "Nieuwe aanvraag via Skin Studio Zuid"
+
+    // Formsubmit.co: geen account nodig. Bij de eerste aanvraag krijgt het
+    // adres hierboven een activatiemail – één keer op de link klikken, daarna
+    // komen alle aanvragen in die mailbox. De velden staan in de mail in
+    // deze volgorde.
     const formBody = new URLSearchParams({
       name: name ?? "",
       email: email ?? "",
       phone: phone ?? "",
       treatment: treatment ?? "",
+      ...(afspraak && datum
+        ? {
+            afspraak: afspraak.naam,
+            datum: formatteerDatum(datum),
+            dagdeel: labelDagdeel(dagdeel),
+          }
+        : {}),
       message: message ?? "",
       _replyto: email ?? "",
-      _subject: "Nieuwe aanvraag via Skin Studio Zuid",
+      _subject: onderwerp,
     })
 
     const res = await fetch(FORMSUBMIT_URL, {
