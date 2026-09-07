@@ -174,11 +174,14 @@ geen regel waar ik over twijfel.
 - **De kuuractie voor vrouwen geldt alleen voor nieuwe klanten.** Zo staat
   het op de vrouwenflyer; op de mannenflyer staat die beperking niet. Daarom
   staat die voorwaarde nu alleen bij de vrouwenkuren. **Geldt hij ook voor
-  mannen?** Dan is het één regel in `lib/tarieven.ts` (`kuurgroepen`).
-- **Vrouwen staan bovenaan.** De tabellen staan per doelgroep bij elkaar:
-  eerst laserontharing en combinatiepakketten voor vrouwen, dan hetzelfde
-  voor mannen, dan de gezichtsbehandeling. Liever mannen eerst? Dat is de
-  volgorde van `tariefgroepen` en `kuurgroepen` omdraaien.
+  mannen?** Dan is het één regel in `lib/tarieven.ts` (`doelgroepen`).
+- **Per doelgroep, pakketten voorop.** Sinds 7 september (op verzoek van
+  Nicky) begint elke doelgroep met de pakketten: de kuur van zes
+  behandelingen en dezelfde combinaties per losse behandeling, met de
+  voorwaarden eronder. Pas daarna komen de losse lichaamsdelen. Vrouwen
+  staan bovenaan, dan mannen, dan de gezichtsbehandeling. Liever mannen
+  eerst? Dat is de volgorde van `doelgroepen` in `lib/tarieven.ts`
+  omdraaien.
 - **De kuren heten zoals op de flyer:** Smooth Essentials (oksels en
   bikinilijn) en Total Smooth (oksels, bikinilijn en onderbenen), met het
   label "Meest gekozen" bij Total Smooth, precies zoals de flyer het
