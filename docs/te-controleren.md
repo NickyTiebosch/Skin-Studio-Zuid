@@ -74,10 +74,9 @@ Vijf vragen. Aandachtspunt:
 Deze zaken zijn niet ingevuld omdat ik ze niet kan weten. Zolang ze ontbreken
 missen de pagina's precies datgene waar bezoekers naar zoeken:
 
-- **Prijzen.** "Prijs" en "kosten" zijn veelgezochte termen. Concurrenten die
-  wel tarieven tonen, winnen die zoekopdrachten. Zodra de tarieven er zijn kan
-  er een `/tarieven`-pagina komen; het meetpunt daarvoor staat al klaar in de
-  code.
+- **Prijzen** stonden hier tot 4 september 2026. Sindsdien staan de
+  mannenprijzen op `/tarieven`, en sinds 7 september ook de vrouwenprijzen.
+  Zie de twee tarievensecties onderaan.
 - **Behandelduur per behandeling.** Nodig voor de site én technisch onmisbaar
   voor het boekingssysteem: zonder duur kan geen enkel systeem tijdsloten
   berekenen.
@@ -155,15 +154,52 @@ Even nalopen of dat klopt.
 
 ### Wat er nog ontbreekt
 
-- **De vrouwenprijzen voor laserontharing.** De sectie staat al klaar in
-  `lib/tarieven.ts` met een lege lijst; zodra de bedragen er zijn verschijnt
-  die tabel vanzelf.
-- **Behandelduur per behandeling.** Staat op geen van beide flyers. Dit is
+- **Behandelduur per behandeling.** Staat op geen van de flyers. Dit is
   technisch onmisbaar voor het boekingssysteem: zonder duur kan geen enkel
   systeem tijdsloten berekenen. Dit is nu het enige dat het boekingssysteem
   nog blokkeert.
 - **Geldigheid van de kuuractie.** Er staat geen einddatum op de flyer. Als
   de actie afloopt, moet iemand eraan denken de site bij te werken.
+
+---
+
+## Vrouwenprijzen — aangeleverd 7 september 2026
+
+Overgenomen van de twee vrouwenflyers (prijslijst en kuuractie), net als bij
+de mannen. Alles staat in `lib/tarieven.ts`. De foto's waren scherp; er is
+geen regel waar ik over twijfel.
+
+### Wat er anders is dan bij de mannen
+
+- **De kuuractie voor vrouwen geldt alleen voor nieuwe klanten.** Zo staat
+  het op de vrouwenflyer; op de mannenflyer staat die beperking niet. Daarom
+  staat die voorwaarde nu alleen bij de vrouwenkuren. **Geldt hij ook voor
+  mannen?** Dan is het één regel in `lib/tarieven.ts` (`kuurgroepen`).
+- **Vrouwen staan bovenaan.** De tabellen staan per doelgroep bij elkaar:
+  eerst laserontharing en combinatiepakketten voor vrouwen, dan hetzelfde
+  voor mannen, dan de gezichtsbehandeling. Liever mannen eerst? Dat is de
+  volgorde van `tariefgroepen` en `kuurgroepen` omdraaien.
+- **De kuren heten zoals op de flyer:** Smooth Essentials (oksels en
+  bikinilijn) en Total Smooth (oksels, bikinilijn en onderbenen), met het
+  label "Meest gekozen" bij Total Smooth, precies zoals de flyer het
+  aanprijst. Bij de losse combinatiepakketten staan de lichaamsdelen, want zo
+  staat het op de prijslijst.
+- **Full body** staat er als "van € 1050 voor € 250 per behandeling", zoals
+  op de flyer.
+
+### Hulp bij de twee onleesbare mannenprijzen
+
+De vrouwenflyer geeft een vergelijkingspunt voor de twee regels van de
+mannenlijst die ik moeilijk kon lezen: bij vrouwen kost gehele billen € 50 en
+intieme zone compleet € 90. Bij mannen heb ik € 60 en **€ 250** overgenomen.
+Vooral die € 250 verdient een blik: het is bijna drie keer het vrouwentarief
+voor dezelfde zone.
+
+### Dezelfde open punten
+
+Ook op de vrouwenflyers staan "Professionele Diode Ice Laser", "Hydrafacial"
+en het oude telefoonnummer 073-2032756. De stand daarvan is niet veranderd;
+zie de tabel bij de mannenprijzen hierboven.
 
 ---
 

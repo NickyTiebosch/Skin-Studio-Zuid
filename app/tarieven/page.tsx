@@ -8,17 +8,16 @@ import { ADRES, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
 import { OPENGRAPH_BASIS, SITE_URL, kruimelpadSchema } from "@/lib/site"
 import {
   KUUR_ADVIES,
-  KUUR_VOORWAARDEN,
+  gevuldeKuurgroepen,
   gevuldeTariefgroepen,
   heeftTarieven,
-  kuren,
 } from "@/lib/tarieven"
 
 const tarievenBekend = heeftTarieven()
 
 export const metadata: Metadata = {
   title: "Tarieven laserontharing en gezichtsbehandelingen",
-  description: `Tarieven van Skin Studio Zuid in ${ADRES.plaats}: laserontharing per lichaamsdeel, combinatiepakketten en gezichtsbehandelingen. Het intakegesprek is gratis.`,
+  description: `Tarieven van Skin Studio Zuid in ${ADRES.plaats}: laserontharing per lichaamsdeel voor vrouwen en mannen, kuren en gezichtsbehandelingen. Gratis intakegesprek.`,
   alternates: { canonical: "/tarieven" },
   robots: tarievenBekend
     ? { index: true, follow: true }
@@ -42,6 +41,7 @@ function Bedrag({ prijs }: { prijs: number | "gratis" }) {
 
 export default function Tarieven() {
   const groepen = gevuldeTariefgroepen()
+  const kuurgroepen = gevuldeKuurgroepen()
 
   return (
     <main id="inhoud" className="overflow-x-hidden">
@@ -146,67 +146,91 @@ export default function Tarieven() {
             ))}
           </div>
 
-          {/* Kuren */}
-          {kuren.length > 0 && (
-            <section className="mt-16 pt-12 border-t" style={{ borderColor: "var(--border)" }}>
+          {/* Kuren, per doelgroep: de voorwaarden verschillen per flyer */}
+          {kuurgroepen.length > 0 && (
+            <section
+              id="kuurprijzen"
+              className="mt-16 pt-12 border-t"
+              style={{ borderColor: "var(--border)" }}
+            >
               <h2 className="font-serif text-2xl text-foreground mb-2">
                 Kuurprijzen
               </h2>
-              <p className="font-sans text-xs text-muted-foreground mb-8">
+              <p className="font-sans text-xs text-muted-foreground mb-10">
                 Bij een kuur van zes behandelingen.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {kuren.map((kuur) => (
-                  <div
-                    key={kuur.titel}
-                    className="p-6 md:p-7"
-                    style={{ backgroundColor: "var(--sand)" }}
-                  >
-                    <h3 className="font-serif text-xl text-foreground mb-1">
-                      {kuur.titel}
+              <div className="flex flex-col gap-12">
+                {kuurgroepen.map((groep) => (
+                  <div key={groep.id}>
+                    <h3 className="font-serif text-xl text-foreground mb-5">
+                      {groep.titel}
                     </h3>
-                    <p className="font-sans text-xs text-muted-foreground mb-5">
-                      {kuur.omvat}
-                    </p>
 
-                    <p className="font-sans text-xs text-muted-foreground mb-1">
-                      Normaal &euro; {kuur.normalePrijsPerBehandeling} per behandeling
-                    </p>
-                    <p className="ssz-cijfers font-serif text-3xl text-foreground mb-1">
-                      &euro; {kuur.kuurprijs}
-                    </p>
-                    <p className="font-sans text-xs text-muted-foreground mb-5">
-                      voor {kuur.aantalBehandelingen} behandelingen &mdash; &euro;{" "}
-                      {kuur.perBehandelingInKuur} per behandeling
-                    </p>
-
-                    {kuur.prijsBijEenmaligeAfname && (
-                      <div
-                        className="pt-4 border-t"
-                        style={{ borderColor: "var(--border)" }}
-                      >
-                        <p
-                          className="font-sans text-xs tracking-[0.15em] uppercase mb-1"
-                          style={{ color: "var(--rose-gold)" }}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {groep.kuren.map((kuur) => (
+                        <div
+                          key={kuur.titel}
+                          className="p-6 md:p-7"
+                          style={{ backgroundColor: "var(--sand)" }}
                         >
-                          Bij afname in één keer
-                        </p>
-                        <p className="ssz-cijfers font-serif text-xl text-foreground">
-                          &euro; {kuur.prijsBijEenmaligeAfname}
-                          <span className="font-sans text-xs text-muted-foreground ml-2">
-                            &euro; {kuur.perBehandelingBijEenmaligeAfname} per behandeling
-                          </span>
-                        </p>
-                      </div>
-                    )}
+                          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
+                            <h4 className="font-serif text-xl text-foreground">
+                              {kuur.titel}
+                            </h4>
+                            {kuur.label && (
+                              <span
+                                className="font-sans text-xs tracking-[0.15em] uppercase"
+                                style={{ color: "var(--rose-gold)" }}
+                              >
+                                {kuur.label}
+                              </span>
+                            )}
+                          </div>
+                          <p className="font-sans text-xs text-muted-foreground mb-5">
+                            {kuur.omvat}
+                          </p>
+
+                          <p className="font-sans text-xs text-muted-foreground mb-1">
+                            Normaal &euro; {kuur.normalePrijsPerBehandeling} per behandeling
+                          </p>
+                          <p className="ssz-cijfers font-serif text-3xl text-foreground mb-1">
+                            &euro; {kuur.kuurprijs}
+                          </p>
+                          <p className="font-sans text-xs text-muted-foreground mb-5">
+                            voor {kuur.aantalBehandelingen} behandelingen &mdash; &euro;{" "}
+                            {kuur.perBehandelingInKuur} per behandeling
+                          </p>
+
+                          {kuur.prijsBijEenmaligeAfname && (
+                            <div
+                              className="pt-4 border-t"
+                              style={{ borderColor: "var(--border)" }}
+                            >
+                              <p
+                                className="font-sans text-xs tracking-[0.15em] uppercase mb-1"
+                                style={{ color: "var(--rose-gold)" }}
+                              >
+                                Bij afname in één keer
+                              </p>
+                              <p className="ssz-cijfers font-serif text-xl text-foreground">
+                                &euro; {kuur.prijsBijEenmaligeAfname}
+                                <span className="font-sans text-xs text-muted-foreground ml-2">
+                                  &euro; {kuur.perBehandelingBijEenmaligeAfname} per behandeling
+                                </span>
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <p className="font-sans text-xs text-muted-foreground mt-6 leading-relaxed">
+                      {groep.voorwaarden}
+                    </p>
                   </div>
                 ))}
               </div>
-
-              <p className="font-sans text-xs text-muted-foreground mt-6 leading-relaxed">
-                {KUUR_VOORWAARDEN}
-              </p>
             </section>
           )}
 

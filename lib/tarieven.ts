@@ -1,16 +1,16 @@
 /**
  * De tarieven van Skin Studio Zuid.
  *
- * Overgenomen van de prijslijst- en actieflyer die de kliniek heeft
- * aangeleverd (mannen, september 2026). Twee regels waren op de foto lastig
- * te lezen door lichtweerkaatsing en staan als te controleren gemarkeerd in
- * docs/te-controleren.md.
+ * Overgenomen van de flyers die de kliniek heeft aangeleverd: de prijslijst en
+ * de kuuractie voor mannen (4 september 2026) en dezelfde twee flyers voor
+ * vrouwen (7 september 2026). Twee regels van de mannenlijst waren op de foto
+ * lastig te lezen door lichtweerkaatsing en staan als te controleren
+ * gemarkeerd in docs/te-controleren.md.
  *
  * NOG NIET AANGELEVERD:
- * - De vrouwenprijzen voor laserontharing.
- * - De behandelduur per behandeling. Die staat op geen van beide flyers, en
- *   is technisch onmisbaar voor het boekingssysteem: zonder duur kan geen
- *   enkel systeem tijdsloten berekenen.
+ * - De behandelduur per behandeling. Die staat op geen van de flyers, en is
+ *   technisch onmisbaar voor het boekingssysteem: zonder duur kan geen enkel
+ *   systeem tijdsloten berekenen.
  */
 
 export type Tariefregel = {
@@ -34,6 +34,8 @@ export type Tariefgroep = {
 export type Kuur = {
   titel: string
   omvat: string
+  /** Aanprijzing zoals op de flyer, bijvoorbeeld "Meest gekozen". */
+  label?: string
   aantalBehandelingen: number
   normalePrijsPerBehandeling: number
   kuurprijs: number
@@ -44,11 +46,70 @@ export type Kuur = {
 }
 
 /**
- * De doelgroepen. Vrouwen staat er bewust al in met een lege lijst: zodra die
- * prijzen binnen zijn hoeft alleen `regels` gevuld te worden en verschijnt de
- * hele sectie vanzelf, inclusief vermelding in de structured data.
+ * De kuuractie per doelgroep. De voorwaarden staan per groep, want ze
+ * verschillen per flyer: de vrouwenactie geldt alleen voor nieuwe klanten,
+ * op de mannenflyer staat die beperking niet.
+ */
+export type Kuurgroep = {
+  id: string
+  titel: string
+  kuren: Kuur[]
+  voorwaarden: string
+}
+
+/**
+ * De prijstabellen, gegroepeerd per doelgroep zodat een bezoeker alles wat
+ * voor haar of hem geldt bij elkaar vindt. Een lege groep wordt niet getoond.
  */
 export const tariefgroepen: Tariefgroep[] = [
+  {
+    id: "laserontharing-vrouwen",
+    titel: "Laserontharing — vrouwen",
+    toelichting: "Alle prijzen zijn per behandeling.",
+    regels: [
+      { naam: "Intakegesprek laserontharing", prijs: "gratis" },
+      { naam: "Bovenlip", prijs: 30 },
+      { naam: "Kin", prijs: 30 },
+      { naam: "Bovenlip en kin", prijs: 50 },
+      { naam: "Wenkbrauwtussenstuk", prijs: 20 },
+      { naam: "Kaaklijn incl. bakkebaarden", prijs: 50 },
+      { naam: "Hals", prijs: 35 },
+      { naam: "Gehele gezicht", prijs: 75 },
+      { naam: "Gehele gezicht en hals", prijs: 100 },
+      { naam: "Oksels", prijs: 40 },
+      { naam: "Buikstreep", prijs: 30 },
+      { naam: "Bikinilijn", prijs: 50 },
+      { naam: "Gehele schaamstreek", prijs: 55, toelichting: "incl. bilnaad" },
+      { naam: "Gehele billen", prijs: 50 },
+      {
+        naam: "Intieme zone compleet",
+        prijs: 90,
+        toelichting: "schaamstreek, bikinilijn, schaamlippen en bilnaad",
+      },
+      { naam: "Bovenarmen", prijs: 70 },
+      { naam: "Onderarmen", prijs: 70 },
+      { naam: "Gehele armen", prijs: 90 },
+      { naam: "Hele rug", prijs: 85 },
+      { naam: "Bovenbenen", prijs: 80 },
+      { naam: "Onderbenen", prijs: 80, toelichting: "incl. knie" },
+      { naam: "Volledige benen", prijs: 125 },
+    ],
+  },
+  {
+    id: "combinatiepakketten-vrouwen",
+    titel: "Combinatiepakketten — vrouwen",
+    toelichting: "Prijs per behandeling bij afname van een combinatie.",
+    regels: [
+      { naam: "Oksels en bikinilijn", prijs: 75, vanPrijs: 90 },
+      {
+        naam: "Full body",
+        prijs: 250,
+        vanPrijs: 1050,
+        toelichting: "van top tot teen",
+      },
+      { naam: "Oksels, bikinilijn en onderbenen", prijs: 125, vanPrijs: 170 },
+    ],
+  },
   {
     id: "laserontharing-mannen",
     titel: "Laserontharing — mannen",
@@ -76,15 +137,8 @@ export const tariefgroepen: Tariefgroep[] = [
     ],
   },
   {
-    id: "laserontharing-vrouwen",
-    titel: "Laserontharing — vrouwen",
-    toelichting: "Alle prijzen zijn per behandeling.",
-    // Nog aan te leveren door de kliniek.
-    regels: [],
-  },
-  {
-    id: "combinatiepakketten",
-    titel: "Combinatiepakketten",
+    id: "combinatiepakketten-mannen",
+    titel: "Combinatiepakketten — mannen",
     toelichting: "Prijs per behandeling bij afname van een combinatie.",
     regels: [
       {
@@ -108,38 +162,77 @@ export const tariefgroepen: Tariefgroep[] = [
 ]
 
 /**
- * De actie voor kuren van zes behandelingen.
- *
- * Voorwaarden staan op de flyer: binnen 18 maanden af te nemen en niet te
- * combineren met andere acties. Die staan hieronder in `KUUR_VOORWAARDEN`,
- * want een aanbieding zonder zichtbare voorwaarden hoort niet op een site.
+ * Voorwaarden die op beide actieflyers staan. Ze horen zichtbaar bij de
+ * kuurprijzen, want een aanbieding zonder voorwaarden hoort niet op een site.
  */
-export const kuren: Kuur[] = [
-  {
-    titel: "Hele bovenlichaam",
-    omvat: "rug, borst, buik en oksels",
-    aantalBehandelingen: 6,
-    normalePrijsPerBehandeling: 250,
-    kuurprijs: 900,
-    perBehandelingInKuur: 150,
-    prijsBijEenmaligeAfname: 750,
-    perBehandelingBijEenmaligeAfname: "125",
-  },
-  {
-    titel: "Schouders en rug",
-    omvat: "schouders en rug",
-    aantalBehandelingen: 6,
-    normalePrijsPerBehandeling: 160,
-    kuurprijs: 600,
-    perBehandelingInKuur: 100,
-    prijsBijEenmaligeAfname: 500,
-    perBehandelingBijEenmaligeAfname: "83,33",
-  },
-]
-
 export const KUUR_VOORWAARDEN =
   "De behandelingen dienen binnen 18 maanden te worden afgenomen. " +
   "Niet geldig in combinatie met andere acties."
+
+/**
+ * De actie voor kuren van zes behandelingen, per doelgroep.
+ *
+ * De vrouwenflyer noemt één voorwaarde extra: de actie geldt voor nieuwe
+ * klanten. Op de mannenflyer staat dat niet, dus die beperking staat alleen
+ * bij de vrouwenkuren — zie docs/te-controleren.md.
+ */
+export const kuurgroepen: Kuurgroep[] = [
+  {
+    id: "kuren-vrouwen",
+    titel: "Vrouwen",
+    voorwaarden: "Actie geldig voor nieuwe klanten. " + KUUR_VOORWAARDEN,
+    kuren: [
+      {
+        titel: "Smooth Essentials",
+        omvat: "oksels en bikinilijn",
+        aantalBehandelingen: 6,
+        normalePrijsPerBehandeling: 90,
+        kuurprijs: 450,
+        perBehandelingInKuur: 75,
+        prijsBijEenmaligeAfname: 375,
+        perBehandelingBijEenmaligeAfname: "62,50",
+      },
+      {
+        titel: "Total Smooth",
+        omvat: "oksels, bikinilijn en onderbenen",
+        label: "Meest gekozen",
+        aantalBehandelingen: 6,
+        normalePrijsPerBehandeling: 170,
+        kuurprijs: 750,
+        perBehandelingInKuur: 125,
+        prijsBijEenmaligeAfname: 600,
+        perBehandelingBijEenmaligeAfname: "100",
+      },
+    ],
+  },
+  {
+    id: "kuren-mannen",
+    titel: "Mannen",
+    voorwaarden: KUUR_VOORWAARDEN,
+    kuren: [
+      {
+        titel: "Hele bovenlichaam",
+        omvat: "rug, borst, buik en oksels",
+        aantalBehandelingen: 6,
+        normalePrijsPerBehandeling: 250,
+        kuurprijs: 900,
+        perBehandelingInKuur: 150,
+        prijsBijEenmaligeAfname: 750,
+        perBehandelingBijEenmaligeAfname: "125",
+      },
+      {
+        titel: "Schouders en rug",
+        omvat: "schouders en rug",
+        aantalBehandelingen: 6,
+        normalePrijsPerBehandeling: 160,
+        kuurprijs: 600,
+        perBehandelingInKuur: 100,
+        prijsBijEenmaligeAfname: 500,
+        perBehandelingBijEenmaligeAfname: "83,33",
+      },
+    ],
+  },
+]
 
 export const KUUR_ADVIES =
   "Voor het beste resultaat adviseren wij een kuur van zes behandelingen."
@@ -147,6 +240,11 @@ export const KUUR_ADVIES =
 /** Groepen met minstens één regel; lege groepen worden niet getoond. */
 export function gevuldeTariefgroepen(): Tariefgroep[] {
   return tariefgroepen.filter((g) => g.regels.length > 0)
+}
+
+/** Kuurgroepen met minstens één kuur; lege groepen worden niet getoond. */
+export function gevuldeKuurgroepen(): Kuurgroep[] {
+  return kuurgroepen.filter((g) => g.kuren.length > 0)
 }
 
 export function heeftTarieven(): boolean {
@@ -162,9 +260,10 @@ export function heeftTarieven(): boolean {
  */
 const groepenPerBehandeling: Record<string, string[]> = {
   laserontharing: [
-    "laserontharing-mannen",
     "laserontharing-vrouwen",
-    "combinatiepakketten",
+    "combinatiepakketten-vrouwen",
+    "laserontharing-mannen",
+    "combinatiepakketten-mannen",
   ],
   gezichtsbehandelingen: ["gezichtsbehandelingen"],
 }
