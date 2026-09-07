@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Fragment } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -8,8 +9,10 @@ import { ADRES, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
 import { OPENGRAPH_BASIS, SITE_URL, kruimelpadSchema } from "@/lib/site"
 import {
   KUUR_ADVIES,
-  gevuldeKuurgroepen,
-  gevuldeTariefgroepen,
+  type Kuur,
+  type Tariefgroep,
+  doelgroepenMetTarieven,
+  gevuldeOverigeTariefgroepen,
   heeftTarieven,
 } from "@/lib/tarieven"
 
@@ -39,9 +42,99 @@ function Bedrag({ prijs }: { prijs: number | "gratis" }) {
   return <>&euro; {prijs}</>
 }
 
+/** Een prijstabel: per regel de naam, eventueel een toelichting, en het bedrag. */
+function Prijstabel({ groep }: { groep: Tariefgroep }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full font-sans text-sm">
+        <caption className="sr-only">{groep.titel}</caption>
+        <tbody>
+          {groep.regels.map((regel) => (
+            <tr
+              key={regel.naam}
+              className="border-b"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <th
+                scope="row"
+                className="py-3 pr-4 text-left font-normal text-muted-foreground align-top"
+              >
+                {regel.naam}
+                {regel.toelichting && (
+                  <span className="block text-xs mt-0.5 opacity-75">
+                    {regel.toelichting}
+                  </span>
+                )}
+              </th>
+              <td className="ssz-cijfers py-3 text-right whitespace-nowrap align-top">
+                {regel.vanPrijs && (
+                  <span className="text-muted-foreground line-through mr-3 opacity-60">
+                    &euro; {regel.vanPrijs}
+                  </span>
+                )}
+                <span className="text-foreground">
+                  <Bedrag prijs={regel.prijs} />
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+/** Eén kuur van zes behandelingen, met de extra korting bij afname in één keer. */
+function Kuurkaart({ kuur }: { kuur: Kuur }) {
+  return (
+    <div className="p-6 md:p-7" style={{ backgroundColor: "var(--sand)" }}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
+        <h3 className="font-serif text-xl text-foreground">{kuur.titel}</h3>
+        {kuur.label && (
+          <span
+            className="font-sans text-xs tracking-[0.15em] uppercase"
+            style={{ color: "var(--rose-gold)" }}
+          >
+            {kuur.label}
+          </span>
+        )}
+      </div>
+      <p className="font-sans text-xs text-muted-foreground mb-5">{kuur.omvat}</p>
+
+      <p className="font-sans text-xs text-muted-foreground mb-1">
+        Normaal &euro; {kuur.normalePrijsPerBehandeling} per behandeling
+      </p>
+      <p className="ssz-cijfers font-serif text-3xl text-foreground mb-1">
+        &euro; {kuur.kuurprijs}
+      </p>
+      <p className="font-sans text-xs text-muted-foreground mb-5">
+        voor {kuur.aantalBehandelingen} behandelingen &mdash; &euro;{" "}
+        {kuur.perBehandelingInKuur} per behandeling
+      </p>
+
+      {kuur.prijsBijEenmaligeAfname && (
+        <div className="pt-4 border-t" style={{ borderColor: "var(--border)" }}>
+          <p
+            className="font-sans text-xs tracking-[0.15em] uppercase mb-1"
+            style={{ color: "var(--rose-gold)" }}
+          >
+            Bij afname in één keer
+          </p>
+          <p className="ssz-cijfers font-serif text-xl text-foreground">
+            &euro; {kuur.prijsBijEenmaligeAfname}
+            <span className="font-sans text-xs text-muted-foreground ml-2">
+              &euro; {kuur.perBehandelingBijEenmaligeAfname} per behandeling
+            </span>
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Tarieven() {
-  const groepen = gevuldeTariefgroepen()
-  const kuurgroepen = gevuldeKuurgroepen()
+  const doelgroepen = doelgroepenMetTarieven()
+  const overige = gevuldeOverigeTariefgroepen()
 
   return (
     <main id="inhoud" className="overflow-x-hidden">
@@ -94,10 +187,70 @@ export default function Tarieven() {
             {KUUR_ADVIES}
           </p>
 
-          {/* Prijstabellen per groep */}
+          {/* Per doelgroep: eerst de pakketten, dan de losse lichaamsdelen */}
           <div className="flex flex-col gap-14 mt-16">
-            {groepen.map((groep) => (
-              <section key={groep.id}>
+            {doelgroepen.map((doelgroep) => (
+              <Fragment key={doelgroep.id}>
+                {(doelgroep.kuren.length > 0 ||
+                  doelgroep.pakketten.regels.length > 0) && (
+                  <section id={`pakketten-${doelgroep.id}`}>
+                    <h2 className="font-serif text-2xl text-foreground mb-2">
+                      Pakketten &mdash; {doelgroep.naam}
+                    </h2>
+                    {doelgroep.kuren.length > 0 && (
+                      <p className="font-sans text-xs text-muted-foreground mb-6">
+                        Een kuur van zes behandelingen, met extra korting bij
+                        afname in één keer.
+                      </p>
+                    )}
+
+                    {doelgroep.kuren.length > 0 && (
+                      <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          {doelgroep.kuren.map((kuur) => (
+                            <Kuurkaart key={kuur.titel} kuur={kuur} />
+                          ))}
+                        </div>
+                        <p className="font-sans text-xs text-muted-foreground mt-6 leading-relaxed">
+                          {doelgroep.voorwaarden}
+                        </p>
+                      </>
+                    )}
+
+                    {doelgroep.pakketten.regels.length > 0 && (
+                      <div className="mt-10">
+                        <h3 className="font-serif text-xl text-foreground mb-2">
+                          {doelgroep.pakketten.titel}
+                        </h3>
+                        {doelgroep.pakketten.toelichting && (
+                          <p className="font-sans text-xs text-muted-foreground mb-6">
+                            {doelgroep.pakketten.toelichting}
+                          </p>
+                        )}
+                        <Prijstabel groep={doelgroep.pakketten} />
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                {doelgroep.lichaamsdelen.regels.length > 0 && (
+                  <section id={`lichaamsdelen-${doelgroep.id}`}>
+                    <h2 className="font-serif text-2xl text-foreground mb-2">
+                      {doelgroep.lichaamsdelen.titel}
+                    </h2>
+                    {doelgroep.lichaamsdelen.toelichting && (
+                      <p className="font-sans text-xs text-muted-foreground mb-6">
+                        {doelgroep.lichaamsdelen.toelichting}
+                      </p>
+                    )}
+                    <Prijstabel groep={doelgroep.lichaamsdelen} />
+                  </section>
+                )}
+              </Fragment>
+            ))}
+
+            {overige.map((groep) => (
+              <section key={groep.id} id={groep.id}>
                 <h2 className="font-serif text-2xl text-foreground mb-2">
                   {groep.titel}
                 </h2>
@@ -106,133 +259,10 @@ export default function Tarieven() {
                     {groep.toelichting}
                   </p>
                 )}
-                <div className="overflow-x-auto">
-                  <table className="w-full font-sans text-sm">
-                    <caption className="sr-only">{groep.titel}</caption>
-                    <tbody>
-                      {groep.regels.map((regel) => (
-                        <tr
-                          key={regel.naam}
-                          className="border-b"
-                          style={{ borderColor: "var(--border)" }}
-                        >
-                          <th
-                            scope="row"
-                            className="py-3 pr-4 text-left font-normal text-muted-foreground align-top"
-                          >
-                            {regel.naam}
-                            {regel.toelichting && (
-                              <span className="block text-xs mt-0.5 opacity-75">
-                                {regel.toelichting}
-                              </span>
-                            )}
-                          </th>
-                          <td className="ssz-cijfers py-3 text-right whitespace-nowrap align-top">
-                            {regel.vanPrijs && (
-                              <span className="text-muted-foreground line-through mr-3 opacity-60">
-                                &euro; {regel.vanPrijs}
-                              </span>
-                            )}
-                            <span className="text-foreground">
-                              <Bedrag prijs={regel.prijs} />
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <Prijstabel groep={groep} />
               </section>
             ))}
           </div>
-
-          {/* Kuren, per doelgroep: de voorwaarden verschillen per flyer */}
-          {kuurgroepen.length > 0 && (
-            <section
-              id="kuurprijzen"
-              className="mt-16 pt-12 border-t"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <h2 className="font-serif text-2xl text-foreground mb-2">
-                Kuurprijzen
-              </h2>
-              <p className="font-sans text-xs text-muted-foreground mb-10">
-                Bij een kuur van zes behandelingen.
-              </p>
-
-              <div className="flex flex-col gap-12">
-                {kuurgroepen.map((groep) => (
-                  <div key={groep.id}>
-                    <h3 className="font-serif text-xl text-foreground mb-5">
-                      {groep.titel}
-                    </h3>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      {groep.kuren.map((kuur) => (
-                        <div
-                          key={kuur.titel}
-                          className="p-6 md:p-7"
-                          style={{ backgroundColor: "var(--sand)" }}
-                        >
-                          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
-                            <h4 className="font-serif text-xl text-foreground">
-                              {kuur.titel}
-                            </h4>
-                            {kuur.label && (
-                              <span
-                                className="font-sans text-xs tracking-[0.15em] uppercase"
-                                style={{ color: "var(--rose-gold)" }}
-                              >
-                                {kuur.label}
-                              </span>
-                            )}
-                          </div>
-                          <p className="font-sans text-xs text-muted-foreground mb-5">
-                            {kuur.omvat}
-                          </p>
-
-                          <p className="font-sans text-xs text-muted-foreground mb-1">
-                            Normaal &euro; {kuur.normalePrijsPerBehandeling} per behandeling
-                          </p>
-                          <p className="ssz-cijfers font-serif text-3xl text-foreground mb-1">
-                            &euro; {kuur.kuurprijs}
-                          </p>
-                          <p className="font-sans text-xs text-muted-foreground mb-5">
-                            voor {kuur.aantalBehandelingen} behandelingen &mdash; &euro;{" "}
-                            {kuur.perBehandelingInKuur} per behandeling
-                          </p>
-
-                          {kuur.prijsBijEenmaligeAfname && (
-                            <div
-                              className="pt-4 border-t"
-                              style={{ borderColor: "var(--border)" }}
-                            >
-                              <p
-                                className="font-sans text-xs tracking-[0.15em] uppercase mb-1"
-                                style={{ color: "var(--rose-gold)" }}
-                              >
-                                Bij afname in één keer
-                              </p>
-                              <p className="ssz-cijfers font-serif text-xl text-foreground">
-                                &euro; {kuur.prijsBijEenmaligeAfname}
-                                <span className="font-sans text-xs text-muted-foreground ml-2">
-                                  &euro; {kuur.perBehandelingBijEenmaligeAfname} per behandeling
-                                </span>
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-
-                    <p className="font-sans text-xs text-muted-foreground mt-6 leading-relaxed">
-                      {groep.voorwaarden}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
 
           {/* Actie */}
           <div className="mt-16 flex flex-wrap gap-4">

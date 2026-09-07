@@ -46,120 +46,27 @@ export type Kuur = {
 }
 
 /**
- * De kuuractie per doelgroep. De voorwaarden staan per groep, want ze
- * verschillen per flyer: de vrouwenactie geldt alleen voor nieuwe klanten,
- * op de mannenflyer staat die beperking niet.
+ * Eén doelgroep op de tarievenpagina. Per doelgroep staan eerst de pakketten
+ * (de kuur van zes behandelingen, en dezelfde combinaties per losse
+ * behandeling) en daarna de losse lichaamsdelen. De pakketten staan voorop
+ * omdat de kliniek daar het gesprek mee begint; de losse prijzen zijn er voor
+ * wie één gebied wil laten doen.
+ *
+ * De voorwaarden staan per doelgroep, want ze verschillen per flyer: de
+ * vrouwenactie geldt alleen voor nieuwe klanten, op de mannenflyer staat die
+ * beperking niet.
  */
-export type Kuurgroep = {
+export type Doelgroep = {
   id: string
-  titel: string
+  /** Kleine letters, zoals in de koppen: "Pakketten — vrouwen". */
+  naam: string
   kuren: Kuur[]
   voorwaarden: string
+  /** Dezelfde combinaties als de kuren, geprijsd per losse behandeling. */
+  pakketten: Tariefgroep
+  /** Losse lichaamsdelen, per behandeling. */
+  lichaamsdelen: Tariefgroep
 }
-
-/**
- * De prijstabellen, gegroepeerd per doelgroep zodat een bezoeker alles wat
- * voor haar of hem geldt bij elkaar vindt. Een lege groep wordt niet getoond.
- */
-export const tariefgroepen: Tariefgroep[] = [
-  {
-    id: "laserontharing-vrouwen",
-    titel: "Laserontharing — vrouwen",
-    toelichting: "Alle prijzen zijn per behandeling.",
-    regels: [
-      { naam: "Intakegesprek laserontharing", prijs: "gratis" },
-      { naam: "Bovenlip", prijs: 30 },
-      { naam: "Kin", prijs: 30 },
-      { naam: "Bovenlip en kin", prijs: 50 },
-      { naam: "Wenkbrauwtussenstuk", prijs: 20 },
-      { naam: "Kaaklijn incl. bakkebaarden", prijs: 50 },
-      { naam: "Hals", prijs: 35 },
-      { naam: "Gehele gezicht", prijs: 75 },
-      { naam: "Gehele gezicht en hals", prijs: 100 },
-      { naam: "Oksels", prijs: 40 },
-      { naam: "Buikstreep", prijs: 30 },
-      { naam: "Bikinilijn", prijs: 50 },
-      { naam: "Gehele schaamstreek", prijs: 55, toelichting: "incl. bilnaad" },
-      { naam: "Gehele billen", prijs: 50 },
-      {
-        naam: "Intieme zone compleet",
-        prijs: 90,
-        toelichting: "schaamstreek, bikinilijn, schaamlippen en bilnaad",
-      },
-      { naam: "Bovenarmen", prijs: 70 },
-      { naam: "Onderarmen", prijs: 70 },
-      { naam: "Gehele armen", prijs: 90 },
-      { naam: "Hele rug", prijs: 85 },
-      { naam: "Bovenbenen", prijs: 80 },
-      { naam: "Onderbenen", prijs: 80, toelichting: "incl. knie" },
-      { naam: "Volledige benen", prijs: 125 },
-    ],
-  },
-  {
-    id: "combinatiepakketten-vrouwen",
-    titel: "Combinatiepakketten — vrouwen",
-    toelichting: "Prijs per behandeling bij afname van een combinatie.",
-    regels: [
-      { naam: "Oksels en bikinilijn", prijs: 75, vanPrijs: 90 },
-      {
-        naam: "Full body",
-        prijs: 250,
-        vanPrijs: 1050,
-        toelichting: "van top tot teen",
-      },
-      { naam: "Oksels, bikinilijn en onderbenen", prijs: 125, vanPrijs: 170 },
-    ],
-  },
-  {
-    id: "laserontharing-mannen",
-    titel: "Laserontharing — mannen",
-    toelichting: "Alle prijzen zijn per behandeling.",
-    regels: [
-      { naam: "Intakegesprek laserontharing", prijs: "gratis" },
-      { naam: "Bovenlip, kin, baardlijn", prijs: 65 },
-      { naam: "Wenkbrauwtussenstuk", prijs: 20 },
-      { naam: "Kaaklijn incl. bakkebaarden", prijs: 50 },
-      { naam: "Schouders", prijs: 75 },
-      { naam: "Nek", prijs: 50 },
-      { naam: "Oksels", prijs: 40 },
-      { naam: "Borst", prijs: 65 },
-      { naam: "Buik", prijs: 70 },
-      { naam: "Borst en buik", prijs: 100 },
-      { naam: "Gehele billen", prijs: 60 },
-      { naam: "Intieme zone compleet", prijs: 250, toelichting: "incl. bilnaad" },
-      { naam: "Bovenarmen", prijs: 70 },
-      { naam: "Onderarmen", prijs: 70 },
-      { naam: "Gehele armen", prijs: 90 },
-      { naam: "Hele rug", prijs: 85 },
-      { naam: "Bovenbenen", prijs: 80 },
-      { naam: "Onderbenen", prijs: 80, toelichting: "incl. knie" },
-      { naam: "Volledige benen", prijs: 125 },
-    ],
-  },
-  {
-    id: "combinatiepakketten-mannen",
-    titel: "Combinatiepakketten — mannen",
-    toelichting: "Prijs per behandeling bij afname van een combinatie.",
-    regels: [
-      {
-        naam: "Hele bovenlichaam",
-        prijs: 150,
-        vanPrijs: 250,
-        toelichting: "rug, borst, buik en oksels",
-      },
-      {
-        naam: "Schouders en rug",
-        prijs: 100,
-        vanPrijs: 160,
-      },
-    ],
-  },
-  {
-    id: "gezichtsbehandelingen",
-    titel: "Gezichtsbehandelingen",
-    regels: [{ naam: "Hydrafacial gezichtsbehandeling", prijs: 45 }],
-  },
-]
 
 /**
  * Voorwaarden die op beide actieflyers staan. Ze horen zichtbaar bij de
@@ -169,17 +76,123 @@ export const KUUR_VOORWAARDEN =
   "De behandelingen dienen binnen 18 maanden te worden afgenomen. " +
   "Niet geldig in combinatie met andere acties."
 
+export const KUUR_ADVIES =
+  "Voor het beste resultaat adviseren wij een kuur van zes behandelingen."
+
+const pakkettenVrouwen: Tariefgroep = {
+  id: "combinatiepakketten-vrouwen",
+  titel: "Per losse behandeling",
+  toelichting: "Prijs per behandeling bij afname van een combinatie.",
+  regels: [
+    { naam: "Oksels en bikinilijn", prijs: 75, vanPrijs: 90 },
+    {
+      naam: "Full body",
+      prijs: 250,
+      vanPrijs: 1050,
+      toelichting: "van top tot teen",
+    },
+    { naam: "Oksels, bikinilijn en onderbenen", prijs: 125, vanPrijs: 170 },
+  ],
+}
+
+const lichaamsdelenVrouwen: Tariefgroep = {
+  id: "laserontharing-vrouwen",
+  titel: "Laserontharing per lichaamsdeel — vrouwen",
+  toelichting: "Alle prijzen zijn per behandeling.",
+  regels: [
+    { naam: "Intakegesprek laserontharing", prijs: "gratis" },
+    { naam: "Bovenlip", prijs: 30 },
+    { naam: "Kin", prijs: 30 },
+    { naam: "Bovenlip en kin", prijs: 50 },
+    { naam: "Wenkbrauwtussenstuk", prijs: 20 },
+    { naam: "Kaaklijn incl. bakkebaarden", prijs: 50 },
+    { naam: "Hals", prijs: 35 },
+    { naam: "Gehele gezicht", prijs: 75 },
+    { naam: "Gehele gezicht en hals", prijs: 100 },
+    { naam: "Oksels", prijs: 40 },
+    { naam: "Buikstreep", prijs: 30 },
+    { naam: "Bikinilijn", prijs: 50 },
+    { naam: "Gehele schaamstreek", prijs: 55, toelichting: "incl. bilnaad" },
+    { naam: "Gehele billen", prijs: 50 },
+    {
+      naam: "Intieme zone compleet",
+      prijs: 90,
+      toelichting: "schaamstreek, bikinilijn, schaamlippen en bilnaad",
+    },
+    { naam: "Bovenarmen", prijs: 70 },
+    { naam: "Onderarmen", prijs: 70 },
+    { naam: "Gehele armen", prijs: 90 },
+    { naam: "Hele rug", prijs: 85 },
+    { naam: "Bovenbenen", prijs: 80 },
+    { naam: "Onderbenen", prijs: 80, toelichting: "incl. knie" },
+    { naam: "Volledige benen", prijs: 125 },
+  ],
+}
+
+const pakkettenMannen: Tariefgroep = {
+  id: "combinatiepakketten-mannen",
+  titel: "Per losse behandeling",
+  toelichting: "Prijs per behandeling bij afname van een combinatie.",
+  regels: [
+    {
+      naam: "Hele bovenlichaam",
+      prijs: 150,
+      vanPrijs: 250,
+      toelichting: "rug, borst, buik en oksels",
+    },
+    {
+      naam: "Schouders en rug",
+      prijs: 100,
+      vanPrijs: 160,
+    },
+  ],
+}
+
+const lichaamsdelenMannen: Tariefgroep = {
+  id: "laserontharing-mannen",
+  titel: "Laserontharing per lichaamsdeel — mannen",
+  toelichting: "Alle prijzen zijn per behandeling.",
+  regels: [
+    { naam: "Intakegesprek laserontharing", prijs: "gratis" },
+    { naam: "Bovenlip, kin, baardlijn", prijs: 65 },
+    { naam: "Wenkbrauwtussenstuk", prijs: 20 },
+    { naam: "Kaaklijn incl. bakkebaarden", prijs: 50 },
+    { naam: "Schouders", prijs: 75 },
+    { naam: "Nek", prijs: 50 },
+    { naam: "Oksels", prijs: 40 },
+    { naam: "Borst", prijs: 65 },
+    { naam: "Buik", prijs: 70 },
+    { naam: "Borst en buik", prijs: 100 },
+    { naam: "Gehele billen", prijs: 60 },
+    { naam: "Intieme zone compleet", prijs: 250, toelichting: "incl. bilnaad" },
+    { naam: "Bovenarmen", prijs: 70 },
+    { naam: "Onderarmen", prijs: 70 },
+    { naam: "Gehele armen", prijs: 90 },
+    { naam: "Hele rug", prijs: 85 },
+    { naam: "Bovenbenen", prijs: 80 },
+    { naam: "Onderbenen", prijs: 80, toelichting: "incl. knie" },
+    { naam: "Volledige benen", prijs: 125 },
+  ],
+}
+
+const gezichtsbehandelingen: Tariefgroep = {
+  id: "gezichtsbehandelingen",
+  titel: "Gezichtsbehandelingen",
+  regels: [{ naam: "Hydrafacial gezichtsbehandeling", prijs: 45 }],
+}
+
 /**
- * De actie voor kuren van zes behandelingen, per doelgroep.
+ * De doelgroepen, in de volgorde van de pagina. Vrouwen staan voorop; liever
+ * andersom, dan is het deze lijst omdraaien.
  *
  * De vrouwenflyer noemt één voorwaarde extra: de actie geldt voor nieuwe
  * klanten. Op de mannenflyer staat dat niet, dus die beperking staat alleen
- * bij de vrouwenkuren — zie docs/te-controleren.md.
+ * bij de vrouwen — zie docs/te-controleren.md.
  */
-export const kuurgroepen: Kuurgroep[] = [
+export const doelgroepen: Doelgroep[] = [
   {
-    id: "kuren-vrouwen",
-    titel: "Vrouwen",
+    id: "vrouwen",
+    naam: "vrouwen",
     voorwaarden: "Actie geldig voor nieuwe klanten. " + KUUR_VOORWAARDEN,
     kuren: [
       {
@@ -204,10 +217,12 @@ export const kuurgroepen: Kuurgroep[] = [
         perBehandelingBijEenmaligeAfname: "100",
       },
     ],
+    pakketten: pakkettenVrouwen,
+    lichaamsdelen: lichaamsdelenVrouwen,
   },
   {
-    id: "kuren-mannen",
-    titel: "Mannen",
+    id: "mannen",
+    naam: "mannen",
     voorwaarden: KUUR_VOORWAARDEN,
     kuren: [
       {
@@ -231,20 +246,37 @@ export const kuurgroepen: Kuurgroep[] = [
         perBehandelingBijEenmaligeAfname: "83,33",
       },
     ],
+    pakketten: pakkettenMannen,
+    lichaamsdelen: lichaamsdelenMannen,
   },
 ]
 
-export const KUUR_ADVIES =
-  "Voor het beste resultaat adviseren wij een kuur van zes behandelingen."
+/** Prijstabellen die bij geen doelgroep horen; komen onder de doelgroepen. */
+export const overigeTariefgroepen: Tariefgroep[] = [gezichtsbehandelingen]
+
+/** Alle prijstabellen, voor de vanaf-prijs en de vraag óf er tarieven zijn. */
+export const tariefgroepen: Tariefgroep[] = [
+  ...doelgroepen.flatMap((d) => [d.pakketten, d.lichaamsdelen]),
+  ...overigeTariefgroepen,
+]
 
 /** Groepen met minstens één regel; lege groepen worden niet getoond. */
 export function gevuldeTariefgroepen(): Tariefgroep[] {
   return tariefgroepen.filter((g) => g.regels.length > 0)
 }
 
-/** Kuurgroepen met minstens één kuur; lege groepen worden niet getoond. */
-export function gevuldeKuurgroepen(): Kuurgroep[] {
-  return kuurgroepen.filter((g) => g.kuren.length > 0)
+/** Doelgroepen waar iets bij staat; een lege doelgroep wordt niet getoond. */
+export function doelgroepenMetTarieven(): Doelgroep[] {
+  return doelgroepen.filter(
+    (d) =>
+      d.kuren.length > 0 ||
+      d.pakketten.regels.length > 0 ||
+      d.lichaamsdelen.regels.length > 0
+  )
+}
+
+export function gevuldeOverigeTariefgroepen(): Tariefgroep[] {
+  return overigeTariefgroepen.filter((g) => g.regels.length > 0)
 }
 
 export function heeftTarieven(): boolean {

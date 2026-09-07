@@ -18,10 +18,11 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
   `/boeken`, `/privacybeleid`. Elke pagina heeft precies één `<h1>`. Op
   `/boeken` is dat sinds 6 september de kop van `ContactSection` (prop
   `kopNiveau`); op de homepage blijft diezelfde kop een `<h2>` onder de hero.
-- Tarieven: laserontharing per lichaamsdeel, combinatiepakketten en de
-  kuuractie voor vrouwen (sinds 7 september) én mannen (sinds 4 september),
-  plus de gezichtsbehandeling. Alles in `lib/tarieven.ts`, per doelgroep bij
-  elkaar, en ook in `public/llms.txt`.
+- Tarieven: laserontharing voor vrouwen (sinds 7 september) én mannen
+  (sinds 4 september), plus de gezichtsbehandeling. Per doelgroep staan
+  eerst de pakketten (de kuur van zes behandelingen en dezelfde combinaties
+  per losse behandeling), dan de losse lichaamsdelen — die volgorde is een
+  keuze van Nicky. Alles in `lib/tarieven.ts`, en ook in `public/llms.txt`.
 - Menu in de balk: Gezichtsbehandelingen · Laserontharing · Tarieven · De Studio ·
   Contact, sinds 6 september; daarvóór vier ankers naar homepage-secties. De
   balk verschijnt vanaf 1280px, daaronder het hamburgermenu — gemeten, zie de
