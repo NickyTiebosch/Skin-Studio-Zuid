@@ -1,6 +1,6 @@
 # Stand van zaken
 
-Bijgewerkt: 6 september 2026. Kort overzicht om een nieuwe sessie snel op gang
+Bijgewerkt: 7 september 2026. Kort overzicht om een nieuwe sessie snel op gang
 te helpen. Details staan in `docs/vercel.md` (migratie) en
 `docs/te-controleren.md` (wat de kliniek moet aanleveren).
 
@@ -18,6 +18,10 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
   `/boeken`, `/privacybeleid`. Elke pagina heeft precies één `<h1>`. Op
   `/boeken` is dat sinds 6 september de kop van `ContactSection` (prop
   `kopNiveau`); op de homepage blijft diezelfde kop een `<h2>` onder de hero.
+- Tarieven: laserontharing per lichaamsdeel, combinatiepakketten en de
+  kuuractie voor vrouwen (sinds 7 september) én mannen (sinds 4 september),
+  plus de gezichtsbehandeling. Alles in `lib/tarieven.ts`, per doelgroep bij
+  elkaar, en ook in `public/llms.txt`.
 - Menu in de balk: Gezichtsbehandelingen · Laserontharing · Tarieven · De Studio ·
   Contact, sinds 6 september; daarvóór vier ankers naar homepage-secties. De
   balk verschijnt vanaf 1280px, daaronder het hamburgermenu — gemeten, zie de
@@ -84,11 +88,12 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
 5. **Boekingssysteem.** Besloten: Apple/iCloud-agenda via Cal.com. Wacht
    uitsluitend nog op de **behandelduur per behandeling** — zonder duur kan
    geen enkel systeem tijdsloten berekenen.
-6. **Van de kliniek**: vrouwenprijzen laserontharing, openingstijden, wie er
-   behandelt met certificering, en de twee tegenstrijdigheden tussen flyer en
-   site (Diode Ice Laser versus Atres Triple Wave, Hydrafacial versus
-   HydraSpa) — die laatste vóór er advertentiebudget op gaat. Zie
-   `docs/te-controleren.md`.
+6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
+   of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
+   vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee
+   tegenstrijdigheden tussen flyer en site (Diode Ice Laser versus Atres
+   Triple Wave, Hydrafacial versus HydraSpa) — die laatste vóór er
+   advertentiebudget op gaat. Zie `docs/te-controleren.md`.
 
 ## Twee dingen om te weten bij het verder bouwen
 
