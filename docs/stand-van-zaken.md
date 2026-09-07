@@ -23,6 +23,14 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
   eerst de pakketten (de kuur van zes behandelingen en dezelfde combinaties
   per losse behandeling), dan de losse lichaamsdelen — die volgorde is een
   keuze van Nicky. Alles in `lib/tarieven.ts`, en ook in `public/llms.txt`.
+- Aanvraagkalender op `/boeken`, sinds 7 september: de bezoeker kiest een
+  behandeling (gezichtsbehandeling, of het gratis intakegesprek waarmee
+  laserontharing altijd begint), een datum en een dagdeel, en de kliniek
+  bevestigt per e-mail of telefoon. Het is een aanvraag, geen boeking: de
+  site kent de agenda van de kliniek nog niet. Alles wat de kalender over de
+  kliniek aanneemt staat in `lib/agenda.ts`; de kalender zelf is
+  `components/afspraak-kiezer.tsx`. Op de homepage blijft het formulier
+  kort, zonder kalender.
 - Menu in de balk: Gezichtsbehandelingen · Laserontharing · Tarieven · De Studio ·
   Contact, sinds 6 september; daarvóór vier ankers naar homepage-secties. De
   balk verschijnt vanaf 1280px, daaronder het hamburgermenu — gemeten, zie de
@@ -88,9 +96,12 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    Pas daarna kan het formulier terug naar dat adres.
 4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Pas zinvol als het domein er is.
-5. **Boekingssysteem.** Besloten: Apple/iCloud-agenda via Cal.com. Wacht
-   uitsluitend nog op de **behandelduur per behandeling** — zonder duur kan
-   geen enkel systeem tijdsloten berekenen.
+5. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
+   Stap twee is echte beschikbaarheid: de Apple/iCloud-agenda via Cal.com,
+   zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar
+   agenda staat. Dat wacht op de **behandelduur per behandeling** en de
+   **beschikbaarheid** (welke dagen en uren), plus een Cal.com-account en een
+   app-specifiek wachtwoord van het Apple ID, aan te maken door de kliniek.
 6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
    of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
    vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee

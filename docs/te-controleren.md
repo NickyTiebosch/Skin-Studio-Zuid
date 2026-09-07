@@ -206,6 +206,26 @@ zie de tabel bij de mannenprijzen hierboven.
 
 ---
 
+## Aanvraagkalender op /boeken — 7 september 2026
+
+De bezoeker kiest een behandeling, een datum en een dagdeel; de aanvraag komt
+per mail binnen en de kliniek bevestigt. Vier aannames, allemaal in
+`lib/agenda.ts`:
+
+| Aanname | Nakijken op |
+|---|---|
+| **Zondag gesloten.** Op zondag is geen datum te kiezen. | Klopt dat, en zijn er nog andere vaste sluitingsdagen? |
+| **Dagdelen: ochtend, middag, avond, geen voorkeur.** | Werkt de kliniek 's avonds? Zo niet, dan hoort "Avond" eruit. |
+| **Drie maanden vooruit** te kiezen. | Verder of korter vooruit is één getal. |
+| **Laserontharing = intake.** Wie laserontharing kiest, vraagt een intakegesprek aan; de behandeldata volgen daarna. | Zo staat het ook in de veelgestelde vragen. Bevestig dat dit de werkwijze blijft. |
+
+Het is bewust een aanvraag en geen boeking: de site kent de agenda niet, dus
+een dubbele boeking is onmogelijk, maar de kliniek moet elke aanvraag wel
+zelf bevestigen. De echte agenda (Cal.com op iCloud, hieronder) neemt dat
+over zodra de behandelduur en de beschikbaarheid bekend zijn.
+
+---
+
 ## Het boekingssysteem — besloten en nog open
 
 **Besloten:** de agenda blijft **Apple/iCloud**, gekoppeld via **Cal.com**. Het

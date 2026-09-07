@@ -8,7 +8,7 @@ import { OPENGRAPH_BASIS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Afspraak maken",
-  description: `Maak een afspraak bij Skin Studio Zuid in ${ADRES.plaats} voor een gezichtsbehandeling, laserontharing of een vrijblijvend consult.`,
+  description: `Maak een afspraak bij Skin Studio Zuid in ${ADRES.plaats}: kies een gezichtsbehandeling of een gratis intakegesprek voor laserontharing en een datum die u schikt.`,
   alternates: { canonical: "/boeken" },
   openGraph: {
     ...OPENGRAPH_BASIS,
@@ -22,9 +22,10 @@ export const metadata: Metadata = {
 /**
  * Vaste bestemming voor elke actieknop op de site.
  *
- * Nu staat hier het contactformulier. Zodra het online boekingssysteem er is,
- * verandert alleen deze pagina — alle knoppen die ernaartoe wijzen blijven
- * kloppen. Dat is de reden dat deze route nu al bestaat.
+ * Hier staat het aanvraagformulier met de kalender: de bezoeker kiest een
+ * behandeling, een datum en een dagdeel, en de kliniek bevestigt. Zodra de
+ * echte agenda gekoppeld is (Cal.com op iCloud) verandert alleen deze
+ * pagina — alle knoppen die ernaartoe wijzen blijven kloppen.
  */
 export default async function Boeken({
   searchParams,
@@ -39,15 +40,14 @@ export default async function Boeken({
     (b) => b.formulierWaarde === params.behandeling
   )
   // "consult" en "overig" zijn geen behandeling maar wel keuzes in het
-  // formulier — de tarievenpagina verwijst bijvoorbeeld naar een consult.
-  const overigeKeuzes: Record<string, string> = {
-    consult: "een vrijblijvend consult",
-    overig: "iets anders",
-  }
-  const overigeKeuze = params.behandeling
-    ? overigeKeuzes[params.behandeling]
-    : undefined
-  const voorgevuld = gekozen?.formulierWaarde ?? (overigeKeuze ? params.behandeling! : "")
+  // formulier — de tarievenpagina verwijst bijvoorbeeld naar het intakegesprek.
+  const overigeKeuzes = ["consult", "overig"]
+  const isIntake = params.behandeling === "consult"
+  const voorgevuld =
+    gekozen?.formulierWaarde ??
+    (params.behandeling && overigeKeuzes.includes(params.behandeling)
+      ? params.behandeling
+      : "")
 
   return (
     <main className="overflow-x-hidden">
@@ -71,20 +71,21 @@ export default async function Boeken({
 
       <ContactSection
         kopNiveau="h1"
+        metAgenda
         standaardBehandeling={voorgevuld}
         titel={
           gekozen
             ? `Een afspraak voor ${gekozen.tag.toLowerCase()}`
-            : overigeKeuze === "een vrijblijvend consult"
-              ? "Een vrijblijvend consult"
+            : isIntake
+              ? "Een gratis intakegesprek"
               : "Maak een afspraak"
         }
         intro={
           gekozen
-            ? `U heeft interesse in ${gekozen.tag.toLowerCase()}. Laat hieronder uw gegevens achter, dan nemen wij contact met u op om een moment te plannen dat u schikt.`
-            : overigeKeuze === "een vrijblijvend consult"
-              ? "Tijdens een consult kijken we naar uw huid, bespreken we wat er mogelijk is en krijgt u een concrete prijsopgave. U zit daarbij nergens aan vast."
-              : "Laat uw gegevens achter, dan nemen wij contact met u op om een moment te plannen dat u schikt. Weet u nog niet welke behandeling bij u past? Kies dan een vrijblijvend consult; we kijken samen wat er nodig is."
+            ? `U heeft interesse in ${gekozen.tag.toLowerCase()}. Kies hieronder een datum die u schikt en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon.`
+            : isIntake
+              ? "Tijdens het intakegesprek kijken we naar uw huid, bespreken we wat er mogelijk is en krijgt u een concrete prijsopgave. U zit daarbij nergens aan vast. Kies hieronder een datum die u schikt."
+              : "Kies een behandeling en een datum die u schikt, en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon. Weet u nog niet welke behandeling bij u past? Kies dan een gratis intakegesprek; we kijken samen wat er nodig is."
         }
       />
 
