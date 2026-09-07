@@ -65,12 +65,14 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
 
 ## Wat er nog moet
 
-1. **Contactformulier naar een adres dat werkt.** Het formulier stuurt via
-   formsubmit.co naar `info@skinstudiozuid.nl` (`app/api/contact/route.ts`),
-   en dat adres kan geen mail ontvangen zolang het domein geen MX-record
-   heeft. De bezoeker ziet "verzonden", de kliniek krijgt niets. Zet het
-   tijdelijk op een mailbox die wél werkt en klik daar één keer op de
-   activatiemail van formsubmit. Dit blokkeert boekingen, dus vóór alles.
+1. **Contactformulier staat tijdelijk op Nicky's adres.** Sinds 7 september
+   stuurt het formulier via formsubmit.co naar `info@22labs.nl`
+   (`app/api/contact/route.ts`), omdat `info@skinstudiozuid.nl` geen mail
+   kan ontvangen zolang het domein geen MX-record heeft. **Nog te doen:** bij
+   de eerste aanvraag stuurt formsubmit één activatiemail naar dat adres;
+   daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
+   het domein werkt: terug naar `info@skinstudiozuid.nl` en daar opnieuw
+   activeren.
 2. **Het domein repareren.** `skinstudiozuid.nl` staat bij TransIP
    (geregistreerd 20 maart 2025, laatst gewijzigd 18 december 2025). Wie het
    TransIP-account heeft — de kliniek of de vorige websitebouwer — logt in en
