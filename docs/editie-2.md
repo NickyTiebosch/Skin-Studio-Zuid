@@ -129,6 +129,32 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   Verdedigbaar omdat het eenmalig is voor de hele site, alleen op desktop met
   muis geladen wordt, pas na idle, en pas als het accent nadert; wie de site op
   een telefoon bekijkt of beweging heeft uitgezet, haalt deze bytes nooit op.
+- **De effecten zijn alsnog naar mobiel gehaald.** Het plan zette de grens bij
+  1024 px: geen pins, geen WebGL, rondgang als veegcarrousel. Dat hield de
+  telefoon rustig, maar het gevolg was dat de beeldrijke versie op mobiel
+  nauwelijks van de gewone verschilde — precies waar Nicky over viel. De cue
+  "Scroll — de studio in" beloofde iets wat op een telefoon niet gebeurde: de
+  poort schoof gewoon voorbij met 6% zoom.
+
+  Wat er nu wél gebeurt op een telefoon, allemaal zonder pin en zonder één byte
+  extra (GSAP stond er al voor deze scènes):
+  - **De hero-poort opent echt**: hij groeit tot anderhalf keer en verliest zijn
+    boog terwijl de hero uit beeld scrollt. De bovengrens van 1,5 is een
+    scherptekwestie: Next levert op een telefoon met dpr 3 een bestand van
+    1200 px (134 kB) en de eerstvolgende stap is 1920 px (219 kB) — te veel voor
+    het beeld waarop de laadtijd gemeten wordt.
+  - **De rondgang schuift mee** met het verticaal scrollen in plaats van stil te
+    staan tot iemand toevallig veegt. De scroll-snap gaat er tijdens die tween
+    af, anders vecht de browser met de beweging; bij uitgezette beweging blijft
+    hij gewoon veegbaar.
+  - **Het traject bouwt zich op**: de lichtstraal groeit en elke stap licht op
+    zodra de straal hem bereikt.
+  - **De ring kantelt**, nu in CSS: een cirkel die om zijn horizontale as draait
+    wordt een ellips, en dat leest als dezelfde beweging als de WebGL-ring.
+
+  Geen pins op mobiel: die leggen de scroll vast en dat voelt op een telefoon
+  alsof de pagina hapert. En geen WebGL: 231 kB three.js over mobiele data is
+  niet te verdedigen voor een accent.
 
 ## Beeldmanifest en placeholders
 
@@ -201,6 +227,7 @@ zitten op desktop ook ~30 kB prefetch van de gelinkte pagina's
 | M2 | /laserontharing 390×844 | 0,72 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
 | M2 | /gezichtsbehandelingen 1440×900 | 0,80 s | kopbeeld (IMG) | 0 | 146 kB | 48 kB |
 | M2 | /gezichtsbehandelingen 390×844 | 0,75 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
+| M3+ | homepage 390×844, ná de mobiele effecten | 0,90 s | poortbeeld (IMG) | 0 | 162 kB | 54 kB |
 | M3 | homepage 1440×900, ring in beeld | — | — | 0 | 161 kB | + 231 kB (three, alleen desktop met muis) |
 
 Het poortbeeld is nu het grootste element in plaats van de h1; het staat er

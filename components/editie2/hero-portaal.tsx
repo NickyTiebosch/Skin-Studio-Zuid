@@ -79,12 +79,57 @@ export function HeroPortaal() {
         .to(gloed, { opacity: 0, ease: EASE.geen }, 0)
     })
 
+    // Op mobiel dezelfde beweging, maar zonder pin: de poort groeit terwijl de
+    // hero uit beeld scrollt, en de volgende sectie schuift eroverheen. Een pin
+    // is op een telefoon te grof — die legt de scroll vast en dat voelt alsof
+    // de pagina hapert — maar zónder beweging loste de cue "de studio in" zijn
+    // belofte niet in. Dit is de tussenweg: hij kost geen pin en geen extra
+    // JavaScript, want GSAP staat er op mobiel toch al voor deze scène.
     mm.add(`${MEDIA.mobiel} and ${MEDIA.geenVoorkeur}`, () => {
-      gsap.to(poort, {
-        scale: 1.06,
-        ease: EASE.geen,
-        scrollTrigger: { trigger: sectie, start: "top top", end: "bottom top", scrub: SCRUB },
+      const doel = () => {
+        const r = poort.getBoundingClientRect()
+        const vw = window.innerWidth
+        const vh = window.innerHeight
+        return {
+          // De bovengrens is een scherptekwestie, geen smaakkwestie. Next
+          // levert op een telefoon met dpr 3 een bestand van 1200 px breed
+          // (134 kB); de eerstvolgende stap is 1920 px en die kost 219 kB op
+          // precies het beeld waarop de laadtijd gemeten wordt. Tot anderhalf
+          // keer blijft de foto scherp genoeg binnen die 1200 px.
+          schaal: Math.min(1.5, Math.max(vw / r.width, (vh * 0.82) / r.height)),
+          x: vw / 2 - (r.left + r.width / 2),
+          y: vh * 0.42 - (r.top + r.height / 2),
+          straal: r.width / 2,
+        }
+      }
+      const start = doel()
+      gsap.set(poort, { borderRadius: `${start.straal}px ${start.straal}px 0 0` })
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectie,
+          start: "top top",
+          end: "bottom top",
+          scrub: SCRUB,
+          invalidateOnRefresh: true,
+        },
       })
+      tl.to(
+        poort,
+        {
+          scale: () => doel().schaal,
+          x: () => doel().x,
+          y: () => doel().y,
+          borderRadius: "0px 0px 0 0",
+          ease: EASE.in,
+        },
+        0
+      )
+        // De kop pas laten wijken als de poort echt open is: op een telefoon
+        // staat de tekst anders al te vervagen terwijl je hem nog leest.
+        .to(tekst, { y: -40, opacity: 0.12, ease: EASE.geen }, 0.3)
+        .to(cue, { opacity: 0, ease: EASE.geen }, 0.2)
+        .to(gloed, { opacity: 0, ease: EASE.geen }, 0)
     })
   })
 
@@ -154,7 +199,7 @@ export function HeroPortaal() {
                 fill
                 priority
                 fetchPriority="high"
-                sizes="(min-width: 1024px) 40vw, 86vw"
+                sizes="(min-width: 1024px) 40vw, 100vw"
                 className="object-cover"
                 style={{ objectPosition: heroPoort.positie }}
               />

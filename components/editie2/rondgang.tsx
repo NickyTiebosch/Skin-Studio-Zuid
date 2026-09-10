@@ -40,6 +40,29 @@ export function Rondgang() {
       })
       return () => gsap.set(venster, { clearProps: "overflowX" })
     })
+
+    // Op mobiel geen pin, maar de rij schuift wel mee terwijl de sectie door
+    // beeld gaat. Vegen kon al, alleen zag je dat niet: wie gewoon doorscrolt
+    // kreeg één stilstaand paneel te zien en liep de rest van de studio mis.
+    // De scroll-snap gaat er tijdens de tween af, anders vecht de browser met
+    // de beweging.
+    mm.add(`${MEDIA.mobiel} and ${MEDIA.geenVoorkeur}`, () => {
+      const afstand = () => spoor.scrollWidth - venster.clientWidth
+      if (afstand() <= 0) return
+      gsap.set(venster, { overflowX: "hidden", scrollSnapType: "none" })
+      gsap.to(spoor, {
+        x: () => -afstand(),
+        ease: EASE.geen,
+        scrollTrigger: {
+          trigger: sectie,
+          start: "top 85%",
+          end: "bottom 15%",
+          scrub: SCRUB,
+          invalidateOnRefresh: true,
+        },
+      })
+      return () => gsap.set(venster, { clearProps: "overflowX,scrollSnapType" })
+    })
   })
 
   return (

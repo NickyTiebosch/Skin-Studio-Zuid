@@ -68,6 +68,9 @@ export function Traject() {
       })
     })
 
+    // Mobiel: geen pin, maar wel dezelfde volgorde. De straal groeit mee met
+    // het scrollen en elke stap licht op zodra de straal hem bereikt, zodat het
+    // traject zich ook op een telefoon van boven naar beneden opbouwt.
     mm.add(`${MEDIA.mobiel} and ${MEDIA.geenVoorkeur}`, () => {
       gsap.fromTo(
         straal,
@@ -78,6 +81,18 @@ export function Traject() {
           scrollTrigger: { trigger: sectie, start: "top 75%", end: "bottom 70%", scrub: SCRUB },
         }
       )
+      items.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0.3, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: EASE.uit,
+            scrollTrigger: { trigger: item, start: "top 88%", end: "top 55%", scrub: SCRUB },
+          }
+        )
+      })
     })
   })
 

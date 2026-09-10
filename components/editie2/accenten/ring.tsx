@@ -26,17 +26,23 @@ export function Ring() {
   )
 }
 
+/**
+ * De terugval: dezelfde twee cirkels, maar ze kantelen mee met het scrollen.
+ * Dat is de beweging van de WebGL-ring, nagemaakt in CSS-3D — een cirkel die
+ * om zijn horizontale as draait, wordt een ellips. Kost niets en werkt op elke
+ * telefoon, waar de echte scène juist bewust níet laadt.
+ */
 function RingStil() {
   return (
-    <>
+    <div className="e2-ringvlak absolute inset-0">
       <div
-        className="absolute inset-3 rounded-full border"
+        className="e2-ringlijn absolute inset-3 rounded-full border"
         style={{ borderColor: "color-mix(in oklch, var(--rose-gold) 55%, transparent)" }}
       />
       <div
-        className="absolute inset-0 rounded-full border"
+        className="e2-ringlijn e2-ringlijn-buiten absolute inset-0 rounded-full border"
         style={{ borderColor: "color-mix(in oklch, var(--rose-gold) 22%, transparent)" }}
       />
-    </>
+    </div>
   )
 }

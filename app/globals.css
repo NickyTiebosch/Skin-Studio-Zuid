@@ -1203,3 +1203,47 @@
   block-size: 100%;
   object-fit: cover;
 }
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     De ring van licht: de terugval kantelt mee
+     ----------------------------------------------------------------------
+     Waar de WebGL-scène niet laadt — elke telefoon, elk apparaat zonder muis —
+     doet CSS het werk. Een cirkel die om zijn horizontale as draait wordt een
+     ellips, en dat leest als dezelfde kantelende ring. Stilstaand is de
+     basistoestand, dus zonder scroll-tijdlijn staat er gewoon een nette ring.
+     ---------------------------------------------------------------------- */
+
+  .e2-ringvlak {
+    perspective: 900px;
+  }
+
+  .e2-ringlijn {
+    transform: rotateX(0deg);
+  }
+
+  @keyframes e2-ring-kantel {
+    from {
+      transform: rotateX(-18deg) rotateZ(-5deg);
+    }
+    to {
+      transform: rotateX(12deg) rotateZ(5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-ringlijn {
+        animation: e2-ring-kantel linear both;
+        animation-timeline: view();
+        animation-range: entry 5% exit 95%;
+      }
+
+      /* De buitenste ring loopt iets achter, zodat de twee niet als één plat
+         vlak bewegen. */
+      .e2-ringlijn-buiten {
+        animation-range: entry 0% exit 100%;
+      }
+    }
+  }
+}
