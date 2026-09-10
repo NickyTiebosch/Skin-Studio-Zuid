@@ -33,6 +33,13 @@ export type Beeld = {
   soort: Beeldsoort
   /** `object-position` van de uitsnede, als die niet gecentreerd hoort. */
   positie?: string
+  /**
+   * Alleen voor placeholders: inzoomfactor van de uitsnede, zodat dezelfde
+   * foto niet twee keer identiek naast elkaar staat tot het AI-beeld er is.
+   */
+  zoom?: number
+  /** Alleen voor placeholders: warme avondtint over de uitsnede. */
+  tint?: "avond"
   bijschrift?: string
 }
 
@@ -51,7 +58,8 @@ export const rondgang: Beeld[] = [
     src: behandelkamerRaam,
     alt: "Blik de behandelkamer in, richting het raam",
     soort: "placeholder",
-    positie: "35% 55%",
+    positie: "30% 42%",
+    zoom: 1.45,
     bijschrift: "De entree",
   },
   {
@@ -76,6 +84,7 @@ export const rondgang: Beeld[] = [
     alt: "De plank met Kalahari-producten in de lattenwand",
     soort: "placeholder",
     positie: "88% 38%",
+    zoom: 1.35,
     bijschrift: "De Kalahari-plank",
   },
   {
@@ -83,7 +92,9 @@ export const rondgang: Beeld[] = [
     src: behandelkamerRaam,
     alt: "Behandelkamer in avondlicht",
     soort: "placeholder",
-    positie: "60% 70%",
+    positie: "62% 74%",
+    zoom: 1.2,
+    tint: "avond",
     bijschrift: "Aan het eind van de dag",
   },
 ]

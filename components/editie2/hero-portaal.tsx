@@ -91,7 +91,7 @@ export function HeroPortaal() {
   return (
     <section
       ref={ref}
-      className="e2-korrel relative min-h-[100svh] overflow-hidden bg-[color:var(--cream)]"
+      className="e2-korrel relative min-h-[100svh] overflow-clip bg-[color:var(--cream)]"
       aria-labelledby="e2-hero-kop"
     >
       {/* Zachte gloed achter de poort */}

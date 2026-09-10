@@ -72,8 +72,11 @@ export type Doelgroep = {
  * Voorwaarden die op beide actieflyers staan. Ze horen zichtbaar bij de
  * kuurprijzen, want een aanbieding zonder voorwaarden hoort niet op een site.
  */
+/** Binnen zoveel maanden moet een kuur afgenomen zijn; staat zo op beide flyers. */
+export const KUUR_TERMIJN_MAANDEN = 18
+
 export const KUUR_VOORWAARDEN =
-  "De behandelingen dienen binnen 18 maanden te worden afgenomen. " +
+  `De behandelingen dienen binnen ${KUUR_TERMIJN_MAANDEN} maanden te worden afgenomen. ` +
   "Niet geldig in combinatie met andere acties."
 
 export const KUUR_ADVIES =

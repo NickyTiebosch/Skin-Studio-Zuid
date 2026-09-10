@@ -137,7 +137,7 @@ export default function Tarieven() {
   const overige = gevuldeOverigeTariefgroepen()
 
   return (
-    <main id="inhoud" className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-clip">
       <div className="ssz-leesbalk" aria-hidden="true" />
       <Navbar />
       <TarievenMelder />

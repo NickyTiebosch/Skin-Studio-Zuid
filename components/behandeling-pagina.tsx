@@ -26,7 +26,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
   const andere = behandelingen.filter((b) => b.slug !== behandeling.slug)
 
   return (
-    <main id="inhoud" className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-clip">
       <div className="ssz-leesbalk" aria-hidden="true" />
       <Navbar />
 

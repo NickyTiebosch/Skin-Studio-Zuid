@@ -188,7 +188,7 @@
    slechter, niet beter. Het ontwerp blijft nu zoals het was; hier staat
    uitsluitend wat er beweegt.
 
-   Vier regels die overal gelden:
+   Vijf regels die overal gelden:
 
    1. DE ZICHTBARE TOESTAND IS DE BASIS. Een browser zonder
       `animation-timeline` (Firefox, Safari < 26) negeert die regel maar leest
@@ -206,6 +206,14 @@
       hero, niet de foto. Een element dat op onzichtbaar begint telt pas als
       geladen zodra het verschijnt. De kop beweegt daarom achter een masker:
       puur `transform`, dekking ongewijzigd.
+
+   5. GEEN `overflow: hidden` OM IETS DAT OP DE SCROLL-TIJDLIJN BEWEEGT. Een
+      element met `overflow: hidden` (ook alleen `overflow-x`) is een
+      scroll-container, en `animation-timeline: view()` rekent dan tegen dát
+      element in plaats van tegen het venster: de animatie staat meteen in de
+      eindstand. `overflow: clip` knipt net zo goed en maakt géén
+      scroll-container. Gevonden bij de tellers van editie 2: <main> had
+      `overflow-x: hidden`, en daarmee stond élke reveal stil.
    ========================================================================== */
 
 @property --ssz-glans {
@@ -714,7 +722,7 @@
    Editie 2 — "de studio in"
    --------------------------------------------------------------------------
    De tweede, beeldrijke versie van de site. Bouwt voort op de bewegingslaag
-   hierboven en houdt zich aan dezelfde vier regels. Wat hier staat is
+   hierboven en houdt zich aan dezelfde vijf regels. Wat hier staat is
    uitsluitend wat editie 2 extra nodig heeft: glas, gloed, korrel, de
    poortvorm van de hero en het overlay-menu. Alle scroll-scènes met een pin
    staan in GSAP (components/editie2/beweging) en niet hier, omdat een
@@ -836,5 +844,70 @@
     .e2-menu-item {
       animation: e2-menu-in 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
+  }
+}
+
+@property --e2-n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     Editie 2: tellers, rondgang, traject
+     ---------------------------------------------------------------------- */
+
+  /* Teller die op de view-timeline optelt. De basistoestand is het eindgetal
+     (regel 1); alleen browsers met scroll-tijdlijn tellen vanaf nul. */
+  .e2-teller {
+    --e2-n: var(--e2-doel, 0);
+    counter-reset: e2-n var(--e2-n);
+  }
+
+  .e2-teller::after {
+    content: counter(e2-n);
+  }
+
+  @keyframes e2-tel {
+    from {
+      --e2-n: 0;
+    }
+    to {
+      --e2-n: var(--e2-doel, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-teller {
+        animation: e2-tel linear both;
+        animation-timeline: view();
+        animation-range: entry 15% entry 75%;
+      }
+    }
+  }
+
+  /* Rondgang: de basis is een gewone horizontaal scrollende rij met snap.
+     Op desktop zet GSAP `overflow-x: hidden` en schuift de rij zelf. */
+  .e2-rondgang-venster {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .e2-rondgang-venster::-webkit-scrollbar {
+    display: none;
+  }
+
+  .e2-paneel {
+    scroll-snap-align: center;
+  }
+
+  /* De lichtstraal in het traject: zichtbaar als basis, GSAP laat hem groeien. */
+  .e2-straal {
+    transform: scaleY(1);
   }
 }

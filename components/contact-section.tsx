@@ -3,8 +3,22 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
+import dynamic from "next/dynamic"
 import { format } from "date-fns"
-import { AfspraakKiezer } from "@/components/afspraak-kiezer"
+
+// De kalender (react-day-picker + date-fns) is alleen nodig op /boeken en pas
+// nadat een boekbare behandeling gekozen is. Als losse bundel scheelt dat de
+// homepage zo'n 32 kB aan JavaScript; de component wordt toch pas na het
+// laden getekend (zie `geladen` hieronder).
+const AfspraakKiezer = dynamic(
+  () => import("@/components/afspraak-kiezer").then((m) => m.AfspraakKiezer),
+  {
+    ssr: false,
+    loading: () => (
+      <p className="font-sans text-xs text-muted-foreground">Kalender wordt geladen…</p>
+    ),
+  }
+)
 import {
   STANDAARD_DAGDEEL,
   type DagdeelId,
@@ -185,7 +199,7 @@ export function ContactSection({
           </div>
 
           {/* Form */}
-          <div className="bg-[color:var(--cream)] p-8 md:p-12">
+          <div className="e2-glas p-8 md:p-12">
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
                 <CheckCircle size={40} style={{ color: "var(--rose-gold)" }} />

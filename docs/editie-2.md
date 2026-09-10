@@ -34,6 +34,14 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   beeld komt; GSAP 3.15 + ScrollTrigger, na idle geladen via
   `components/editie2/beweging/gsap.ts`, uitsluitend voor pins en tekstreveal per
   regel; geen Lenis, geen tweede bewegingsbibliotheek.
+- **Homepage (M1)**, van boven naar beneden: hero-portaal → intro-strip →
+  behandelkaarten (glas over een fotoband, plus kaart "Onder één dak" naar de
+  tarieven) → tellers (6 / 18 / 3, uit de datalaag) → rondgang (desktop:
+  gepind horizontaal; mobiel en reduced motion: native scroll-snap) → De Studio
+  (rond beeld, slot voor accent A) → traject (gepinde tijdlijn met lichtstraal,
+  knop naar `/boeken?behandeling=consult`) → quote → producten (echte
+  plank-uitsnede) → contact (formulier in glas) → footer. Ankers
+  `#behandelingen`, `#rondgang`, `#studio`, `#traject`, `#producten`, `#contact`.
 - **WebGL** alleen achter `components/editie2/accenten/webgl-poort.tsx`: desktop,
   muis, geen reduced motion, geen databesparing, WebGL 2 zonder software-
   rendering, na idle en pas als de sectie nadert. Anders een stilstaand beeld
@@ -46,6 +54,28 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   komen. Een CSS-zoom van 7% over achttien seconden op de foto in de poort
   (`.e2-kenburns`) geeft hetzelfde beeld voor nul bytes. Een echte AI-clip met
   parallax kan later in dezelfde poort; de manifest-slot blijft bestaan.
+- **`overflow: clip` in plaats van `overflow: hidden`** rond alles wat op de
+  scroll-tijdlijn beweegt. Bij het bouwen van de tellers (M1) bleek dat
+  `<main>` op elke pagina `overflow-x: hidden` had; zo'n element is voor de
+  browser een scroll-container, en `animation-timeline: view()` rekent dan
+  tegen dát element in plaats van tegen het venster. Gevolg: elke reveal stond
+  meteen in de eindstand, ook op `main` (niemand merkte het, want de zichtbare
+  toestand is de basis, regel 1). `overflow: clip` knipt wél en maakt géén
+  scroll-container. Sinds M1 is dat regel 5 in `app/globals.css`; de live site
+  heeft dezelfde fout nog (drie bestanden, één woord per regel).
+- **Placeholders in de rondgang zijn uitsnedes met zoom en tint.** Zolang de
+  AI-beelden er niet zijn, wijzen "De entree", "De Kalahari-plank" en "Aan het
+  eind van de dag" naar de twee echte foto's; om ze niet drie keer identiek te
+  tonen heeft het manifest `zoom` (inzoomfactor op de `positie`) en `tint:
+  "avond"` (warme walnoot/rosé-verloop, `mix-blend-mode: multiply`). Bij het
+  wisselen naar een AI-beeld vervallen die twee velden gewoon.
+- **De aanvraagkalender laadt alleen op /boeken.** `components/contact-section.tsx`
+  haalt `AfspraakKiezer` nu via `next/dynamic` (`ssr: false`) binnen; op de
+  homepage zit hij niet meer in de eerste lading.
+- **Geen "Waarom wij"-sectie meer.** De drie iconen ("Medische innovatie 2026",
+  "Pijnvrije ervaring", "Direct zichtbaar resultaat") maakten claims die de
+  datalaag niet draagt; de tellers (feiten uit `lib/tarieven.ts`) en het
+  traject nemen die plek in.
 
 ## Beeldmanifest en placeholders
 
@@ -98,23 +128,39 @@ Metingen per mijlpaal staan hieronder.
 ## Metingen
 
 Gemeten met `cdp-meet.mjs` (headless Chromium, 4× CPU-vertraging, 4 Mbit/s,
-150 ms latentie) op de lokale productiebuild. "Eerste lading" is alle JS tot het
-load-event; "na idle" wat daarna nog binnenkomt (GSAP en de hero-scène).
+150 ms latentie) op de lokale productiebuild. Sinds M1 telt "eerste lading" de
+scripts die in de HTML zelf staan (alles wat nodig is om te tekenen en te
+hydrateren) en "na idle" wat pas later via `import()` binnenkomt: GSAP +
+ScrollTrigger (44 kB) en de scènes. De M0-rijen zijn met de oude, tijdgebonden
+verdeling gemeten (alles vóór het load-event), dus 178 kB daar is vergelijkbaar
+met 161 kB nu min de kalender die toen nog op de homepage zat. Bij "na idle"
+zitten op desktop ook ~30 kB prefetch van de gelinkte pagina's
+(`/laserontharing`, `/gezichtsbehandelingen`, `/tarieven`), gewoon Next.js-gedrag.
 
 | Mijlpaal | Scherm | LCP | LCP-element | CLS | JS eerste lading | JS na idle |
 |---|---|---|---|---|---|---|
 | M0 | 1440×900 | 0,97 s | poortbeeld (IMG) | 0 | 178 kB | 75 kB |
 | M0 | 390×844 | 0,89 s | poortbeeld (IMG) | 0 | 178 kB | 54 kB |
+| M1 | 1440×900 | 0,94 s | poortbeeld (IMG) | 0 | 161 kB | 75 kB (44 GSAP + 30 prefetch) |
+| M1 | 390×844 | 0,92 s | poortbeeld (IMG) | 0 | 161 kB | 54 kB (44 GSAP + 10 prefetch) |
+| M1 | 1440×900, reduced motion | 0,95 s | poortbeeld (IMG) | 0 | 161 kB | 30 kB (alleen prefetch; geen GSAP) |
 
 Het poortbeeld is nu het grootste element in plaats van de h1; het staat er
-ruim binnen het doel omdat het het enige `priority`-beeld is.
+ruim binnen het doel omdat het het enige `priority`-beeld is. De eerste lading
+zit sinds M1 onder het budget van 170 kB (`main`: 213 kB).
+
+Gecontroleerd in M1, naast de metingen: de tellers tellen echt (0 → 2/6/1 →
+6/18/3 bij het binnenkomen), reveals staan buiten beeld op 0 en in beeld op 1,
+bij reduced motion staat alles direct in de eindstand en wordt GSAP niet
+geladen (geen `canvas`, geen `video`, geen pin-spacer in de DOM), op desktop
+staan precies drie pins (hero, rondgang, traject) en één h1.
 
 ## Mijlpalen
 
 | | Inhoud | Stand |
 |---|---|---|
 | M0 | Fundament: branch, bibliotheken, manifest, balk, hero-portaal, draft-PR | klaar (10 sep) |
-| M1 | Homepage compleet | — |
+| M1 | Homepage compleet: glas-kaarten, tellers, rondgang, studio, traject, producten, contact in glas | klaar (10 sep) |
 | M2 | Behandelpagina's, huidlagen, lichtband | — |
 | M3 | Ring-accent, tarieven/boeken/privacy, a11y, bundelmeting | — |
 | M4 | AI-beeld (na tegoed) | — |
