@@ -708,3 +708,133 @@
     }
   }
 }
+
+
+/* ==========================================================================
+   Editie 2 — "de studio in"
+   --------------------------------------------------------------------------
+   De tweede, beeldrijke versie van de site. Bouwt voort op de bewegingslaag
+   hierboven en houdt zich aan dezelfde vier regels. Wat hier staat is
+   uitsluitend wat editie 2 extra nodig heeft: glas, gloed, korrel, de
+   poortvorm van de hero en het overlay-menu. Alle scroll-scènes met een pin
+   staan in GSAP (components/editie2/beweging) en niet hier, omdat een
+   view-timeline en een pin elkaar in de weg zitten.
+   ========================================================================== */
+
+@layer components {
+  /* Melkglas. Het vervagen van de achtergrond is een dure bewerking; alleen
+     op apparaten met een muis en een scherm vanaf 768px, daaronder een
+     ondoorzichtiger vlak dat er hetzelfde uitziet. */
+  .e2-glas {
+    background-color: color-mix(in oklch, var(--cream) 78%, transparent);
+    border: 1px solid color-mix(in oklch, var(--rose-gold) 22%, transparent);
+    box-shadow: 0 30px 80px -48px color-mix(in oklch, var(--walnut) 55%, transparent);
+  }
+
+  @media (hover: hover) and (min-width: 768px) {
+    .e2-glas {
+      background-color: color-mix(in oklch, var(--cream) 62%, transparent);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+  }
+
+  /* Zachte rosé-gouden gloed, als achtergrond achter beeld of glas. */
+  .e2-gloed {
+    background: radial-gradient(
+      55% 50% at 50% 50%,
+      color-mix(in oklch, var(--rose-gold-light) 55%, transparent),
+      transparent 72%
+    );
+  }
+
+  /* Fijne korrel over een sectie: haalt het "digitale" van de vlakken af.
+     Eén SVG-ruis van 200px, herhaald; dekking laag genoeg om niet op te vallen. */
+  .e2-korrel {
+    position: relative;
+  }
+
+  .e2-korrel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23r)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* De poort van de hero: een boog (ronde bovenhoeken) die overflow afsnijdt.
+     De straal wordt door de scène in pixels gezet en naar 0 getweend zodra de
+     boog het scherm vult. */
+  .e2-poort {
+    border-radius: 999px 999px 0 0;
+    overflow: hidden;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  /* Trage zoom op de foto in de poort. Puur transform, begint op volle
+     dekking, dus onschadelijk voor de laadtijdmeting. */
+  @keyframes e2-kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+    .e2-kenburns {
+      animation: e2-kenburns 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+  }
+
+  /* Het lijntje in de scroll-cue: groeit van links, krimpt naar rechts. */
+  @keyframes e2-cue-lijn {
+    0% {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    45% {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    55% {
+      transform: scaleX(1);
+      transform-origin: right;
+    }
+    100% {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .e2-cue-lijn {
+      animation: e2-cue-lijn 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+  }
+
+  /* Overlay-menu: de regels verschijnen trapsgewijs. Het menu bestaat pas
+     als het open is, dus dit verbergt nooit inhoud van de pagina. */
+  @keyframes e2-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .e2-menu-item {
+      animation: e2-menu-in 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+  }
+}
