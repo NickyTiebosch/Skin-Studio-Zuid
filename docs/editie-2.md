@@ -155,6 +155,15 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   Geen pins op mobiel: die leggen de scroll vast en dat voelt op een telefoon
   alsof de pagina hapert. En geen WebGL: 231 kB three.js over mobiele data is
   niet te verdedigen voor een accent.
+- **De datumkeuze op /boeken is nu altijd zichtbaar.** De kalender hangt af van
+  de gekozen behandeling — laserontharing begint met een intake, en bij
+  "overig" hoort een bericht en geen datum — en stond daarom pas in de pagina
+  ná die keuze. Het gevolg was dat wie het formulier opende helemaal niets van
+  een agenda zag en er ook niet naar ging zoeken. Nu staat de plek er altijd,
+  met de regel "Kies hierboven een behandeling, dan verschijnt hier de
+  kalender"; bij "overig" staat er dat we dan geen datum vooruit plannen. Dit
+  is geen fout van editie 2: dezelfde voorwaarde staat op `main`, dus de live
+  site heeft hem ook.
 
 ## Beeldmanifest en placeholders
 
