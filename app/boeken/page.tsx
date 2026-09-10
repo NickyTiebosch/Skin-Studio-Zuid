@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/editie2/navbar"
+import { Footer } from "@/components/editie2/footer"
+import { Sfeerband } from "@/components/editie2/sfeerband"
 import { ContactSection } from "@/components/contact-section"
 import { behandelingen } from "@/lib/behandelingen"
 import { ADRES } from "@/lib/contact"
@@ -50,11 +51,15 @@ export default async function Boeken({
       : "")
 
   return (
-    <main className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-clip">
       <Navbar />
 
-      <div className="pt-32 md:pt-40 px-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="e2-korrel relative px-6 pt-32 md:pt-40">
+        <div
+          className="e2-gloed pointer-events-none absolute -right-[16vw] -top-[10vh] h-[55vh] w-[55vw]"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-7xl">
           <nav aria-label="Kruimelpad">
             <ol className="flex items-center gap-2 font-sans text-xs text-muted-foreground">
               <li>
@@ -88,6 +93,8 @@ export default async function Boeken({
               : "Kies een behandeling en een datum die u schikt, en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon. Weet u nog niet welke behandeling bij u past? Kies dan een gratis intakegesprek; we kijken samen wat er nodig is."
         }
       />
+
+      <Sfeerband />
 
       <Footer />
     </main>

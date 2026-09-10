@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/editie2/navbar"
+import { Footer } from "@/components/editie2/footer"
+import { Paginakop } from "@/components/editie2/paginakop"
 import {
   ADRES,
   BEDRIJFSNAAM,
@@ -26,25 +27,22 @@ const LAATST_BIJGEWERKT = "4 september 2026"
 
 export default function Privacybeleid() {
   return (
-    <main className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-clip">
       <Navbar />
 
-      <article className="pt-36 pb-24 md:pt-44 md:pb-32 px-6">
-        <div className="max-w-2xl mx-auto">
-          <span
-            className="font-sans text-xs tracking-[0.4em] uppercase mb-5 block"
-            style={{ color: "var(--rose-gold)" }}
-          >
-            Juridisch
-          </span>
-          <h1 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
-            Privacybeleid
-          </h1>
-          <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
-          <p className="font-sans text-xs text-muted-foreground mb-12">
-            Laatst bijgewerkt op {LAATST_BIJGEWERKT}
-          </p>
+      <Paginakop
+        eyebrow="Juridisch"
+        titel="Privacybeleid"
+        kruimels={[
+          { naam: "Home", pad: "/" },
+          { naam: "Privacybeleid", pad: "/privacybeleid" },
+        ]}
+      >
+        <p className="text-xs">Laatst bijgewerkt op {LAATST_BIJGEWERKT}</p>
+      </Paginakop>
 
+      <article className="px-6 pb-24 md:pb-32">
+        <div className="max-w-2xl mx-auto">
           <div className="flex flex-col gap-10 font-sans text-sm leading-relaxed text-muted-foreground">
             <section>
               <h2 className="font-serif text-xl text-foreground mb-3">

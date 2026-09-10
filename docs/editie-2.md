@@ -48,6 +48,11 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   lichtband bij laserontharing) → voordelen in glas (alleen laserontharing) →
   sfeerband uit het manifest → vragen als `<details>` → doorverwijzingen naar de
   tarieven en de andere behandeling. Alle structured data ongewijzigd.
+- **Tarieven, boeken en privacybeleid (M3)** delen `components/editie2/paginakop.tsx`:
+  kruimelpad, eyebrow, één h1 achter het maskertje, een gouden lijn en de
+  introtekst. De kuurkaarten op /tarieven staan in glas; de prijzen, de logica en
+  de `TarievenMelder` blijven ongewijzigd. /boeken houdt `ContactSection` met de
+  kalender en krijgt er een sfeerband onder.
 - **WebGL** alleen achter `components/editie2/accenten/webgl-poort.tsx`: desktop,
   muis, geen reduced motion, geen databesparing, WebGL 2 zonder software-
   rendering, na idle en pas als de sectie nadert. Anders een stilstaand beeld
@@ -113,6 +118,17 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   ondergrond crème → zand en kleurt alleen het diepste lint. In de shader mengt
   het licht naar zijn eigen kleur toe in plaats van op te tellen: optellen loopt
   op een lichte ondergrond meteen naar wit, en dan verdwijnen juist de linten.
+- **De ring kantelt maar een klein beetje.** De eerste versie draaide van 35°
+  voorover naar 25° achterover. Dat zag er op zichzelf mooi uit, maar de
+  onderrand viel dan over de foto en dat werd rommelig. Nu blijft de hoek onder
+  de 15°: de ring ligt óm het beeld en wat je ziet is vooral het licht dat over
+  het oppervlak loopt. De dikte is ook terug van 5,5% naar 2,8% van de straal —
+  het logo is een penseelstreek, geen buis, en de terugval is een haarlijn.
+- **Beide WebGL-accenten delen één chunk van 231 kB gzip** (three.js plus
+  react-three-fiber). Dat is 11 kB meer dan het budget van 220 kB uit het plan.
+  Verdedigbaar omdat het eenmalig is voor de hele site, alleen op desktop met
+  muis geladen wordt, pas na idle, en pas als het accent nadert; wie de site op
+  een telefoon bekijkt of beweging heeft uitgezet, haalt deze bytes nooit op.
 
 ## Beeldmanifest en placeholders
 
@@ -185,6 +201,7 @@ zitten op desktop ook ~30 kB prefetch van de gelinkte pagina's
 | M2 | /laserontharing 390×844 | 0,72 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
 | M2 | /gezichtsbehandelingen 1440×900 | 0,80 s | kopbeeld (IMG) | 0 | 146 kB | 48 kB |
 | M2 | /gezichtsbehandelingen 390×844 | 0,75 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
+| M3 | homepage 1440×900, ring in beeld | — | — | 0 | 161 kB | + 231 kB (three, alleen desktop met muis) |
 
 Het poortbeeld is nu het grootste element in plaats van de h1; het staat er
 ruim binnen het doel omdat het het enige `priority`-beeld is. De eerste lading
@@ -203,7 +220,7 @@ staan precies drie pins (hero, rondgang, traject) en één h1.
 | M0 | Fundament: branch, bibliotheken, manifest, balk, hero-portaal, draft-PR | klaar (10 sep) |
 | M1 | Homepage compleet: glas-kaarten, tellers, rondgang, studio, traject, producten, contact in glas | klaar (10 sep) |
 | M2 | Behandelpagina's, huidlagen, lichtband | klaar (10 sep) |
-| M3 | Ring-accent, tarieven/boeken/privacy, a11y, bundelmeting | — |
+| M3 | Ring-accent, tarieven/boeken/privacy, a11y, bundelmeting | klaar (10 sep) |
 | M4 | AI-beeld (na tegoed) | — |
 | M5 | Go-live | — |
 

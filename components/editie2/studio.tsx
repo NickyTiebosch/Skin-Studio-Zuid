@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { rondgang } from "@/lib/editie2/beeld"
+import { Ring } from "./accenten/ring"
 
 /**
  * "Over ons": de tekst uit de eerste versie, met rechts de plek voor het
@@ -53,17 +54,10 @@ export function Studio() {
               style={{ objectPosition: beeld.positie }}
             />
           </div>
-          {/* De penseelcirkel van het logo, als dunne ring om het beeld. */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-3 rounded-full border"
-            style={{ borderColor: "color-mix(in oklch, var(--rose-gold) 55%, transparent)" }}
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-6 rounded-full border"
-            style={{ borderColor: "color-mix(in oklch, var(--rose-gold) 22%, transparent)" }}
-          />
+          {/* De penseelcirkel van het logo als ring om het beeld: op een ruim
+              scherm met een muis een echte, kantelende ring van rosé-goud,
+              en anders dezelfde twee cirkels als dunne lijnen. */}
+          <Ring />
         </div>
       </div>
     </section>

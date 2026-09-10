@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import { Fragment } from "react"
 import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/editie2/navbar"
+import { Footer } from "@/components/editie2/footer"
+import { Paginakop } from "@/components/editie2/paginakop"
 import { TarievenMelder } from "@/components/tarieven-melder"
 import { behandelingen } from "@/lib/behandelingen"
 import { ADRES, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
@@ -87,7 +88,7 @@ function Prijstabel({ groep }: { groep: Tariefgroep }) {
 /** Eén kuur van zes behandelingen, met de extra korting bij afname in één keer. */
 function Kuurkaart({ kuur }: { kuur: Kuur }) {
   return (
-    <div className="p-6 md:p-7" style={{ backgroundColor: "var(--sand)" }}>
+    <div className="e2-glas ssz-til p-6 md:p-7">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
         <h3 className="font-serif text-xl text-foreground">{kuur.titel}</h3>
         {kuur.label && (
@@ -154,38 +155,24 @@ export default function Tarieven() {
         }}
       />
 
-      <article className="pt-36 pb-24 md:pt-44 md:pb-32 px-6">
-        <div className="max-w-3xl mx-auto">
-          <nav aria-label="Kruimelpad" className="mb-8">
-            <ol className="flex items-center gap-2 font-sans text-xs text-muted-foreground">
-              <li>
-                <Link href="/" className="hover:text-foreground transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li className="text-foreground">Tarieven</li>
-            </ol>
-          </nav>
+      <Paginakop
+        eyebrow="Wat kost het"
+        titel={`Tarieven in ${ADRES.plaats}`}
+        kruimels={[
+          { naam: "Home", pad: "/" },
+          { naam: "Tarieven", pad: "/tarieven" },
+        ]}
+      >
+        <p>
+          Bij laserontharing hangt de prijs af van het gebied dat u wilt laten
+          behandelen. Het intakegesprek is gratis: daarin kijken we samen wat er
+          nodig is en weet u precies waar u aan toe bent.
+        </p>
+        <p>{KUUR_ADVIES}</p>
+      </Paginakop>
 
-          <span
-            className="font-sans text-xs tracking-[0.4em] uppercase mb-5 block"
-            style={{ color: "var(--rose-gold)" }}
-          >
-            Wat kost het
-          </span>
-          <h1 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
-            Tarieven in {ADRES.plaats}
-          </h1>
-          <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
-          <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-2xl mb-4">
-            Bij laserontharing hangt de prijs af van het gebied dat u wilt laten
-            behandelen. Het intakegesprek is gratis: daarin kijken we samen wat er
-            nodig is en weet u precies waar u aan toe bent.
-          </p>
-          <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-2xl">
-            {KUUR_ADVIES}
-          </p>
+      <article className="px-6 pb-24 md:pb-32">
+        <div className="max-w-3xl mx-auto">
 
           {/* Per doelgroep: eerst de pakketten, dan de losse lichaamsdelen */}
           <div className="flex flex-col gap-14 mt-16">
