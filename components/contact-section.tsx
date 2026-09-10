@@ -2,9 +2,23 @@
 
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { CheckCircle } from "lucide-react"
+import { CalendarDays, CheckCircle } from "lucide-react"
+import dynamic from "next/dynamic"
 import { format } from "date-fns"
-import { AfspraakKiezer } from "@/components/afspraak-kiezer"
+
+// De kalender (react-day-picker + date-fns) is alleen nodig op /boeken en pas
+// nadat een boekbare behandeling gekozen is. Als losse bundel scheelt dat de
+// homepage zo'n 32 kB aan JavaScript; de component wordt toch pas na het
+// laden getekend (zie `geladen` hieronder).
+const AfspraakKiezer = dynamic(
+  () => import("@/components/afspraak-kiezer").then((m) => m.AfspraakKiezer),
+  {
+    ssr: false,
+    loading: () => (
+      <p className="font-sans text-xs text-muted-foreground">Kalender wordt geladen…</p>
+    ),
+  }
+)
 import {
   STANDAARD_DAGDEEL,
   type DagdeelId,
@@ -185,7 +199,7 @@ export function ContactSection({
           </div>
 
           {/* Form */}
-          <div className="bg-[color:var(--cream)] p-8 md:p-12">
+          <div className="e2-glas p-8 md:p-12">
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
                 <CheckCircle size={40} style={{ color: "var(--rose-gold)" }} />
@@ -267,15 +281,55 @@ export function ContactSection({
                   </select>
                 </div>
 
-                {geladen && afspraak && (
-                  <AfspraakKiezer
-                    afspraak={afspraak}
-                    datum={datum}
-                    onDatum={kiesDatum}
-                    dagdeel={dagdeel}
-                    onDagdeel={setDagdeel}
-                  />
-                )}
+                {/* De datumkeuze hangt af van de behandeling: laserontharing
+                    begint met een intake, en bij "overig" hoort een bericht en
+                    geen datum. Daardoor stond hier vóór een keuze helemaal
+                    niets, en zag een bezoeker op /boeken nooit dat er een
+                    agenda was. De plek is nu altijd zichtbaar en zegt zelf wat
+                    er moet gebeuren. */}
+                {metAgenda &&
+                  (geladen && afspraak ? (
+                    <AfspraakKiezer
+                      afspraak={afspraak}
+                      datum={datum}
+                      onDatum={kiesDatum}
+                      dagdeel={dagdeel}
+                      onDagdeel={setDagdeel}
+                    />
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                        Wanneer schikt het u?
+                      </p>
+                      <div
+                        className="flex items-start gap-3 border border-dashed px-4 py-4"
+                        style={{
+                          borderColor: "color-mix(in oklch, var(--rose-gold) 40%, transparent)",
+                        }}
+                      >
+                        <CalendarDays
+                          size={18}
+                          className="mt-0.5 shrink-0"
+                          style={{ color: "var(--rose-gold)" }}
+                          aria-hidden="true"
+                        />
+                        <p className="font-sans text-sm leading-relaxed text-muted-foreground">
+                          {form.treatment === "overig" ? (
+                            <>
+                              Bij &ldquo;overig&rdquo; plannen we geen datum vooruit.
+                              Laat hieronder uw vraag achter, dan nemen we contact
+                              met u op.
+                            </>
+                          ) : (
+                            <>
+                              Kies hierboven een behandeling, dan verschijnt hier de
+                              kalender en kiest u zelf een dag die u schikt.
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="contact-bericht" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">

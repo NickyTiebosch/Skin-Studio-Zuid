@@ -188,7 +188,7 @@
    slechter, niet beter. Het ontwerp blijft nu zoals het was; hier staat
    uitsluitend wat er beweegt.
 
-   Vier regels die overal gelden:
+   Vijf regels die overal gelden:
 
    1. DE ZICHTBARE TOESTAND IS DE BASIS. Een browser zonder
       `animation-timeline` (Firefox, Safari < 26) negeert die regel maar leest
@@ -206,6 +206,14 @@
       hero, niet de foto. Een element dat op onzichtbaar begint telt pas als
       geladen zodra het verschijnt. De kop beweegt daarom achter een masker:
       puur `transform`, dekking ongewijzigd.
+
+   5. GEEN `overflow: hidden` OM IETS DAT OP DE SCROLL-TIJDLIJN BEWEEGT. Een
+      element met `overflow: hidden` (ook alleen `overflow-x`) is een
+      scroll-container, en `animation-timeline: view()` rekent dan tegen dát
+      element in plaats van tegen het venster: de animatie staat meteen in de
+      eindstand. `overflow: clip` knipt net zo goed en maakt géén
+      scroll-container. Gevonden bij de tellers van editie 2: <main> had
+      `overflow-x: hidden`, en daarmee stond élke reveal stil.
    ========================================================================== */
 
 @property --ssz-glans {
@@ -705,6 +713,537 @@
     ::view-transition-new(*) {
       animation-duration: 0s !important;
       animation-delay: 0s !important;
+    }
+  }
+}
+
+
+/* ==========================================================================
+   Editie 2 — "de studio in"
+   --------------------------------------------------------------------------
+   De tweede, beeldrijke versie van de site. Bouwt voort op de bewegingslaag
+   hierboven en houdt zich aan dezelfde vijf regels. Wat hier staat is
+   uitsluitend wat editie 2 extra nodig heeft: glas, gloed, korrel, de
+   poortvorm van de hero en het overlay-menu. Alle scroll-scènes met een pin
+   staan in GSAP (components/editie2/beweging) en niet hier, omdat een
+   view-timeline en een pin elkaar in de weg zitten.
+   ========================================================================== */
+
+@layer components {
+  /* Melkglas. Het vervagen van de achtergrond is een dure bewerking; alleen
+     op apparaten met een muis en een scherm vanaf 768px, daaronder een
+     ondoorzichtiger vlak dat er hetzelfde uitziet. */
+  .e2-glas {
+    background-color: color-mix(in oklch, var(--cream) 78%, transparent);
+    border: 1px solid color-mix(in oklch, var(--rose-gold) 22%, transparent);
+    box-shadow: 0 30px 80px -48px color-mix(in oklch, var(--walnut) 55%, transparent);
+  }
+
+  @media (hover: hover) and (min-width: 768px) {
+    .e2-glas {
+      background-color: color-mix(in oklch, var(--cream) 62%, transparent);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+  }
+
+  /* Zachte rosé-gouden gloed, als achtergrond achter beeld of glas. */
+  .e2-gloed {
+    background: radial-gradient(
+      55% 50% at 50% 50%,
+      color-mix(in oklch, var(--rose-gold-light) 55%, transparent),
+      transparent 72%
+    );
+  }
+
+  /* Fijne korrel over een sectie: haalt het "digitale" van de vlakken af.
+     Eén SVG-ruis van 200px, herhaald; dekking laag genoeg om niet op te vallen. */
+  .e2-korrel {
+    position: relative;
+  }
+
+  .e2-korrel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23r)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* De poort van de hero: een boog (ronde bovenhoeken) die overflow afsnijdt.
+     De straal wordt door de scène in pixels gezet en naar 0 getweend zodra de
+     boog het scherm vult. */
+  .e2-poort {
+    border-radius: 999px 999px 0 0;
+    overflow: hidden;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  /* Trage zoom op de foto in de poort. Puur transform, begint op volle
+     dekking, dus onschadelijk voor de laadtijdmeting. */
+  @keyframes e2-kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+    .e2-kenburns {
+      animation: e2-kenburns 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+  }
+
+  /* Het lijntje in de scroll-cue: groeit van links, krimpt naar rechts. */
+  @keyframes e2-cue-lijn {
+    0% {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    45% {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    55% {
+      transform: scaleX(1);
+      transform-origin: right;
+    }
+    100% {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .e2-cue-lijn {
+      animation: e2-cue-lijn 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+  }
+
+  /* Overlay-menu: de regels verschijnen trapsgewijs. Het menu bestaat pas
+     als het open is, dus dit verbergt nooit inhoud van de pagina. */
+  @keyframes e2-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .e2-menu-item {
+      animation: e2-menu-in 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+  }
+}
+
+@property --e2-n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     Editie 2: tellers, rondgang, traject
+     ---------------------------------------------------------------------- */
+
+  /* Teller die op de view-timeline optelt. De basistoestand is het eindgetal
+     (regel 1); alleen browsers met scroll-tijdlijn tellen vanaf nul. */
+  .e2-teller {
+    --e2-n: var(--e2-doel, 0);
+    counter-reset: e2-n var(--e2-n);
+  }
+
+  .e2-teller::after {
+    content: counter(e2-n);
+  }
+
+  @keyframes e2-tel {
+    from {
+      --e2-n: 0;
+    }
+    to {
+      --e2-n: var(--e2-doel, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-teller {
+        animation: e2-tel linear both;
+        animation-timeline: view();
+        animation-range: entry 15% entry 75%;
+      }
+    }
+  }
+
+  /* Rondgang: de basis is een gewone horizontaal scrollende rij met snap.
+     Op desktop zet GSAP `overflow-x: hidden` en schuift de rij zelf. */
+  .e2-rondgang-venster {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .e2-rondgang-venster::-webkit-scrollbar {
+    display: none;
+  }
+
+  .e2-paneel {
+    scroll-snap-align: center;
+  }
+
+  /* De lichtstraal in het traject: zichtbaar als basis, GSAP laat hem groeien. */
+  .e2-straal {
+    transform: scaleY(1);
+  }
+}
+
+/* ==========================================================================
+   Editie 2 — de behandelpagina's
+   --------------------------------------------------------------------------
+   Drie dingen: de huidlagen van de gezichtsbehandeling, de lichtband van de
+   laserpagina en de uitvouwbare vragenlijst. Alle drie houden zich aan de
+   vijf regels bovenin dit bestand: de eindstand is de basistoestand, er
+   beweegt alleen `transform`, en niets hiervan verbergt inhoud voor een
+   browser zonder scroll-tijdlijn.
+   ========================================================================== */
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     Huidlagen: drie vlakken die uit elkaar liften
+     ---------------------------------------------------------------------- */
+
+  /* De vaste verhouding staat er vóór alles: de stapel reserveert zijn ruimte
+     bij de eerste opmaak, dus er verschuift niets als hij gaat bewegen. */
+  .e2-huidstapel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    perspective: 900px;
+    perspective-origin: 50% 42%;
+  }
+
+  .e2-huidstapel-binnen {
+    position: absolute;
+    inset: 14% 6%;
+    transform-style: preserve-3d;
+    transform: rotateX(58deg) rotateZ(-8deg);
+  }
+
+  /* Na die kanteling wijst de Z-as schuin omhoog: een grotere Z tilt een laag
+     op boven de vorige. De opgetilde stand is de basis. */
+  .e2-huidlaag {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1px solid color-mix(in oklch, var(--rose-gold) 28%, transparent);
+    box-shadow: 0 30px 70px -34px color-mix(in oklch, var(--walnut) 62%, transparent);
+    transform: translateZ(var(--e2-laag-z, 0px));
+  }
+
+  /* Van oppervlak naar diepte: licht, zand, warm. */
+  .e2-huidlaag-1 {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--cream) 92%, transparent),
+      color-mix(in oklch, var(--sand-light) 88%, transparent)
+    );
+  }
+
+  .e2-huidlaag-2 {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--sand) 90%, transparent),
+      color-mix(in oklch, var(--rose-gold-light) 45%, transparent)
+    );
+  }
+
+  .e2-huidlaag-3 {
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--rose-gold-light) 65%, transparent),
+      color-mix(in oklch, var(--rose-gold) 45%, transparent)
+    );
+  }
+
+  /* Eén lichtvlek per laag, zodat de vlakken niet als plat papier lezen. */
+  .e2-huidlaag-glans {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      45% 60% at 28% 24%,
+      color-mix(in oklch, var(--cream) 75%, transparent),
+      transparent 70%
+    );
+  }
+
+  @keyframes e2-huidlaag-lift {
+    from {
+      transform: translateZ(0px);
+    }
+    to {
+      transform: translateZ(var(--e2-laag-z, 0px));
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-huidlaag {
+        animation: e2-huidlaag-lift linear both;
+        animation-timeline: view();
+        animation-range: entry 25% cover 45%;
+      }
+
+      /* Trapsgewijs, net als .ssz-trap: een verschoven bereik per laag. */
+      .e2-huidlaag-2 {
+        animation-range: entry 30% cover 52%;
+      }
+
+      .e2-huidlaag-3 {
+        animation-range: entry 35% cover 58%;
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     Lichtband: de CSS-versie van accent B
+     ---------------------------------------------------------------------- */
+
+  /* Dit is wat vrijwel iedereen ziet — mobiel, zonder muis, met beweging uit,
+     of zonder WebGL 2. De WebGL-scène doet hetzelfde beeld, niet meer. */
+  /* De ondergrond blijft licht en warm — crème naar zand, niet naar rood. Het
+     eerste ontwerp liet hem naar vol rosé-goud lopen om de linten te laten
+     opvallen; dat werkte, maar de band werd een roze vlak en dat is niet de
+     huisstijl. De diepte komt nu van het onderste lint, dat als enige echt
+     kleurt. */
+  .e2-band {
+    background: linear-gradient(
+      to bottom,
+      var(--cream) 0%,
+      var(--sand-light) 22%,
+      var(--sand) 62%,
+      color-mix(in oklch, var(--rose-gold-light) 35%, var(--sand)) 100%
+    );
+  }
+
+  /* Elk lint beslaat de hele band en tekent zijn vlek bovenin. Zo is de
+     verplaatsing een percentage van de bandhoogte en klopt hij op elk scherm. */
+  /* Elk lint beslaat de hele band en tekent zijn vlek bovenin. Zo is de
+     verplaatsing een percentage van de bandhoogte en klopt hij op elk scherm.
+     Dieper licht is breder en zwakker; dat is het hele beeld. */
+  .e2-band-lint {
+    position: absolute;
+    inset: 0;
+    filter: blur(12px);
+    transform: translateY(var(--e2-lint-y, 0%));
+  }
+
+  .e2-band-lint-1 {
+    --e2-lint-y: 20%;
+    background: radial-gradient(
+      58% 7% at 50% 10%,
+      var(--cream),
+      color-mix(in oklch, var(--cream) 45%, transparent) 45%,
+      transparent 72%
+    );
+  }
+
+  .e2-band-lint-2 {
+    --e2-lint-y: 46%;
+    background: radial-gradient(
+      66% 9% at 50% 10%,
+      color-mix(in oklch, var(--cream) 88%, var(--rose-gold-light)),
+      color-mix(in oklch, var(--cream) 35%, transparent) 50%,
+      transparent 76%
+    );
+  }
+
+  /* Het diepste lint is het enige gekleurde element: rosé-goud, breed en
+     zacht, zoals licht dat aan het eind van zijn weg is. */
+  .e2-band-lint-3 {
+    --e2-lint-y: 72%;
+    background: radial-gradient(
+      76% 13% at 50% 10%,
+      color-mix(in oklch, var(--rose-gold) 78%, var(--cream)),
+      color-mix(in oklch, var(--rose-gold) 26%, transparent) 52%,
+      transparent 80%
+    );
+  }
+
+  @keyframes e2-band-zak {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(var(--e2-lint-y, 0%));
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-band-lint {
+        animation: e2-band-zak linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 60%;
+      }
+
+      .e2-band-lint-2 {
+        animation-range: entry 10% cover 70%;
+      }
+
+      .e2-band-lint-3 {
+        animation-range: entry 10% cover 80%;
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     Uitvouwbare vragen
+     ---------------------------------------------------------------------- */
+
+  /* Een gewone <details>: open en dicht zonder JavaScript, en het antwoord
+     staat altijd in de HTML — ook voor een zoekmachine die niet klikt. */
+  .e2-vouw {
+    border-top: 1px solid var(--border);
+  }
+
+  .e2-vouw:last-of-type {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .e2-vouw-kop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .e2-vouw-kop::-webkit-details-marker {
+    display: none;
+  }
+
+  .e2-vouw-kop:focus-visible {
+    outline: 2px solid var(--rose-gold);
+    outline-offset: 4px;
+  }
+
+  /* Plus dat een min wordt: twee streepjes, waarvan er één wegdraait. */
+  .e2-vouw-teken {
+    position: relative;
+    flex: none;
+    width: 14px;
+    height: 14px;
+  }
+
+  .e2-vouw-teken::before,
+  .e2-vouw-teken::after {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto 0;
+    height: 1px;
+    background-color: var(--rose-gold);
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .e2-vouw-teken::after {
+    transform: rotate(90deg);
+  }
+
+  .e2-vouw[open] .e2-vouw-teken::after {
+    transform: rotate(90deg) scaleX(0);
+  }
+
+  .e2-vouw-tekst {
+    max-width: 62ch;
+    padding-bottom: 1.4rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .e2-vouw-teken::before,
+    .e2-vouw-teken::after {
+      transition: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   Paginaovergang: de behandelfoto mag niet uitrekken
+   --------------------------------------------------------------------------
+   De browser geeft de twee momentopnamen van een view-transition standaard
+   `object-fit: fill` met een automatische hoogte. De kaart op de homepage is
+   4:3 en het kopbeeld op de behandelpagina is breder, dus zonder deze regel
+   zie je de foto tijdens de overgang zichtbaar vervormen. Een pseudo-element
+   kent geen selector op een deel van de naam, dus de namen staan er voluit;
+   komt er ooit een derde behandeling bij, dan hoort hier een regel bij.
+   ========================================================================== */
+
+::view-transition-old(behandeling-laserontharing),
+::view-transition-new(behandeling-laserontharing),
+::view-transition-old(behandeling-gezichtsbehandelingen),
+::view-transition-new(behandeling-gezichtsbehandelingen) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     De ring van licht: de terugval kantelt mee
+     ----------------------------------------------------------------------
+     Waar de WebGL-scène niet laadt — elke telefoon, elk apparaat zonder muis —
+     doet CSS het werk. Een cirkel die om zijn horizontale as draait wordt een
+     ellips, en dat leest als dezelfde kantelende ring. Stilstaand is de
+     basistoestand, dus zonder scroll-tijdlijn staat er gewoon een nette ring.
+     ---------------------------------------------------------------------- */
+
+  .e2-ringvlak {
+    perspective: 900px;
+  }
+
+  .e2-ringlijn {
+    transform: rotateX(0deg);
+  }
+
+  @keyframes e2-ring-kantel {
+    from {
+      transform: rotateX(-18deg) rotateZ(-5deg);
+    }
+    to {
+      transform: rotateX(12deg) rotateZ(5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .e2-ringlijn {
+        animation: e2-ring-kantel linear both;
+        animation-timeline: view();
+        animation-range: entry 5% exit 95%;
+      }
+
+      /* De buitenste ring loopt iets achter, zodat de twee niet als één plat
+         vlak bewegen. */
+      .e2-ringlijn-buiten {
+        animation-range: entry 0% exit 100%;
+      }
     }
   }
 }
