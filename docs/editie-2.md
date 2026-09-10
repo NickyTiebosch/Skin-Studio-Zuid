@@ -42,6 +42,12 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   knop naar `/boeken?behandeling=consult`) → quote → producten (echte
   plank-uitsnede) → contact (formulier in glas) → footer. Ankers
   `#behandelingen`, `#rondgang`, `#studio`, `#traject`, `#producten`, `#contact`.
+- **Behandelpagina's (M2)**: kruimelpad → kop met h1 en de twee knoppen →
+  kopbeeld met view-transition → "Hoe het werkt" met een meelopende kop op
+  desktop → het accent van die behandeling (huidlagen bij de gezichtsbehandeling,
+  lichtband bij laserontharing) → voordelen in glas (alleen laserontharing) →
+  sfeerband uit het manifest → vragen als `<details>` → doorverwijzingen naar de
+  tarieven en de andere behandeling. Alle structured data ongewijzigd.
 - **WebGL** alleen achter `components/editie2/accenten/webgl-poort.tsx`: desktop,
   muis, geen reduced motion, geen databesparing, WebGL 2 zonder software-
   rendering, na idle en pas als de sectie nadert. Anders een stilstaand beeld
@@ -76,6 +82,37 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   "Pijnvrije ervaring", "Direct zichtbaar resultaat") maakten claims die de
   datalaag niet draagt; de tellers (feiten uit `lib/tarieven.ts`) en het
   traject nemen die plek in.
+- **Het kopbeeld van een behandelpagina blijft de foto van de homepage-kaart**,
+  en staat binnen `max-w-6xl` in plaats van over de volle breedte. Twee redenen.
+  De view-transition (`components/paginaovergang.tsx`) laat de kaartfoto
+  doorgroeien naar de kop; wijst de kop naar een ánder beeld, dan wordt dat een
+  kruisvervaging tussen twee onherkenbare foto's en vervalt de reden waarom die
+  overgang bestaat. En beide behandelfoto's zijn 1024×1024: een 21:9-uitsnede
+  daaruit is 1024×439, en die over 1440 px uitsmeren kost zichtbaar scherpte op
+  precies het element dat de laadtijdmeting oppikt. Binnen `max-w-6xl` blijft de
+  opschaling onder de 13%. Zodra de 21:9-beelden uit de shotlist er zijn (M4) kan
+  `behandeling.image` naar dat bestand wijzen; dan klopt het aan beide kanten en
+  mag de band alsnog het hele scherm vullen. `laserKop` en `gezichtKop` uit het
+  manifest staan tot die tijd als sfeerband tussen de uitleg en de vragen.
+  Bijkomend: `::view-transition-old/new` krijgt `object-fit: cover`, anders rekt
+  de browser de 4:3-kaart uit naar de bredere kop tijdens de overgang.
+- **De gezichtsbehandeling toont haar drie technieken één keer, niet twee.** De
+  huidlagen worden gevoed door dezelfde `benefits` als de glas-kaarten, dus de
+  pagina kiest: huidlagen bij de gezichtsbehandeling, glas-kaarten (vier
+  voordelen) bij laserontharing. Die koppeling staat in
+  `components/editie2/behandeling-pagina.tsx` en niet in de datalaag — dat
+  bestand beschrijft de behandeling, niet hoe editie 2 haar in beeld brengt.
+- **Geen enkele GSAP-scène op de behandelpagina's.** De meelopende kop is
+  `position: sticky`, de huidlagen zijn CSS op de view-timeline, en de lichtband
+  heeft achter de WebGL-poort zijn eigen scroll-listener. Een pin zou hier zelfs
+  schadelijk zijn: een uitklappende vraag verandert de paginahoogte, en dan
+  hermeet ScrollTrigger de hele pagina en springt de scroll weg onder de lezer.
+- **De lichtband is licht gebleven.** De eerste versie liet de ondergrond naar
+  vol rosé-goud lopen om de drie lichtlinten te laten opvallen. Dat werkte, maar
+  het leverde een roze vlak op in plaats van een warm accent. Nu blijft de
+  ondergrond crème → zand en kleurt alleen het diepste lint. In de shader mengt
+  het licht naar zijn eigen kleur toe in plaats van op te tellen: optellen loopt
+  op een lichte ondergrond meteen naar wit, en dan verdwijnen juist de linten.
 
 ## Beeldmanifest en placeholders
 
@@ -144,6 +181,10 @@ zitten op desktop ook ~30 kB prefetch van de gelinkte pagina's
 | M1 | 1440×900 | 0,94 s | poortbeeld (IMG) | 0 | 161 kB | 75 kB (44 GSAP + 30 prefetch) |
 | M1 | 390×844 | 0,92 s | poortbeeld (IMG) | 0 | 161 kB | 54 kB (44 GSAP + 10 prefetch) |
 | M1 | 1440×900, reduced motion | 0,95 s | poortbeeld (IMG) | 0 | 161 kB | 30 kB (alleen prefetch; geen GSAP) |
+| M2 | /laserontharing 1440×900 | 0,80 s | kopbeeld (IMG) | 0 | 146 kB | 48 kB |
+| M2 | /laserontharing 390×844 | 0,72 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
+| M2 | /gezichtsbehandelingen 1440×900 | 0,80 s | kopbeeld (IMG) | 0 | 146 kB | 48 kB |
+| M2 | /gezichtsbehandelingen 390×844 | 0,75 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
 
 Het poortbeeld is nu het grootste element in plaats van de h1; het staat er
 ruim binnen het doel omdat het het enige `priority`-beeld is. De eerste lading
@@ -161,7 +202,7 @@ staan precies drie pins (hero, rondgang, traject) en één h1.
 |---|---|---|
 | M0 | Fundament: branch, bibliotheken, manifest, balk, hero-portaal, draft-PR | klaar (10 sep) |
 | M1 | Homepage compleet: glas-kaarten, tellers, rondgang, studio, traject, producten, contact in glas | klaar (10 sep) |
-| M2 | Behandelpagina's, huidlagen, lichtband | — |
+| M2 | Behandelpagina's, huidlagen, lichtband | klaar (10 sep) |
 | M3 | Ring-accent, tarieven/boeken/privacy, a11y, bundelmeting | — |
 | M4 | AI-beeld (na tegoed) | — |
 | M5 | Go-live | — |

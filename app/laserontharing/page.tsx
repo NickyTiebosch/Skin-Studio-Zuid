@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { BehandelingPagina } from "@/components/behandeling-pagina"
+import { BehandelingPagina } from "@/components/editie2/behandeling-pagina"
 import { behandelingBySlug } from "@/lib/behandelingen"
 import { OPENGRAPH_BASIS } from "@/lib/site"
 
