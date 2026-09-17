@@ -164,6 +164,23 @@ tekstreveal per regel, gepinde secties, en volledige reduced-motion-fallbacks.
   kalender"; bij "overig" staat er dat we dan geen datum vooruit plannen. Dit
   is geen fout van editie 2: dezelfde voorwaarde staat op `main`, dus de live
   site heeft hem ook.
+- **De rondgang staat op een telefoon stil en wordt geblaadderd, niet geschoven.**
+  Dit is twee keer bijgesteld. Eerst kon je alleen vegen, maar niets liet zien
+  dat er meer foto's waren, dus zag vrijwel iedereen er één. Toen schoven de
+  panelen automatisch mee met het verticaal scrollen, en stond er bij elke
+  scrollpositie een halve foto in beeld zonder dat je er grip op had. Nu staan
+  de foto's stil, staat er telkens één vol in beeld met een glimp van de
+  volgende, en zeggen vijf stippen, de tekst "veeg of tik" en twee pijlknoppen
+  dat er meer is. De knoppen werken ook bij uitgezette beweging en met het
+  toetsenbord, dus de foto's zijn voor iedereen bereikbaar. Bewust géén pin:
+  die zou de verticale scroll kapen, en dat hoort een pagina op een telefoon
+  niet te doen.
+- **De poort dekt op een telefoon de kop af in plaats van andersom.** De kop
+  stond in de opmaak bóven de poort én er met `z-10` overheen; zodra de poort
+  openging bleven de knopranden als spookvormen over de foto liggen. De poort
+  ligt nu op `z-20` met `pointer-events: none` (de knoppen blijven klikbaar) en
+  de kop gaat naar dekking nul in plaats van naar een restje, klaar op 45% van
+  de beweging.
 
 ## Beeldmanifest en placeholders
 
@@ -237,6 +254,7 @@ zitten op desktop ook ~30 kB prefetch van de gelinkte pagina's
 | M2 | /gezichtsbehandelingen 1440×900 | 0,80 s | kopbeeld (IMG) | 0 | 146 kB | 48 kB |
 | M2 | /gezichtsbehandelingen 390×844 | 0,75 s | kopbeeld (IMG) | 0 | 146 kB | 38 kB |
 | M3+ | homepage 390×844, ná de mobiele effecten | 0,90 s | poortbeeld (IMG) | 0 | 162 kB | 54 kB |
+| M3+ | homepage 390×844, ná de rondgang-navigatie | 1,00 s | poortbeeld (IMG) | 0 | 163 kB | 54 kB |
 | M3 | homepage 1440×900, ring in beeld | — | — | 0 | 161 kB | + 231 kB (three, alleen desktop met muis) |
 
 Het poortbeeld is nu het grootste element in plaats van de h1; het staat er

@@ -125,11 +125,13 @@ export function HeroPortaal() {
         },
         0
       )
-        // De kop pas laten wijken als de poort echt open is: op een telefoon
-        // staat de tekst anders al te vervagen terwijl je hem nog leest.
-        .to(tekst, { y: -40, opacity: 0.12, ease: EASE.geen }, 0.3)
-        .to(cue, { opacity: 0, ease: EASE.geen }, 0.2)
-        .to(gloed, { opacity: 0, ease: EASE.geen }, 0)
+        // De kop gaat hier naar nul, niet naar een restje: hij ligt op een
+        // telefoon recht boven de poort, en een half zichtbare knop onder een
+        // opschuivende foto leest als een fout. Hij is weg op 45% van de
+        // beweging, ruim voordat de foto zijn plek inneemt.
+        .to(tekst, { y: -40, opacity: 0, ease: EASE.geen, duration: 0.35 }, 0.1)
+        .to(cue, { opacity: 0, ease: EASE.geen, duration: 0.25 }, 0.1)
+        .to(gloed, { opacity: 0, ease: EASE.geen, duration: 0.5 }, 0)
     })
   })
 
@@ -148,7 +150,7 @@ export function HeroPortaal() {
 
       <div className="relative mx-auto grid min-h-[100svh] max-w-7xl grid-cols-1 items-center gap-10 px-6 pb-16 pt-28 md:px-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,42vw)] lg:gap-16 lg:pb-0 lg:pt-20">
         {/* Kop */}
-        <div data-e2="tekst" className="relative z-10 max-w-xl">
+        <div data-e2="tekst" className="relative z-10 max-w-xl [&_a]:pointer-events-auto">
           <p
             className="ssz-intro-op font-sans text-xs tracking-[0.4em] uppercase mb-6"
             style={{ color: "var(--rose-gold)" }}
@@ -186,8 +188,14 @@ export function HeroPortaal() {
           </div>
         </div>
 
-        {/* De poort: de behandelkamer in een boogvorm */}
-        <div className="relative flex justify-center lg:justify-end">
+        {/* De poort: de behandelkamer in een boogvorm.
+
+            `z-20` en `pointer-events-none`: op een telefoon staat de kop bóven
+            de poort in de opmaak, en zodra de poort opengaat schuift hij daar
+            overheen. Lag de kop dan bovenop, dan bleven de knopranden als
+            spookvormen over de foto liggen. De poort dekt de kop nu netjes af
+            en laat kliks erdoorheen, zodat de knoppen bereikbaar blijven. */}
+        <div className="relative z-20 flex justify-center pointer-events-none lg:justify-end">
           <div
             data-e2="poort"
             className="e2-poort relative aspect-[4/5] w-[min(86vw,420px)] lg:aspect-auto lg:h-[74vh] lg:w-[40vw] lg:max-w-none"
