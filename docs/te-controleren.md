@@ -252,3 +252,26 @@ behandeling**. Dat is het enige dat nu nog blokkeert.
 **Niet in het boekingsformulier zetten:** vragen over huidtype, medicijngebruik
 of zwangerschap. Dat zijn gezondheidsgegevens onder artikel 9 AVG, met een
 zwaarder regime. De medische intake hoort apart, niet in het formulier.
+
+---
+
+## Quick wins uit de SEO-beoordeling — 9 oktober 2026
+
+Doorgevoerd naar aanleiding van `docs/seo-geo-aeo-beoordeling.md`. Nieuwe
+teksten die de kliniek moet nalopen:
+
+| Wat | Waar | Nakijken op |
+|---|---|---|
+| **Postcode 5216 VR** | `lib/contact.ts`, contactpagina, structured data, `llms.txt` | Opgezocht in OpenStreetMap, niet aangeleverd. Klopt hij? |
+| **Coördinaten** 51.6831879, 5.3281354 | `lib/contact.ts`, structured data | Idem, OpenStreetMap. |
+| **Ligging en werkgebied**: "in het zuiden van 's-Hertogenbosch", bereikbaar vanuit Vught, Rosmalen, Sint-Michielsgestel, Vlijmen, Engelen en Boxtel | `lib/contact.ts`, homepage (Over ons), `/contact`, `llms.txt` | Komen klanten inderdaad uit die plaatsen? Andere plaatsen toevoegen of schrappen is één lijst. |
+| **Samenvatting bovenaan elke behandelpagina** (eerste alinea, vóór de oorspronkelijke tekst) | `lib/behandelingen.ts`, veld `samenvatting` | Geschreven uit de bestaande teksten; bevat geen nieuwe feiten. |
+| **Stappenplan laserontharing** (intake, eerste behandeling, vervolgsessies, kuur van zes) | `lib/behandelingen.ts`, veld `stappen` | Zelfde bron als de FAQ en `KUUR_ADVIES`. Klopt de volgorde? |
+| **Hydrafacial-alinea** op de gezichtsbehandelingenpagina en in `llms.txt` | `lib/behandelingen.ts`, veld `aliasOpmerking` | Zegt dat de HydraSpa volgens hetzelfde principe werkt en dat Hydrafacial een merknaam van een andere fabrikant is. Dit raakt het open punt "Hydrafacial versus HydraSpa" hierboven: als de kliniek wél met Hydrafacial-apparatuur werkt, moet deze alinea eruit. |
+| **Spaarapp in Google Play** als extern profiel | `lib/contact.ts`, structured data `sameAs` | Is `nl.skinstudiozuid.app` de app van de kliniek? De App Store-URL ontbreekt nog. |
+| **Kop "Medische Innovatie"** (was "Medische Innovatie 2026") | `components/why-us-section.tsx` | Jaartal weggehaald zodat de kop niet veroudert. |
+
+Wat bewust níét is gedaan, omdat de gegevens ontbreken: openingstijden in de
+structured data, behandelduur en aantal sessies in de teksten, een
+over-ons-pagina met naam en certificering van de behandelaar, en een
+nazorg-sectie. Die staan onder "Wat er bewust níét op staat" hierboven.

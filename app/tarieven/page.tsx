@@ -5,8 +5,9 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { TarievenMelder } from "@/components/tarieven-melder"
 import { behandelingen } from "@/lib/behandelingen"
-import { ADRES, BEDRIJFSNAAM, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
+import { ADRES, BEDRIJFSNAAM, PLAATS_ZOEKNAAM, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
 import { OPENGRAPH_BASIS, SITE_URL, kruimelpadSchema } from "@/lib/site"
+import { bijgewerktTekst } from "@/lib/bijgewerkt"
 import {
   KUUR_ADVIES,
   type Kuur,
@@ -19,7 +20,7 @@ import {
 const tarievenBekend = heeftTarieven()
 
 export const metadata: Metadata = {
-  title: "Tarieven laserontharing en gezichtsbehandelingen",
+  title: `Tarieven laserontharing en gezichtsbehandeling ${PLAATS_ZOEKNAAM}`,
   description: `Tarieven van ${BEDRIJFSNAAM} in ${ADRES.plaats}: laserontharing per lichaamsdeel voor vrouwen en mannen, kuren en gezichtsbehandelingen. Gratis intakegesprek.`,
   alternates: { canonical: "/tarieven" },
   robots: tarievenBekend
@@ -42,12 +43,34 @@ function Bedrag({ prijs }: { prijs: number | "gratis" }) {
   return <>&euro; {prijs}</>
 }
 
-/** Een prijstabel: per regel de naam, eventueel een toelichting, en het bedrag. */
+/**
+ * Een prijstabel: per regel de naam, eventueel een toelichting, en het bedrag.
+ *
+ * Met kolomkoppen: zoekmachines tonen een tabel alleen als antwoord op
+ * "wat kost…" als duidelijk is wat de kolommen betekenen, en AI-assistenten
+ * lezen "Prijs per behandeling" mee als ze een bedrag citeren.
+ */
 function Prijstabel({ groep }: { groep: Tariefgroep }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full font-sans text-sm">
         <caption className="sr-only">{groep.titel}</caption>
+        <thead>
+          <tr className="border-b" style={{ borderColor: "var(--border)" }}>
+            <th
+              scope="col"
+              className="py-2 pr-4 text-left font-normal text-xs tracking-[0.15em] uppercase text-muted-foreground"
+            >
+              Behandeling
+            </th>
+            <th
+              scope="col"
+              className="py-2 text-right font-normal text-xs tracking-[0.15em] uppercase text-muted-foreground whitespace-nowrap"
+            >
+              Prijs per behandeling
+            </th>
+          </tr>
+        </thead>
         <tbody>
           {groep.regels.map((regel) => (
             <tr
@@ -175,7 +198,7 @@ export default function Tarieven() {
             Wat kost het
           </span>
           <h1 className="font-serif text-3xl md:text-5xl text-foreground text-balance mb-6 leading-tight">
-            Tarieven in {ADRES.plaats}
+            Tarieven laserontharing en gezichtsbehandeling in {PLAATS_ZOEKNAAM}
           </h1>
           <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
           <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-2xl mb-4">
@@ -186,6 +209,11 @@ export default function Tarieven() {
           <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-2xl">
             {KUUR_ADVIES}
           </p>
+          {bijgewerktTekst("/tarieven") && (
+            <p className="font-sans text-xs text-muted-foreground mt-4">
+              Tarieven bijgewerkt op {bijgewerktTekst("/tarieven")}
+            </p>
+          )}
 
           {/* Per doelgroep: eerst de pakketten, dan de losse lichaamsdelen */}
           <div className="flex flex-col gap-14 mt-16">

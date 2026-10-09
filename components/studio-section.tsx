@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { WERKGEBIED, WIJK } from "@/lib/contact"
 import StudioImage from "@/Images/1000026036.jpg"
 import { BEDRIJFSNAAM } from "@/lib/contact"
 
@@ -24,6 +25,10 @@ export function StudioSection() {
             </p>
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
               Wij werken uitsluitend met gecertificeerde specialisten en de meest geavanceerde apparatuur: de Atres Triple Wave Laser voor definitieve ontharing en de Atres HydraSpa voor huidverbetering en lift. Techniek en expertise in één.
+            </p>
+            <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
+              De studio zit {WIJK}, aan de Hildebrandstraat, en is goed bereikbaar vanuit{" "}
+              {WERKGEBIED.slice(0, -1).join(", ")} en {WERKGEBIED[WERKGEBIED.length - 1]}.
             </p>
             <p className="font-sans text-sm leading-relaxed text-muted-foreground">
               Wij veranderen niet wie je bent — we onthullen de beste versie van jezelf met de techniek van morgen.

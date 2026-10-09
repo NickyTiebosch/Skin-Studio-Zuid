@@ -1,22 +1,29 @@
 # Skinstudio Zuid
 
-> Kliniek in 's-Hertogenbosch voor gezichtsbehandelingen en laserontharing.
-> Werkt met de Atres Triple Wave laser en de Atres HydraSpa.
+> Kliniek in Den Bosch ('s-Hertogenbosch) voor laserontharing en
+> gezichtsbehandelingen. Werkt met de Atres Triple Wave laser en de Atres
+> HydraSpa.
 
 ## Contact en locatie
 
-- Adres: Hildebrandstraat 8, 's-Hertogenbosch, Nederland
+- Adres: Hildebrandstraat 8, 5216 VR 's-Hertogenbosch, Nederland
+- Ligging: in het zuiden van 's-Hertogenbosch; goed bereikbaar vanuit Vught,
+  Rosmalen, Sint-Michielsgestel, Vlijmen, Engelen en Boxtel
 - Telefoon: 073 689 6423
 - E-mail: info@skinstudio-zuid.nl
 - Instagram: https://www.instagram.com/skinstudio_zuid
+- Spaarapp: https://play.google.com/store/apps/details?id=nl.skinstudiozuid.app
 - Openingstijden: op afspraak
+- Contactpagina: https://skin-studio-zuid.vercel.app/contact
 
 ## Behandelingen
 
 ### Laserontharing
 
 Definitieve ontharing met de Atres Triple Wave, een medisch gecertificeerde
-laser die drie golflengtes combineert. Waar oudere lasers moeite hebben met
+laser die drie golflengtes combineert. Een traject begint altijd met een
+gratis intake in de studio; daarna worden de sessies gepland, met tussenpozen
+afgestemd op de groeifase van het haar. Waar oudere lasers moeite hebben met
 lichte haartjes of een donkere huid, is deze geschikt voor elk huid- en
 haartype. De laserkop koelt actief, waardoor de behandeling vrijwel pijnloos
 is, en de In-Motion techniek verkort de behandeltijd. Geschikt voor
@@ -24,7 +31,9 @@ behandelingen het hele jaar door.
 
 ### Gezichtsbehandelingen
 
-Huidverbetering en lift met de Atres HydraSpa, die drie technieken combineert:
+Huidverbetering en lift met de Atres HydraSpa (geen Hydrafacial: dat is de
+merknaam van een andere fabrikant, het principe is vergelijkbaar), die drie
+technieken combineert:
 
 1. Reiniging en hydratatie met Vortex-technologie, die onzuiverheden uit de
    poriën zuigt en de huid tegelijk verzadigt met serums.
@@ -45,6 +54,7 @@ Cream. Verkrijgbaar via de studio.
 - https://skin-studio-zuid.vercel.app/laserontharing — definitieve ontharing met de Atres Triple Wave, inclusief veelgestelde vragen
 - https://skin-studio-zuid.vercel.app/gezichtsbehandelingen — huidverbetering met de Atres HydraSpa, inclusief veelgestelde vragen
 - https://skin-studio-zuid.vercel.app/tarieven — tarieven en behandelduur
+- https://skin-studio-zuid.vercel.app/contact — adres, telefoon, e-mail en werkgebied
 - https://skin-studio-zuid.vercel.app/boeken — een afspraak aanvragen: kies een behandeling, een datum en een dagdeel; de kliniek bevestigt per e-mail of telefoon
 - https://skin-studio-zuid.vercel.app/privacybeleid — hoe de kliniek met gegevens omgaat
 

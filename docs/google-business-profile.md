@@ -49,20 +49,22 @@ en tegelijk in de Instagram-bio.
 
 ### Categorieën
 
-De **hoofdcategorie** weegt het zwaarst. Kies er een die overeenkomt met wat de
-site zegt (`"@type": "BeautySalon"`): in de Nederlandse keuzelijst is dat
-**Schoonheidssalon**.
+De **hoofdcategorie** weegt het zwaarst: die bepaalt voor welke zoekopdrachten
+je überhaupt in de kaartresultaten meedoet. Volg hier het advies uit
+`docs/seo-geo-aeo-beoordeling.md`:
 
-Daarnaast mogen er extra categorieën bij. Zoek in de keuzelijst op de termen
-die de site al noemt in `knowsAbout`, en kies wat er het dichtst bij komt —
-Google biedt alleen zijn eigen categorieën aan, dus de exacte benaming zie je
-pas in het scherm:
+- hoofdcategorie **Laserontharingscentrum** (Laser hair removal service);
+- secundair **Schoonheidssalon** en **Huidverzorgingskliniek**.
 
-- laserontharing / ontharing
-- huidverzorging of huidverbetering
+Dat wijkt af van het `"@type": "BeautySalon"` in de structured data, en dat is
+geen fout. Het zijn twee verschillende woordenlijsten: schema.org kent geen
+type voor laserontharing, dus `BeautySalon` is daar het beste dat er is, en
+Google vraagt alleen dat naam, adres en telefoonnummer overeenkomen — niet de
+categorie. De hoofdcategorie hoort te volgen waar de kliniek het meest op
+gevonden wil worden, en dat is laserontharing.
 
-Niet overdrijven: twee of drie extra categorieën die echt kloppen werken beter
-dan een lange lijst.
+Niet overdrijven met de rest: twee of drie extra categorieën die echt kloppen
+werken beter dan een lange lijst.
 
 ### Beschrijving
 
