@@ -110,24 +110,39 @@ staat hij verkeerd, dan wijst alles tegelijk naar het verkeerde adres.
 | 1 | `NEXT_PUBLIC_SITE_URL` is gezet | die waarde |
 | 2 | `VERCEL_ENV=production` én `VERCEL_PROJECT_PRODUCTION_URL` | het productiedomein van het project |
 | 3 | `VERCEL_URL` bestaat (preview) | deze deploy zelf |
-| 4 | geen van bovenstaande | `https://skinstudiozuid.nl` |
+| 4 | geen van bovenstaande | `https://skinstudio-zuid.nl` (mét streepje, sinds 9 oktober 2026) |
 
 Een **preview-deploy krijgt bovendien `noindex, nofollow`** en een `robots.txt`
 die alles weigert. Preview-URL's zijn publiek bereikbaar en bevatten dezelfde
 teksten als productie; zonder die uitzondering kunnen ze naast het echte
 domein in de index belanden en daarmee met zichzelf concurreren.
 
-## Let op: het domein is geregistreerd, maar de delegatie is kapot
+## Let op: twee domeinnamen, en de delegatie van de oude is kapot
 
-De terugval `https://skinstudiozuid.nl` is ooit afgeleid van het e-mailadres
-in de oorspronkelijke code (`info@skinstudiozuid.nl`). Op 6 september 2026
+**Het echte domein is `skinstudio-zuid.nl`, mét streepje** (bevestigd door
+Nicky op 9 oktober 2026). Tot die dag stond in de code en in deze
+documentatie `skinstudiozuid.nl` zónder streepje; die naam was afgeleid van
+het e-mailadres en is nooit het domein van de site geweest. Op 9 oktober
+toonde `skinstudio-zuid.nl` nog de "Reserved"-parkeerpagina van TransIP over
+http, terwijl productie op Vercel al naar dat domein canonicaliseerde (het
+domein is aan het project gehangen of `NEXT_PUBLIC_SITE_URL` is gezet). Tot
+de DNS bij TransIP naar Vercel wijst, wijzen canonicals, sitemap en robots
+dus naar een parkeerpagina: dat is stap 4 hierboven, en die moet nu snel.
+
+Het e-mailadres is sinds 9 oktober 2026 ook mét streepje:
+`info@skinstudio-zuid.nl` (bevestigd door Nicky). Wat hieronder staat gaat
+over de naam zónder streepje en is historie.
+
+De oude terugval `https://skinstudiozuid.nl` was afgeleid van het e-mailadres
+dat in de oorspronkelijke code stond (`info@skinstudiozuid.nl`, eveneens
+zonder streepje, en eveneens fout). Op 6 september 2026
 uitgezocht via de .nl-servers en SIDN's RDAP: het domein is op 20 maart 2025
 geregistreerd via TransIP (registrar team.blue nl B.V.; houder afgeschermd)
 en laatst gewijzigd op 18 december 2025. De .nl-servers delegeren het aan
 `ns0.mailhet.nu` en `ns1.mailhet.nu`. Die servers bestaan, maar antwoorden
 voor dit domein met "Query refused": de zone staat er niet meer. Daardoor is
 er geen A-record én geen MX-record — niet alleen de site, ook mail naar
-`info@skinstudiozuid.nl` is onbereikbaar.
+het oude adres `info@skinstudiozuid.nl` is onbereikbaar.
 
 Zolang dat niet is hersteld: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
 pakt de code de Vercel-URL en wijst alles in elk geval naar iets dat bestaat.
