@@ -214,6 +214,14 @@
       eindstand. `overflow: clip` knipt net zo goed en maakt géén
       scroll-container. Gevonden bij de tellers van editie 2: <main> had
       `overflow-x: hidden`, en daarmee stond élke reveal stil.
+
+      Het geldt ook voor een pseudo-element: `.ssz-doek::after` hangt onder
+      `.ssz-doek`, dus de `overflow` van het doek zelf zette zijn eigen doek
+      stil. Op deze site stonden daarmee drie lagen vast: <main>, de
+      hero-<section> en elke .ssz-doek. Gemeten: de tijdlijn is niet inactief
+      maar rekent tegen die container, en omdat die nooit scrolt blijft elke
+      animatie op één stand hangen — bij de reveals precies de eindstand, en
+      dus niet te zien.
    ========================================================================== */
 
 @property --ssz-glans {

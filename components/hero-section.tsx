@@ -5,7 +5,7 @@ import HeroImage from "@/Images/1000026002.jpg"
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-clip">
       {/* Background image. Zoomt langzaam in tijdens het scrollen; de dekking
           blijft ongemoeid, dus dit raakt de laadtijdmeting niet. */}
       <Image

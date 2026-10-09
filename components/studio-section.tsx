@@ -32,7 +32,7 @@ export function StudioSection() {
           {/* Image side */}
           <div className="relative">
             <div
-              className="ssz-doek relative h-[500px] md:h-[620px] overflow-hidden"
+              className="ssz-doek relative h-[500px] md:h-[620px] overflow-clip"
               style={{ "--doek": "var(--sand)" } as React.CSSProperties}
             >
               <Image
