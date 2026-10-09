@@ -28,8 +28,11 @@ Studio Zuid staat nergens.
 
 Dat heeft drie oorzaken, in volgorde van gewicht:
 
-1. **Het domein `skinstudiozuid.nl` is dood** (DNS geeft vandaag nog steeds
-   "name not known"). De site draait op een `vercel.app`-subdomein, waar geen
+1. **Het domein is nog niet gekoppeld.** Het echte domein is
+   `skinstudio-zuid.nl` (mét streepje; de naam zonder streepje in oudere
+   notities was een vergissing uit het e-mailadres). Het toont vandaag nog
+   de parkeerpagina van TransIP, terwijl productie er sinds 9 oktober al naar
+   canonicaliseert. De site draait op een `vercel.app`-subdomein, waar geen
    enkele externe link, vermelding of Google Business Profile naartoe wijst.
    Alles wat nu aan autoriteit wordt opgebouwd moet straks via een migratie
    worden meegenomen.
@@ -96,8 +99,13 @@ Gecontroleerd op de live site:
 
 ### 2.1 Het domein (blokkerend)
 
-`skinstudiozuid.nl` en `www.skinstudiozuid.nl` resolven niet (vandaag opnieuw
-getest). Gevolgen:
+Het echte domein `skinstudio-zuid.nl` (en `www.`) toont vandaag de
+"Reserved"-parkeerpagina van TransIP over http; de naam zonder streepje uit
+oudere notities resolvet helemaal niet. Sinds de deploy van 9 oktober wijzen
+canonical, sitemap en `robots.txt` van productie naar `skinstudio-zuid.nl`,
+dus tot de DNS naar Vercel wijst, vertelt elke pagina aan Google dat de
+echte versie op een parkeerpagina staat. Dat maakt de koppeling urgent.
+Gevolgen zolang het niet gekoppeld is:
 
 - Canonical, sitemap, `robots.txt`, OpenGraph, `llms.txt` en alle `@id`'s in
   de structured data wijzen naar `skin-studio-zuid.vercel.app`. Dat is

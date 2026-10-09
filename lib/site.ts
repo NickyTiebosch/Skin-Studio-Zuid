@@ -26,11 +26,12 @@ export const IS_PREVIEW = process.env.VERCEL_ENV === "preview"
  * Vandaar een keten in plaats van één vaste waarde. Er waren twee concrete
  * manieren waarop dat misging:
  *
- * 1. Het vaste adres hieronder is ooit afgeleid van het e-mailadres in de
- *    oorspronkelijke code en nooit geverifieerd. Werkt dat domein niet, dan
- *    vertelt elke pagina aan Google dat de echte versie op een dood adres
- *    staat. Op Vercel is dat niet meer nodig: het platform weet zelf op welke
- *    URL het draait.
+ * 1. Het vaste adres hieronder was tot 9 oktober 2026 afgeleid van het
+ *    e-mailadres in de oorspronkelijke code (`skinstudiozuid.nl`, zonder
+ *    streepje) en nooit geverifieerd; het echte domein is
+ *    `skinstudio-zuid.nl`. Werkt het domein niet, dan vertelt elke pagina aan
+ *    Google dat de echte versie op een dood adres staat. Op Vercel is de
+ *    terugval niet nodig: het platform weet zelf op welke URL het draait.
  * 2. Preview-deploys zijn publiek bereikbaar. Zonder deze keten zou een
  *    preview zichzelf als het productiedomein presenteren en daarmee met de
  *    echte site gaan concurreren in de index. Nu wijst een preview naar
@@ -54,8 +55,10 @@ function bepaalSiteUrl(): string {
   const deploy = process.env.VERCEL_URL
   if (deploy) return `https://${deploy}`
 
-  // 4. Buiten Vercel: de laatste terugval.
-  return "https://skinstudiozuid.nl"
+  // 4. Buiten Vercel: de laatste terugval. Het domein mét streepje; de
+  //    variant zonder streepje stond hier tot 9 oktober 2026 en was ooit
+  //    afgeleid van het e-mailadres, nooit van het echte domein.
+  return "https://skinstudio-zuid.nl"
 }
 
 export const SITE_URL = bepaalSiteUrl()
