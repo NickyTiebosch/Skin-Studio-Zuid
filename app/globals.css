@@ -188,7 +188,7 @@
    slechter, niet beter. Het ontwerp blijft nu zoals het was; hier staat
    uitsluitend wat er beweegt.
 
-   Vier regels die overal gelden:
+   Vijf regels die overal gelden:
 
    1. DE ZICHTBARE TOESTAND IS DE BASIS. Een browser zonder
       `animation-timeline` (Firefox, Safari < 26) negeert die regel maar leest
@@ -206,6 +206,22 @@
       hero, niet de foto. Een element dat op onzichtbaar begint telt pas als
       geladen zodra het verschijnt. De kop beweegt daarom achter een masker:
       puur `transform`, dekking ongewijzigd.
+
+   5. GEEN `overflow: hidden` OM IETS DAT OP DE SCROLL-TIJDLIJN BEWEEGT. Een
+      element met `overflow: hidden` (ook alleen `overflow-x`) is een
+      scroll-container, en `animation-timeline: view()` rekent dan tegen dát
+      element in plaats van tegen het venster: de animatie staat meteen in de
+      eindstand. `overflow: clip` knipt net zo goed en maakt géén
+      scroll-container. Gevonden bij de tellers van editie 2: <main> had
+      `overflow-x: hidden`, en daarmee stond élke reveal stil.
+
+      Het geldt ook voor een pseudo-element: `.ssz-doek::after` hangt onder
+      `.ssz-doek`, dus de `overflow` van het doek zelf zette zijn eigen doek
+      stil. Op deze site stonden daarmee drie lagen vast: <main>, de
+      hero-<section> en elke .ssz-doek. Gemeten: de tijdlijn is niet inactief
+      maar rekent tegen die container, en omdat die nooit scrolt blijft elke
+      animatie op één stand hangen — bij de reveals precies de eindstand, en
+      dus niet te zien.
    ========================================================================== */
 
 @property --ssz-glans {

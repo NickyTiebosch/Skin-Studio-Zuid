@@ -30,7 +30,7 @@ export function ProductsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
           <div
-            className="ssz-doek relative h-[420px] md:h-[520px] overflow-hidden"
+            className="ssz-doek relative h-[420px] md:h-[520px] overflow-clip"
             style={{ "--doek": "var(--background)" } as React.CSSProperties}
           >
             <Image

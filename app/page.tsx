@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
-    <main id="inhoud" className="overflow-x-hidden">
+    <main id="inhoud" className="overflow-x-clip">
       <Navbar />
       <HeroSection />
       <IntroStrip />

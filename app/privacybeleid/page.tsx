@@ -26,7 +26,7 @@ const LAATST_BIJGEWERKT = "4 september 2026"
 
 export default function Privacybeleid() {
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-clip">
       <Navbar />
 
       <article className="pt-36 pb-24 md:pt-44 md:pb-32 px-6">
