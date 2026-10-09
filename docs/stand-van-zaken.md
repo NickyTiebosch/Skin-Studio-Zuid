@@ -10,7 +10,8 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 |---|---|---|
 | Vercel (nieuw) | `skin-studio-zuid.vercel.app` | Productie, bouwt van `main`. Op 6 september volledig nagelopen, in orde |
 | Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
-| Eigen domein | `skinstudiozuid.nl` | **Geregistreerd maar dood.** Bij TransIP (registrar team.blue), gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren ("Query refused"). Geen A- en geen MX-record |
+| Eigen domein | `skinstudio-zuid.nl` | **Vastgelegd op 9 oktober 2026**, mét koppelteken. Nog niet aan het Vercel-project gekoppeld en nog geen postvak. De code wijst er sindsdien naar |
+| Oud domein | `skinstudiozuid.nl` | Zonder koppelteken, bij TransIP, gedelegeerd aan `ns0/ns1.mailhet.nu` die de zone weigeren. Geen A- en geen MX-record. Nagaan of het nog van de kliniek is; zo ja, laten doorverwijzen naar het domein mét koppelteken |
 
 ## Wat er staat
 
@@ -68,20 +69,20 @@ domein, en Node stond in het dashboard op 24 terwijl repo en draaiboek 22
 zeiden.
 
 Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
-`docs/vercel.md`), en daardoor kan `info@skinstudiozuid.nl` geen mail ontvangen
+`docs/vercel.md`), en daardoor kan `info@skinstudio-zuid.nl` geen mail ontvangen
 — terwijl het contactformulier precies daar naartoe stuurt.
 
 ## Wat er nog moet
 
 1. **Contactformulier staat tijdelijk op Nicky's adres.** Sinds 7 september
    stuurt het formulier via formsubmit.co naar `info@22labs.nl`
-   (`app/api/contact/route.ts`), omdat `info@skinstudiozuid.nl` geen mail
+   (`app/api/contact/route.ts`), omdat `info@skinstudio-zuid.nl` geen mail
    kan ontvangen zolang het domein geen MX-record heeft. **Nog te doen:** bij
    de eerste aanvraag stuurt formsubmit één activatiemail naar dat adres;
    daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
-   het domein werkt: terug naar `info@skinstudiozuid.nl` en daar opnieuw
+   het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
    activeren.
-2. **Het domein repareren.** `skinstudiozuid.nl` staat bij TransIP
+2. **Het domein koppelen.** `skinstudio-zuid.nl` is vastgelegd; het oude `skinstudiozuid.nl` staat bij TransIP
    (geregistreerd 20 maart 2025, laatst gewijzigd 18 december 2025). Wie het
    TransIP-account heeft — de kliniek of de vorige websitebouwer — logt in en
    zet de nameservers om: naar TransIP's eigen DNS met de records die Vercel
@@ -92,7 +93,7 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
 3. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
    komen voor de mailbox die de kliniek echt gebruikt (TransIP-mailbox,
    Google Workspace, Microsoft 365 — te kiezen). Uitzoeken bij de kliniek: is
-   er ooit een mailbox voor `info@skinstudiozuid.nl` geweest, en zo ja waar?
+   er ooit een mailbox voor `info@skinstudio-zuid.nl` geweest, en zo ja waar?
    Pas daarna kan het formulier terug naar dat adres.
 4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Pas zinvol als het domein er is.

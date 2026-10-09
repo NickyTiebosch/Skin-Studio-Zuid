@@ -45,7 +45,7 @@ function bepaalSiteUrl(): string {
   if (deploy) return `https://${deploy}`
 
   // 4. Buiten Vercel: de laatste terugval.
-  return "https://skinstudiozuid.nl"
+  return "https://skinstudio-zuid.nl"
 }
 
 export const SITE_URL = bepaalSiteUrl()
