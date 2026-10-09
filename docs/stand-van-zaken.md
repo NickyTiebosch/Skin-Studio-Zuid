@@ -47,6 +47,32 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 - Bewegingslaag over het bestaande ontwerp, met een terugvaloptie voor
   browsers zonder `animation-timeline` (Firefox, Safari < 26).
 
+## SEO-beoordeling en quick wins van 9 oktober 2026
+
+De beoordeling staat in `docs/seo-geo-aeo-beoordeling.md`, de bijgewerkte
+SEO/GEO/AEO-skills in `docs/skills/`. De code-quick-wins daaruit zijn
+doorgevoerd:
+
+- Eigen contactpagina op `/contact` (adres met postcode, telefoon, e-mail,
+  werkgebied); het menu en de footer wijzen daar nu naartoe. Het formulier
+  blijft op `/boeken`.
+- Behandelpagina's beginnen met een samenvatting die de vraag beantwoordt
+  (wat, waar, vanaf-prijs, hoe het begint), hebben koppen in vraagvorm, een
+  stappenplan (laserontharing) en een Hydrafacial-alinea
+  (gezichtsbehandelingen). H1's zeggen "Den Bosch".
+- Tarieven: H1 met behandeling en plaats, kolomkoppen in de tabellen.
+- Structured data: postcode, geo-coördinaten, `priceRange` uit de tarieven,
+  werkgebied in `areaServed`, spaarapp in `sameAs`.
+- Sitemap-`lastmod` en een zichtbare "Bijgewerkt op" komen uit
+  `lib/bijgewerkt.ts`; werk die datum bij als de inhoud van een pagina
+  verandert.
+- Homepage: label boven de kop noemt behandeling en Den Bosch; "2026" uit de
+  kop "Medische Innovatie"; ligging en werkgebied onder "Over ons".
+
+Nog open uit de beoordeling, buiten de code: domein, Google Business Profile,
+reviews, Search Console, en de feiten van de kliniek (behandelaar,
+openingstijden, duur, sessies, nazorg). Zie `docs/te-controleren.md`.
+
 ## Controle van 6 september 2026
 
 Op de Vercel-URL nagelopen, zodat dit niet opnieuw hoeft:

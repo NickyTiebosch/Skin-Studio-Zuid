@@ -22,7 +22,10 @@ export const hoofdnavigatie = [
   ...behandelingen.map((b) => ({ label: b.tag, href: `/${b.slug}` })),
   { label: "Tarieven", href: "/tarieven" },
   { label: "De Studio", href: "/#studio" },
-  { label: "Contact", href: "/#contact" },
+  // Sinds 9 oktober 2026 een eigen pagina, zodat Google Business Profile,
+  // gidsen en AI-assistenten naar één adres met de contactgegevens kunnen
+  // verwijzen in plaats van naar een anker op de homepage.
+  { label: "Contact", href: "/contact" },
 ]
 
 /** De kolom "Navigatie" in de footer: de secties van de homepage. */
@@ -30,7 +33,7 @@ export const sectienavigatie = [
   { label: "Behandelingen", href: "/#behandelingen" },
   { label: "De Studio", href: "/#studio" },
   { label: "Producten", href: "/#producten" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ]
 
 /**

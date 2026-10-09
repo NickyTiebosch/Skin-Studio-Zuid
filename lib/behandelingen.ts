@@ -35,6 +35,22 @@ export type Behandeling = {
   title: string
   /** De kop op de eigen pagina: bevat behandeling én plaats, want daar wordt op gezocht */
   paginaTitel: string
+  /**
+   * De eerste alinea van de pagina: wat, waar, voor wie en hoe het begint, in
+   * drie of vier zinnen. Zoekmachines en AI-assistenten halen hun antwoord uit
+   * de eerste zestig woorden; die horen dus de vraag te beantwoorden en niet
+   * de sfeer te zetten. De oorspronkelijke tekst volgt eronder in `description`.
+   */
+  samenvatting: string
+  /** De kop boven de uitleg, als vraag zoals mensen hem stellen. */
+  uitlegKop: string
+  /** Het verloop in stappen, als genummerde lijst. */
+  stappen?: { kop: string; items: string[] }
+  /**
+   * Eén alinea voor wie op een andere naam zoekt dan die wij gebruiken, met
+   * de uitleg waarom de naam verschilt.
+   */
+  aliasOpmerking?: string
   /** Voor het title-element en de zoekresultaten */
   metaTitel: string
   metaBeschrijving: string
@@ -59,7 +75,21 @@ export const behandelingen: Behandeling[] = [
     slug: "gezichtsbehandelingen",
     tag: "Gezichtsbehandelingen",
     title: "Huidverbetering & Lift",
-    paginaTitel: "Gezichtsbehandelingen in 's-Hertogenbosch",
+    paginaTitel: "Gezichtsbehandelingen in Den Bosch",
+    samenvatting:
+      "Een gezichtsbehandeling bij Skin Studio Zuid in Den Bosch is een " +
+      "behandeling met de Atres HydraSpa: diepe reiniging, verstrakking met " +
+      "radiofrequentie en een anti-aging boost in één sessie, zonder " +
+      "hersteltijd. De behandeling is geschikt voor alle huidtypes. Welke " +
+      "accenten uw huid nodig heeft, bespreken we vooraf in de studio aan de " +
+      "Hildebrandstraat.",
+    uitlegKop: "Hoe werkt de HydraSpa-gezichtsbehandeling?",
+    aliasOpmerking:
+      "Zoekt u een hydrafacial in Den Bosch? De Atres HydraSpa werkt volgens " +
+      "hetzelfde principe: reiniging met een wervelstroom van water en serums, " +
+      "aangevuld met radiofrequentie en ultrageluid. Hydrafacial is de " +
+      "merknaam van een andere fabrikant; wij werken met de apparatuur van " +
+      "Atres.",
     metaTitel: "Gezichtsbehandeling Den Bosch — HydraSpa huidverbetering",
     metaBeschrijving:
       "Gezichtsbehandeling in 's-Hertogenbosch met de Atres HydraSpa: " +
@@ -79,7 +109,7 @@ export const behandelingen: Behandeling[] = [
       "De behandeling kent geen hersteltijd. U kunt er dus voor kiezen op een " +
         "moment dat het u uitkomt, ook als u daarna nog een afspraak heeft.",
     ],
-    benefitsHeading: "De drie technieken:",
+    benefitsHeading: "Welke drie technieken combineert de HydraSpa?",
     benefits: [
       {
         label: "Deep Cleanse & Hydrate",
@@ -146,7 +176,29 @@ export const behandelingen: Behandeling[] = [
     slug: "laserontharing",
     tag: "Laserontharing",
     title: "Definitieve Ontharing met de Atres Triple Wave",
-    paginaTitel: "Laserontharing in 's-Hertogenbosch",
+    paginaTitel: "Laserontharing in Den Bosch",
+    samenvatting:
+      "Laserontharing bij Skin Studio Zuid in Den Bosch is definitieve " +
+      "ontharing met de Atres Triple Wave, een medisch gecertificeerde laser " +
+      "die drie golflengtes combineert en daardoor geschikt is voor elk huid- " +
+      "en haartype. De prijs hangt af van de zone die u laat behandelen. Een " +
+      "traject begint altijd met een gratis intake in de studio; daarna " +
+      "plannen we de sessies.",
+    uitlegKop: "Hoe werkt laserontharing?",
+    benefitsHeading: "Waarom laserontharing met de Atres Triple Wave?",
+    stappen: {
+      kop: "Zo verloopt een traject laserontharing",
+      items: [
+        "Gratis intake in de studio: we bekijken uw huid- en haartype, " +
+          "bespreken wat u mag verwachten en stellen het behandelplan op.",
+        "Eerste behandeling: de laser behandelt de afgesproken zone terwijl " +
+          "de laserkop de huid actief koelt.",
+        "Vervolgsessies met tussenpozen die passen bij de groeifase van uw " +
+          "haar, zodat elke sessie nieuwe haren in de groeifase raakt.",
+        "Het resultaat bouwt per sessie op. Voor het beste resultaat " +
+          "adviseren wij een kuur van zes behandelingen.",
+      ],
+    },
     metaTitel: "Laserontharing Den Bosch — Atres Triple Wave",
     metaBeschrijving:
       "Definitieve laserontharing in 's-Hertogenbosch met de Atres Triple " +

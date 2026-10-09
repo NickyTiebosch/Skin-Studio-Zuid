@@ -12,6 +12,8 @@ import {
   kruimelpadSchema,
 } from "@/lib/site"
 import { TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
+import { laagstePrijsVoor } from "@/lib/tarieven"
+import { bijgewerktTekst } from "@/lib/bijgewerkt"
 import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang"
 
 /**
@@ -24,6 +26,8 @@ import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang
 export function BehandelingPagina({ behandeling }: { behandeling: Behandeling }) {
   const paginaUrl = `${SITE_URL}/${behandeling.slug}`
   const andere = behandelingen.filter((b) => b.slug !== behandeling.slug)
+  const vanafPrijs = laagstePrijsVoor(behandeling.slug)
+  const bijgewerkt = bijgewerktTekst(`/${behandeling.slug}`)
 
   return (
     <main id="inhoud" className="overflow-x-clip">
@@ -69,6 +73,22 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
             {behandeling.paginaTitel}
           </h1>
           <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
+          {/* Eerst het antwoord, dan de sfeer: de eerste alinea zegt wat de
+              behandeling is, waar, voor wie en hoe het begint. Daaronder de
+              oorspronkelijke tekst van de kliniek. */}
+          <p className="font-sans text-sm md:text-base leading-relaxed text-foreground max-w-2xl mb-4">
+            {behandeling.samenvatting}
+            {vanafPrijs !== undefined && (
+              <>
+                {" "}
+                Tarieven vanaf &euro; {vanafPrijs}, zie{" "}
+                <Link href="/tarieven" className="underline underline-offset-4">
+                  alle tarieven
+                </Link>
+                .
+              </>
+            )}
+          </p>
           <p className="font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl">
             {behandeling.description}
           </p>
@@ -112,15 +132,45 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
       <section className="px-6 pb-16 md:pb-24">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">
-            Hoe het werkt
+            {behandeling.uitlegKop}
           </h2>
           <div className="ssz-op flex flex-col gap-6 font-sans text-sm leading-relaxed text-muted-foreground">
             {behandeling.uitleg.map((alinea) => (
               <p key={alinea.slice(0, 40)}>{alinea}</p>
             ))}
+            {behandeling.aliasOpmerking && <p>{behandeling.aliasOpmerking}</p>}
           </div>
         </div>
       </section>
+
+      {/* Het verloop in stappen: een genummerde lijst is het format dat
+          zoekmachines als antwoord op "hoe verloopt…" tonen. Gewone HTML,
+          zonder HowTo-schema: die rich result bestaat niet meer. */}
+      {behandeling.stappen && (
+        <section className="px-6 pb-16 md:pb-24">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">
+              {behandeling.stappen.kop}
+            </h2>
+            <ol className="ssz-op flex flex-col gap-5 list-none">
+              {behandeling.stappen.items.map((stap, i) => (
+                <li key={stap.slice(0, 40)} className="flex gap-4">
+                  <span
+                    className="ssz-cijfers shrink-0 font-serif text-lg leading-6"
+                    style={{ color: "var(--rose-gold)" }}
+                    aria-hidden="true"
+                  >
+                    {i + 1}.
+                  </span>
+                  <p className="font-sans text-sm leading-relaxed text-muted-foreground">
+                    {stap}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
       {/* Voordelen */}
       {behandeling.benefits && (
@@ -157,7 +207,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
       <section className="px-6 py-16 md:py-24">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-10">
-            Veelgestelde vragen
+            Veelgestelde vragen over {behandeling.tag.toLowerCase()}
           </h2>
           <div className="ssz-op flex flex-col gap-8">
             {behandeling.faq.map((item) => (
@@ -169,6 +219,11 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
               </div>
             ))}
           </div>
+          {bijgewerkt && (
+            <p className="font-sans text-xs text-muted-foreground mt-10">
+              Bijgewerkt op {bijgewerkt}
+            </p>
+          )}
         </div>
       </section>
 
