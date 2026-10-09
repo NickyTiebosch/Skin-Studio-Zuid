@@ -50,7 +50,7 @@ export default async function Boeken({
       : "")
 
   return (
-    <main className="overflow-x-clip">
+    <main id="inhoud" className="overflow-x-clip">
       <Navbar />
 
       <div className="pt-32 md:pt-40 px-6">
