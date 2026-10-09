@@ -27,7 +27,7 @@ export function SpecialtiesSection() {
           {behandelingen.map((item, index) => (
             <div
               key={item.slug}
-              className="ssz-op ssz-til ssz-goudrand group relative overflow-hidden"
+              className="ssz-op ssz-til ssz-goudrand group relative overflow-clip"
               style={
                 {
                   "--vlak": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
@@ -36,7 +36,7 @@ export function SpecialtiesSection() {
             >
               {/* Beeld: een doek schuift weg en legt de foto bloot. */}
               <div
-                className="ssz-doek relative h-80 overflow-hidden"
+                className="ssz-doek relative h-80 overflow-clip"
                 style={
                   {
                     "--doek": index % 2 === 0 ? "var(--sand)" : "var(--walnut)",
