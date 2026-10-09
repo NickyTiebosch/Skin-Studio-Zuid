@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 import { hoofdnavigatie } from "@/lib/navigatie"
 import Logo from "@/Images/logo-skin-studio-zuid.png"
 
@@ -39,7 +40,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center leading-none">
           <Image
             src={Logo}
-            alt="Skin Studio Zuid"
+            alt={BEDRIJFSNAAM}
             className="h-18 w-auto"
             priority
           />

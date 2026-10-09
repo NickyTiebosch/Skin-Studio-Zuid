@@ -10,7 +10,30 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 |---|---|---|
 | Vercel (nieuw) | `skin-studio-zuid.vercel.app` | Productie, bouwt van `main`. Op 6 september volledig nagelopen, in orde |
 | Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
-| Eigen domein | `skinstudio-zuid.nl` (mét streepje; bevestigd 9 oktober 2026) | **Geregistreerd bij TransIP, toont nog de parkeerpagina.** Productie canonicaliseert er sinds 9 oktober al naartoe; de DNS moet nog naar Vercel. De naam zónder streepje (`skinstudiozuid.nl`) was een vergissing uit het e-mailadres en is dood: gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren. Geen A- en geen MX-record |
+| Eigen domein | `skinstudio-zuid.nl` (mét streepje; bevestigd 9 oktober 2026) | **Geregistreerd bij TransIP, toont nog de parkeerpagina.** Productie canonicaliseert er sinds 9 oktober al naartoe; de DNS moet nog naar Vercel. De naam zónder streepje (`skinstudiozuid.nl`) was een vergissing uit het e-mailadres en is dood: gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren, geen A- en geen MX-record. Bovendien **niet meer van de kliniek** en niet op te kopen (nagekeken 9 oktober 2026): doorverwijzen kan niet |
+
+## De naam
+
+Sinds 9 oktober 2026 heet de site **Skinstudio Zuid**, één woord. Dat is de
+schrijfwijze van de kliniek zelf en van de Instagram-naam. Twee dingen wijken
+daar bewust van af en dat is geen slordigheid:
+
+- het **logo** is een PNG waarin "Skin Studio" in schrijfletters staat met
+  "ZUID" eronder — niet aan te passen in code;
+- het **domein** is `skinstudio-zuid.nl`, mét streepje.
+
+De naam staat op één plek: `BEDRIJFSNAAM` in `lib/contact.ts`. Alles wat de
+bezoeker ziet leest daar — paginatitels, de deelafbeelding, de footer, de
+structured data. In het **Google Business Profile** (nog aan te maken, zie
+`docs/google-business-profile.md`) hoort letterlijk dezelfde schrijfwijze te
+staan, anders ziet Google twee bedrijven waar er één is.
+
+**Let op bij het doorgeven van het webadres.** De naam is nu één woord, maar
+het domein heeft een streepje, en `skinstudiozuid.nl` zonder streepje is van
+iemand anders. Wie het adres uit zijn hoofd intypt komt dus niet bij de
+kliniek uit. Zet `skinstudio-zuid.nl` daarom overal als aanklikbare link neer
+— Instagram-bio, Business Profile, flyers, mailhandtekening — en laat niemand
+het overtypen.
 
 ## Wat er staat
 
@@ -106,32 +129,47 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    de eerste aanvraag stuurt formsubmit één activatiemail naar dat adres;
    daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
    het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
-   activeren.
+   activeren. De kliniek heeft nog niet gekozen welk postvak dat wordt (punt
+   3), dus dit blijft voorlopig zo.
 2. **Het domein koppelen.** Het echte domein is `skinstudio-zuid.nl` (mét
    streepje). Op 9 oktober 2026 wezen canonical, sitemap en `robots.txt` van
    productie al naar dat domein, terwijl het zelf nog de parkeerpagina van
-   TransIP toonde. Wie het TransIP-account heeft, zet de DNS om naar de
-   records die Vercel bij het domein toont (Settings → Domains), of naar
-   Vercel DNS. Omdat er alleen een parkeerpagina staat, is er geen oude site
-   die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen. `llms.txt`
-   staat al op het domein (sinds 9 oktober). Zodra het domein "Valid
-   Configuration" heeft: in Search Console een Change of Address van de
-   Vercel-URL doen. De naam zónder streepje in de oudere notities
+   TransIP toonde. Op 9 oktober 2026 via de Vercel-API gemeten: het domein
+   hangt aan het project (apex én `www`, allebei geverifieerd), staat op de
+   nameservers van TransIP en heeft één A-record, `37.97.254.27` — dat is
+   TransIP, niet Vercel. Vandaar dat Vercel het als `misconfigured` meldt.
+   Wie het TransIP-account heeft, zet het A-record van het hoofddomein om
+   naar **`76.76.21.21`** en `www` naar **`cname.vercel-dns.com`** (Vercel
+   toont ze ook onder Settings → Domains). Houd het DNS-beheer bij TransIP;
+   delegeer de zone niet aan Vercel, anders vallen de MX-records weg zodra de
+   mail geregeld is. Omdat er alleen een parkeerpagina staat, is er geen oude
+   site die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen.
+   `llms.txt` staat al op het domein (sinds 9 oktober). Zodra het domein
+   "Valid Configuration" heeft: in Search Console een Change of Address van
+   de Vercel-URL doen. De naam zónder streepje in de oudere notities
    hieronder was een vergissing; zie `docs/vercel.md`.
-3. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
-   komen voor de mailbox die de kliniek echt gebruikt (TransIP-mailbox,
-   Google Workspace, Microsoft 365 — te kiezen). Uitzoeken bij de kliniek: is
-   er ooit een mailbox voor `info@skinstudio-zuid.nl` geweest, en zo ja waar?
-   Pas daarna kan het formulier terug naar dat adres.
-4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+3. **E-mail op het domein.** Er is nog geen postvak en de kliniek denkt nog
+   na over welke provider het wordt (TransIP-mailbox, Google Workspace,
+   Microsoft 365). De vraag of er ooit een mailbox bestond is niet meer aan
+   de orde: dit is een gloednieuw domein. Zodra de keuze er is komen de
+   MX-records erbij, plus SPF, DKIM en DMARC. Pas daarna kan het formulier
+   terug naar het eigen adres. De code gaat uit van
+   `info@skinstudio-zuid.nl`; wordt het iets anders, dan is `EMAIL` in
+   `lib/contact.ts` de enige regel die wijzigt.
+4. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
+   kliniek is dit een grotere hefboom dan de hele SEO van de site: het bepaalt
+   of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.
+   Nicky maakt hem aan; `docs/google-business-profile.md` bevat per veld de
+   exacte waarde, zodat profiel en structured data letterlijk gelijk zijn.
+5. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Pas zinvol als het domein er is.
-5. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
+6. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
    Stap twee is echte beschikbaarheid: de Apple/iCloud-agenda via Cal.com,
    zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar
    agenda staat. Dat wacht op de **behandelduur per behandeling** en de
    **beschikbaarheid** (welke dagen en uren), plus een Cal.com-account en een
    app-specifiek wachtwoord van het Apple ID, aan te maken door de kliniek.
-6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
+7. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
    of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
    vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee
    tegenstrijdigheden tussen flyer en site (Diode Ice Laser versus Atres

@@ -1,5 +1,5 @@
 /**
- * De behandelingen van Skin Studio Zuid, als één bron.
+ * De behandelingen van Skinstudio Zuid, als één bron.
  *
  * Deze inhoud stond eerder als module-lokale const in specialties-section.tsx
  * en was daardoor nergens anders bruikbaar. Nu putten zowel de sectie op de
@@ -77,7 +77,7 @@ export const behandelingen: Behandeling[] = [
     title: "Huidverbetering & Lift",
     paginaTitel: "Gezichtsbehandelingen in Den Bosch",
     samenvatting:
-      "Een gezichtsbehandeling bij Skin Studio Zuid in Den Bosch is een " +
+      "Een gezichtsbehandeling bij Skinstudio Zuid in Den Bosch is een " +
       "behandeling met de Atres HydraSpa: diepe reiniging, verstrakking met " +
       "radiofrequentie en een anti-aging boost in één sessie, zonder " +
       "hersteltijd. De behandeling is geschikt voor alle huidtypes. Welke " +
@@ -126,7 +126,7 @@ export const behandelingen: Behandeling[] = [
     ],
     detail: "Kalahari Productlijn",
     image: "/images/facial-treatment.jpg",
-    imageAlt: "Luxe gezichtsbehandeling bij Skin Studio Zuid",
+    imageAlt: "Luxe gezichtsbehandeling bij Skinstudio Zuid",
     schemaBeschrijving:
       "Gezichtsbehandeling met de Atres HydraSpa in 's-Hertogenbosch: " +
       "reiniging met Vortex-technologie, verstrakking met radiofrequentie en " +
@@ -178,7 +178,7 @@ export const behandelingen: Behandeling[] = [
     title: "Definitieve Ontharing met de Atres Triple Wave",
     paginaTitel: "Laserontharing in Den Bosch",
     samenvatting:
-      "Laserontharing bij Skin Studio Zuid in Den Bosch is definitieve " +
+      "Laserontharing bij Skinstudio Zuid in Den Bosch is definitieve " +
       "ontharing met de Atres Triple Wave, een medisch gecertificeerde laser " +
       "die drie golflengtes combineert en daardoor geschikt is voor elk huid- " +
       "en haartype. De prijs hangt af van de zone die u laat behandelen. Een " +
@@ -248,7 +248,7 @@ export const behandelingen: Behandeling[] = [
     ],
     detail: "ATRES Technologie",
     image: "/images/laser-treatment.jpg",
-    imageAlt: "Professionele laserontharing bij Skin Studio Zuid",
+    imageAlt: "Professionele laserontharing bij Skinstudio Zuid",
     schemaBeschrijving:
       "Definitieve laserontharing in 's-Hertogenbosch met de Atres Triple " +
       "Wave, een medisch gecertificeerde laser die drie golflengtes combineert " +

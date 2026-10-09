@@ -54,7 +54,7 @@ export default function OpengraphImage() {
             textAlign: "center",
           }}
         >
-          Skin Studio Zuid
+          {BEDRIJFSNAAM}
         </div>
 
         <div

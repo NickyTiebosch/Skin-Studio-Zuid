@@ -7,6 +7,22 @@ eerst getoetst op actualiteit (zie `docs/skills/README.md`: alle drie waren
 verouderd op punten die precies deze site raken; de bijgewerkte versies staan
 in `docs/skills/`).
 
+> **Nagekomen op 9 oktober 2026, ná het schrijven van deze beoordeling.**
+> Vier feiten hieronder zijn ingehaald; de analyse zelf blijft staan als
+> momentopname.
+>
+> - De naam is **Skinstudio Zuid**, één woord. Het advies verderop om het
+>   Business Profile "Skin Studio Zuid" te noemen is daarmee achterhaald —
+>   gebruik de schrijfwijze die de site nu voert, zie
+>   `docs/google-business-profile.md`.
+> - Er is een eigen domein vastgelegd: **`skinstudio-zuid.nl`, mét
+>   koppelteken**. Nog niet gedelegeerd (geen DNS-zone, geen A- en geen
+>   MX-record), dus nog niet gekoppeld.
+> - Het oude `skinstudiozuid.nl` zónder koppelteken is **niet meer van de
+>   kliniek** en ook niet op te kopen. Doorverwijzen kan dus niet.
+> - `info@skinstudiozuid.nl` staat niet meer in de code; dat is nu
+>   `info@skinstudio-zuid.nl`.
+
 Wat níét gelukt is: zoekvolumes en moeilijkheidsscores uit Ahrefs ("Insufficient
 plan") en Semrush ("geen API-units meer"). Waar hieronder over zoekvolume wordt
 gesproken is dat een inschatting op basis van de SERP, niet een gemeten getal.
@@ -245,8 +261,9 @@ Checklist voor het profiel, afgestemd op wat Google in 2026 zwaarder weegt
 
 - Primaire categorie "Laserontharingscentrum" (Laser hair removal service),
   secundair "Schoonheidssalon" en "Huidverzorgingskliniek".
-- Naam exact "Skin Studio Zuid" (geen zoekwoorden erin: dat is tegen de regels
-  en wordt sinds 2025 actief bestraft).
+- Naam exact zoals de site hem voert — sinds 9 oktober 2026 "Skinstudio Zuid",
+  één woord (geen zoekwoorden erin: dat is tegen de regels en wordt sinds 2025
+  actief bestraft).
 - Adres, telefoon en website identiek aan de site (NAP). Telefoon: 073 689
   6423; de flyers tonen nog 073-2032756 en moeten herdrukt worden.
 - Openingstijden invullen. "Op afspraak" kan in GBP, maar dan ontbreekt het

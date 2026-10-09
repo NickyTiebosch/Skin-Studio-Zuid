@@ -1,5 +1,5 @@
 /**
- * De tarieven van Skin Studio Zuid.
+ * De tarieven van Skinstudio Zuid.
  *
  * Overgenomen van de flyers die de kliniek heeft aangeleverd: de prijslijst en
  * de kuuractie voor mannen (4 september 2026) en dezelfde twee flyers voor

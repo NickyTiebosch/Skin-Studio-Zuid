@@ -125,10 +125,18 @@ Nicky op 9 oktober 2026). Tot die dag stond in de code en in deze
 documentatie `skinstudiozuid.nl` zónder streepje; die naam was afgeleid van
 het e-mailadres en is nooit het domein van de site geweest. Op 9 oktober
 toonde `skinstudio-zuid.nl` nog de "Reserved"-parkeerpagina van TransIP over
-http, terwijl productie op Vercel al naar dat domein canonicaliseerde (het
-domein is aan het project gehangen of `NEXT_PUBLIC_SITE_URL` is gezet). Tot
-de DNS bij TransIP naar Vercel wijst, wijzen canonicals, sitemap en robots
-dus naar een parkeerpagina: dat is stap 4 hierboven, en die moet nu snel.
+http, terwijl productie op Vercel al naar dat domein canonicaliseerde. Via de
+Vercel-API nagekeken waardoor dat komt: **het domein hangt aan het project**
+(apex én `www`, allebei geverifieerd), en `NEXT_PUBLIC_SITE_URL` is níét
+gezet. Daarmee is `VERCEL_PROJECT_PRODUCTION_URL` het eigen domein geworden,
+en dat is stap 2 van de keten hierboven.
+
+Het domein staat op de nameservers van TransIP en heeft één A-record:
+`37.97.254.27` — TransIP, niet Vercel. Vercel meldt het daarom als
+`misconfigured`. Tot dat record naar Vercel wijst, wijzen canonicals, sitemap
+en robots naar een parkeerpagina. Dat is de dringendste openstaande actie:
+A-record op het hoofddomein naar **`76.76.21.21`**, `www` naar
+**`cname.vercel-dns.com`**.
 
 Het e-mailadres is sinds 9 oktober 2026 ook mét streepje:
 `info@skinstudio-zuid.nl` (bevestigd door Nicky). Wat hieronder staat gaat
@@ -145,8 +153,21 @@ voor dit domein met "Query refused": de zone staat er niet meer. Daardoor is
 er geen A-record én geen MX-record — niet alleen de site, ook mail naar
 het oude adres `info@skinstudiozuid.nl` is onbereikbaar.
 
-Zolang dat niet is hersteld: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
-pakt de code de Vercel-URL en wijst alles in elk geval naar iets dat bestaat.
+**Dat oude domein is bovendien niet meer van de kliniek** (bevestigd op
+9 oktober 2026), en op diezelfde dag nagekeken: ook niet beschikbaar, de
+registratie staat nog op iemand anders. Doorverwijzen naar het domein mét
+streepje kan dus niet, en opkopen evenmin. Dat is vervelend, want sinds de
+naam op de site één woord is (Skinstudio Zuid) is `skinstudiozuid.nl` precies
+de spelling die iemand uit zijn hoofd intypt. Daar valt technisch niets aan te
+doen: zet `skinstudio-zuid.nl` overal als aanklikbare link neer en laat
+niemand het adres overtypen.
+
+**Let op:** het oude advies "laat `NEXT_PUBLIC_SITE_URL` leeg, dan pakt de
+code de Vercel-URL" gaat niet meer op. Dat werkte zolang er geen eigen domein
+aan het project hing; nu dat er wel is, levert stap 2 van de keten het eigen
+domein op. Wil je terug naar een adres dat gegarandeerd bestaat, dan moet
+`NEXT_PUBLIC_SITE_URL` juist expliciet op de Vercel-URL gezet worden. Beter is
+het A-record omzetten — dat is vijf minuten werk en lost het echt op.
 
 Voor de omschakeling betekent dit dat stap 5 en 6 vervallen: er is geen
 werkende oude site die tijdens de omschakeling stuk kan gaan. Wie het

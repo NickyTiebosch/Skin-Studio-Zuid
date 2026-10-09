@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
 import HeroImage from "@/Images/1000026002.jpg"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 
 export function HeroSection() {
   return (
@@ -10,7 +11,7 @@ export function HeroSection() {
           blijft ongemoeid, dus dit raakt de laadtijdmeting niet. */}
       <Image
         src={HeroImage}
-        alt="Luxe behandelkamer Skin Studio Zuid"
+        alt={`Luxe behandelkamer ${BEDRIJFSNAAM}`}
         fill
         priority
         sizes="100vw"
@@ -46,7 +47,7 @@ export function HeroSection() {
           </h1>
         </div>
         <p className="ssz-intro-op ssz-vertraag-2 font-sans text-sm md:text-base text-[color:var(--cream)]/70 leading-relaxed mb-12 max-w-xl mx-auto">
-          Ontdek de geavanceerde behandelingen van Skin Studio Zuid. Wij combineren expertise met ontspanning voor een stralend resultaat.
+          Ontdek de geavanceerde behandelingen van {BEDRIJFSNAAM}. Wij combineren expertise met ontspanning voor een stralend resultaat.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
