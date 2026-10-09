@@ -40,7 +40,8 @@ export const TELEFOON_HREF = "tel:+31736896423"
 /**
  * Het adres volgt het domein dat op 9 oktober 2026 is vastgelegd:
  * skinstudio-zuid.nl, mét koppelteken. Het oude `skinstudiozuid.nl` zonder
- * koppelteken stond los bij TransIP en heeft nooit post kunnen ontvangen.
+ * koppelteken stond los bij TransIP, heeft nooit post kunnen ontvangen en is
+ * bovendien niet meer van de kliniek — teruggrijpen op dat adres kan dus niet.
  * Zodra de kliniek bevestigt welk postvak er echt komt, is dit de enige regel
  * die hoeft te wijzigen — de site, de structured data en llms.txt lezen hier.
  */

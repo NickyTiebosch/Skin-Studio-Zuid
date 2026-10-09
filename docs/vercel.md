@@ -131,15 +131,23 @@ waar de code vóór die datum naar wees. Op 6 september 2026 uitgezocht via de
 servers bestaan maar antwoorden met "Query refused": de zone staat er niet
 meer, dus geen A-record en geen MX-record.
 
-Twee open punten daarbij, allebei voor de kliniek:
+**Dat oude domein is niet meer van de kliniek** — bevestigd op 9 oktober 2026.
+Diezelfde dag nagekeken: hij is ook niet beschikbaar, de registratie staat nog
+op iemand anders. Doorverwijzen naar het domein mét koppelteken kan dus niet,
+en opkopen evenmin. Hij resolvet op dit moment nergens naartoe, dus wie hem
+intypt krijgt een foutmelding; gaat de houder er ooit iets op zetten, dan komt
+die bezoeker bij een vreemde uit.
 
-1. **Is het oude domein nog van hen?** Zo ja, laat het doorverwijzen naar
-   `skinstudio-zuid.nl`. Zonder koppelteken is de spelling die bezoekers het
-   eerst intypen, en die mag niet bij een foutmelding of bij iemand anders
-   uitkomen.
-2. **Welk postvak komt er?** De code gaat uit van
-   `info@skinstudio-zuid.nl`. Klopt dat niet, dan is `EMAIL` in
-   `lib/contact.ts` de enige plek die wijzigt.
+Daar valt technisch niets aan te doen, dus het moet eromheen: zet
+`skinstudio-zuid.nl` overal als **aanklikbare link** neer — Instagram-bio,
+Google Business Profile, flyers, mailhandtekening — en laat niemand het adres
+uit zijn hoofd overtypen. Een Business Profile helpt hier het meest: wie
+"Skinstudio Zuid Den Bosch" zoekt hoeft geen domeinnaam te raden. Zie
+`docs/google-business-profile.md`.
+
+Eén open punt blijft: **welk postvak komt er?** De code gaat uit van
+`info@skinstudio-zuid.nl`. De kliniek denkt daar nog over na; wordt het iets
+anders, dan is `EMAIL` in `lib/contact.ts` de enige plek die wijzigt.
 
 Zolang het nieuwe domein nog niet aan het Vercel-project hangt en resolvet:
 laat `NEXT_PUBLIC_SITE_URL` leeg, dan pakt de code de Vercel-URL en wijst
