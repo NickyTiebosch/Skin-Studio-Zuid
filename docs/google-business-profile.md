@@ -130,10 +130,10 @@ Gebruik de echte studiofoto's die al in de repo staan (`Images/`): de
 behandelkamer, het interieur, de gevel. Een profiel met foto's wordt aanzienlijk
 vaker aangeklikt dan een profiel zonder.
 
-**Zet hier geen AI-beeld op.** Editie 2 van de site krijgt AI-sfeerbeeld (M4),
-duidelijk gelabeld als sfeerimpressie. Op een Business Profile is dat iets
-anders: daar presenteert een foto zich als een weergave van de echte locatie.
-Alleen echte foto's dus.
+**Zet hier geen AI-beeld op.** De beeldrijke versie van de site die in de maak
+is krijgt AI-sfeerbeeld, duidelijk gelabeld als sfeerimpressie. Op een Business
+Profile ligt dat anders: daar presenteert een foto zich als een weergave van de
+echte locatie. Alleen echte foto's dus.
 
 ## Van wie het profiel moet zijn
 
