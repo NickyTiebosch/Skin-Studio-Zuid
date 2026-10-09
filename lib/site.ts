@@ -1,6 +1,16 @@
-import { ADRES, BEDRIJFSNAAM, EMAIL, INSTAGRAM, TELEFOON_HREF } from "./contact"
+import {
+  ADRES,
+  BEDRIJFSNAAM,
+  EMAIL,
+  GEO,
+  GOOGLE_PLAY,
+  INSTAGRAM,
+  PLAATS_ZOEKNAAM,
+  TELEFOON_HREF,
+  WERKGEBIED,
+} from "./contact"
 import type { Behandeling, VeelgesteldeVraag } from "./behandelingen"
-import { laagstePrijsVoor } from "./tarieven"
+import { laagstePrijsVoor, prijsbereik } from "./tarieven"
 
 /** Draait deze build als preview-omgeving op Vercel? */
 export const IS_PREVIEW = process.env.VERCEL_ENV === "preview"
@@ -53,8 +63,9 @@ export const SITE_URL = bepaalSiteUrl()
 export const SITE_NAAM = BEDRIJFSNAAM
 
 export const SITE_BESCHRIJVING =
-  `${BEDRIJFSNAAM} is een kliniek in ${ADRES.plaats} voor gezichtsbehandelingen ` +
-  "en laserontharing, met de Atres Triple Wave laser en de Atres HydraSpa."
+  `${BEDRIJFSNAAM} is een kliniek in ${PLAATS_ZOEKNAAM} (${ADRES.plaats}) voor ` +
+  "laserontharing en gezichtsbehandelingen, met de Atres Triple Wave laser en " +
+  "de Atres HydraSpa."
 
 /**
  * De deelafbeelding. `app/opengraph-image.tsx` rendert hem; dit is de ene plek
@@ -93,10 +104,12 @@ export const OPENGRAPH_BASIS = {
  * lokale kliniek is dat het verschil tussen wel en niet in de kaartresultaten
  * verschijnen.
  *
- * Nog aan te vullen zodra de gegevens er zijn: openingstijden, geo-coördinaten,
- * prijzen per behandeling en het Google Business Profile bij `sameAs`.
+ * Nog aan te vullen zodra de gegevens er zijn: openingstijden
+ * (`openingHoursSpecification`), de behandelaar als `Person` met credentials,
+ * en het Google Business Profile bij `sameAs` en `hasMap`.
  */
 export function bedrijfsSchema() {
+  const bereik = prijsbereik()
   return {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
@@ -110,14 +123,24 @@ export function bedrijfsSchema() {
     address: {
       "@type": "PostalAddress",
       streetAddress: ADRES.straat,
+      postalCode: ADRES.postcode,
       addressLocality: ADRES.plaats,
       addressCountry: ADRES.land,
     },
-    areaServed: {
-      "@type": "City",
-      name: ADRES.plaats,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: GEO.latitude,
+      longitude: GEO.longitude,
     },
-    sameAs: [INSTAGRAM],
+    // Het bereik van de tarievenpagina, zodat het klopt met wat er zichtbaar
+    // staat; Google eist dat structured data de pagina niet tegenspreekt.
+    ...(bereik ? { priceRange: `€${bereik.min} - €${bereik.max}` } : {}),
+    currenciesAccepted: "EUR",
+    areaServed: [ADRES.plaats, ...WERKGEBIED].map((naam) => ({
+      "@type": "City",
+      name: naam,
+    })),
+    sameAs: [INSTAGRAM, GOOGLE_PLAY],
     knowsAbout: [
       "Laserontharing",
       "Definitieve ontharing",

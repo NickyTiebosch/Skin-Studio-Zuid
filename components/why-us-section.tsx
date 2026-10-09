@@ -3,7 +3,7 @@ import { Sparkles, Snowflake, TrendingUp } from "lucide-react"
 const reasons = [
   {
     icon: Sparkles,
-    title: "Medische Innovatie 2026",
+    title: "Medische Innovatie",
     text: "Wij werken uitsluitend met de allernieuwste Atres-systemen. Veiliger, sneller en effectiever dan traditionele methoden.",
   },
   {

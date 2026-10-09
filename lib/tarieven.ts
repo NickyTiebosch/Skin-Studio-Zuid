@@ -301,6 +301,29 @@ const groepenPerBehandeling: Record<string, string[]> = {
 }
 
 /**
+ * Laagste en hoogste bedrag op de tarievenpagina, voor `priceRange` in de
+ * structured data. Kuren tellen mee (ze staan zichtbaar op de pagina), het
+ * gratis intakegesprek niet: "€0" zou de indruk wekken dat er gratis
+ * behandelingen zijn.
+ */
+export function prijsbereik(): { min: number; max: number } | undefined {
+  const bedragen: number[] = []
+  for (const groep of gevuldeTariefgroepen()) {
+    for (const regel of groep.regels) {
+      if (typeof regel.prijs === "number") bedragen.push(regel.prijs)
+    }
+  }
+  for (const doelgroep of doelgroepen) {
+    for (const kuur of doelgroep.kuren) {
+      bedragen.push(kuur.kuurprijs)
+      if (kuur.prijsBijEenmaligeAfname) bedragen.push(kuur.prijsBijEenmaligeAfname)
+    }
+  }
+  if (bedragen.length === 0) return undefined
+  return { min: Math.min(...bedragen), max: Math.max(...bedragen) }
+}
+
+/**
  * Laagste bedrag binnen één behandeling, voor de vanaf-prijs in de structured
  * data. Het gratis intakegesprek telt niet mee: "vanaf € 0" wekt de indruk dat
  * de behandeling zelf gratis is.

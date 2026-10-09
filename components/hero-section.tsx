@@ -31,7 +31,7 @@ export function HeroSection() {
         <p
           className="ssz-intro-op font-sans text-xs tracking-[0.4em] uppercase mt-[calc(2rem+0.5cm)] mb-6 text-white"
         >
-          Skin Studio Zuid - 's-Hertogenbosch
+          Laserontharing &amp; gezichtsbehandelingen &middot; Den Bosch
         </p>
         {/* Eén masker om de hele kop, en niet één per regel.
 
