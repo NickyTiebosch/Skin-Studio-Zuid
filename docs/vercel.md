@@ -82,9 +82,10 @@ Pas nu de A- en CNAME-records omzetten naar Vercel.
 
 Zet `NEXT_PUBLIC_SITE_URL` op het echte domein en deploy opnieuw. Werk
 daarna **`public/llms.txt`** met de hand bij: daar staan absolute URL's in die
-niet uit de code komen. Die staan sinds 6 september 2026 op de Vercel-URL
-(daarvóór op het dode `skinstudiozuid.nl`); zoek op
-`skin-studio-zuid.vercel.app`.
+niet uit de code komen. Die staan sinds 9 oktober 2026 op
+`https://skinstudio-zuid.nl` (van 6 september tot 9 oktober op de Vercel-URL,
+daarvóór op het foute `skinstudiozuid.nl`). Verandert het adres ooit: zoek op
+`skinstudio-zuid.nl`.
 
 ### 9. Opruimen
 
