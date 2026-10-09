@@ -110,27 +110,56 @@ staat hij verkeerd, dan wijst alles tegelijk naar het verkeerde adres.
 | 1 | `NEXT_PUBLIC_SITE_URL` is gezet | die waarde |
 | 2 | `VERCEL_ENV=production` én `VERCEL_PROJECT_PRODUCTION_URL` | het productiedomein van het project |
 | 3 | `VERCEL_URL` bestaat (preview) | deze deploy zelf |
-| 4 | geen van bovenstaande | `https://skinstudiozuid.nl` |
+| 4 | geen van bovenstaande | `https://skinstudio-zuid.nl` |
 
 Een **preview-deploy krijgt bovendien `noindex, nofollow`** en een `robots.txt`
 die alles weigert. Preview-URL's zijn publiek bereikbaar en bevatten dezelfde
 teksten als productie; zonder die uitzondering kunnen ze naast het echte
 domein in de index belanden en daarmee met zichzelf concurreren.
 
-## Let op: het domein is geregistreerd, maar de delegatie is kapot
+## Het domein: twee spellingen, één die telt
 
-De terugval `https://skinstudiozuid.nl` is ooit afgeleid van het e-mailadres
-in de oorspronkelijke code (`info@skinstudiozuid.nl`). Op 6 september 2026
-uitgezocht via de .nl-servers en SIDN's RDAP: het domein is op 20 maart 2025
-geregistreerd via TransIP (registrar team.blue nl B.V.; houder afgeschermd)
-en laatst gewijzigd op 18 december 2025. De .nl-servers delegeren het aan
-`ns0.mailhet.nu` en `ns1.mailhet.nu`. Die servers bestaan, maar antwoorden
-voor dit domein met "Query refused": de zone staat er niet meer. Daardoor is
-er geen A-record én geen MX-record — niet alleen de site, ook mail naar
-`info@skinstudiozuid.nl` is onbereikbaar.
+**Sinds 9 oktober 2026 is `skinstudio-zuid.nl` vastgelegd — mét koppelteken.**
+Dat is het adres waar de site op komt; de code wijst daar sindsdien naar
+(`lib/site.ts` terugval, `lib/contact.ts` e-mailadres, `public/llms.txt`).
 
-Zolang dat niet is hersteld: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
-pakt de code de Vercel-URL en wijst alles in elk geval naar iets dat bestaat.
+Daarnaast bestaat er nog een ouder `skinstudiozuid.nl` **zonder** koppelteken,
+waar de code vóór die datum naar wees. Op 6 september 2026 uitgezocht via de
+.nl-servers en SIDN's RDAP: op 20 maart 2025 geregistreerd via TransIP
+(registrar team.blue nl B.V.; houder afgeschermd), laatst gewijzigd op
+18 december 2025, gedelegeerd aan `ns0.mailhet.nu` en `ns1.mailhet.nu`. Die
+servers bestaan maar antwoorden met "Query refused": de zone staat er niet
+meer, dus geen A-record en geen MX-record.
+
+Twee open punten daarbij, allebei voor de kliniek:
+
+1. **Is het oude domein nog van hen?** Zo ja, laat het doorverwijzen naar
+   `skinstudio-zuid.nl`. Zonder koppelteken is de spelling die bezoekers het
+   eerst intypen, en die mag niet bij een foutmelding of bij iemand anders
+   uitkomen.
+2. **Welk postvak komt er?** De code gaat uit van
+   `info@skinstudio-zuid.nl`. Klopt dat niet, dan is `EMAIL` in
+   `lib/contact.ts` de enige plek die wijzigt.
+
+Zolang het nieuwe domein nog niet aan het Vercel-project hangt en resolvet:
+laat `NEXT_PUBLIC_SITE_URL` leeg, dan pakt de code de Vercel-URL en wijst
+alles in elk geval naar iets dat bestaat. Zet hem pas op
+`https://skinstudio-zuid.nl` als dat adres de site echt toont.
+
+### Koppelen zonder de mail te slopen
+
+Het domein hoort in **twee** richtingen te wijzen, en die moeten naast elkaar
+blijven bestaan:
+
+- de site naar Vercel (Vercel toont de exacte records zodra het domein aan het
+  project wordt toegevoegd; dat is doorgaans een A-record op het hoofddomein
+  en een CNAME op `www`);
+- de mail naar de mailprovider (MX, plus SPF, DKIM en DMARC).
+
+Houd het DNS-beheer daarom bij de registrar en zet daar alleen de
+Vercel-records bij. Delegeer het domein **niet** aan de nameservers van
+Vercel: dan verhuist de hele zone en vallen de MX-records weg, en dat merk je
+pas als de eerste aanvraag niet aankomt.
 
 Voor de omschakeling betekent dit dat stap 5 en 6 vervallen: er is geen
 werkende oude site die tijdens de omschakeling stuk kan gaan. Wie het
