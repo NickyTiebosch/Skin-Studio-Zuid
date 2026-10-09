@@ -8,16 +8,17 @@ import {
   labelDagdeel,
   parseAfspraakdatum,
 } from "@/lib/agenda"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 
 /**
  * Bestemming van het contactformulier.
  *
  * TIJDELIJK het adres van Nicky, sinds 7 september 2026: zo komen aanvragen
- * aan terwijl `info@skinstudiozuid.nl` geen mail kan ontvangen (het domein
+ * aan terwijl `info@skinstudio-zuid.nl` geen mail kan ontvangen (het domein
  * heeft geen MX-record, zie docs/stand-van-zaken.md). Het adres dat de
  * bezoeker op de site ziet, blijft dat van de kliniek (`EMAIL` in
  * lib/contact.ts). Zodra mail op het domein werkt: hier terug naar
- * info@skinstudiozuid.nl en daar opnieuw één keer op de activatiemail van
+ * info@skinstudio-zuid.nl en daar opnieuw één keer op de activatiemail van
  * formsubmit klikken.
  */
 const CONTACT_EMAIL = "info@22labs.nl"
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
       afspraak && datum
         ? `Afspraakaanvraag: ${afspraak.naam} op ${formatteerDatumKort(datum)}` +
           (dagdeel !== "geen-voorkeur" ? ` (${labelDagdeel(dagdeel).toLowerCase()})` : "")
-        : "Nieuwe aanvraag via Skin Studio Zuid"
+        : `Nieuwe aanvraag via ${BEDRIJFSNAAM}`
 
     // Formsubmit.co: geen account nodig. Bij de eerste aanvraag krijgt het
     // adres hierboven een activatiemail – één keer op de link klikken, daarna

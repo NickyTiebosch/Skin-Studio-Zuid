@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
-import { BehandelingPagina } from "@/components/behandeling-pagina"
+import { BehandelingPagina } from "@/components/editie2/behandeling-pagina"
 import { behandelingBySlug } from "@/lib/behandelingen"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 import { OPENGRAPH_BASIS } from "@/lib/site"
 
 const behandeling = behandelingBySlug("gezichtsbehandelingen")!
 
 export const metadata: Metadata = {
-  title: { absolute: `${behandeling.metaTitel} | Skin Studio Zuid` },
+  title: { absolute: `${behandeling.metaTitel} | ${BEDRIJFSNAAM}` },
   description: behandeling.metaBeschrijving,
   alternates: { canonical: `/${behandeling.slug}` },
   openGraph: {

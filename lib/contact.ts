@@ -9,7 +9,21 @@
  * Alles wat de bezoeker over het bedrijf te zien krijgt, komt hiervandaan.
  */
 
-export const BEDRIJFSNAAM = "Skin Studio Zuid"
+/**
+ * De naam zoals de bezoeker hem leest, op 9 oktober 2026 op verzoek van de
+ * kliniek één woord geworden. Dat volgt de schrijfwijze van de kliniek zelf en
+ * van de Instagram-naam (`skinstudio_zuid`).
+ *
+ * Let op de twee plekken die hier bewust van afwijken: het logo
+ * (`Images/logo-skin-studio-zuid.png`) is een foto-bestand waarin "Skin Studio"
+ * in schrijfletters staat, en het domein heeft een koppelteken. Alleen de
+ * geschreven naam verandert mee met deze regel.
+ *
+ * Alles wat de bezoeker ziet leest hier: paginatitels, de deelafbeelding, de
+ * footer, de structured data. Stond dit ergens met de hand ingetypt, dan liep
+ * het vroeg of laat uit elkaar — zie de toelichting boven aan dit bestand.
+ */
+export const BEDRIJFSNAAM = "Skinstudio Zuid"
 
 export const ADRES = {
   straat: "Hildebrandstraat 8",
@@ -23,7 +37,15 @@ export const TELEFOON_WEERGAVE = "073 689 6423"
 /** Internationale vorm voor tel:-links en structured data. */
 export const TELEFOON_HREF = "tel:+31736896423"
 
-export const EMAIL = "info@skinstudiozuid.nl"
+/**
+ * Het adres volgt het domein dat op 9 oktober 2026 is vastgelegd:
+ * skinstudio-zuid.nl, mét koppelteken. Het oude `skinstudiozuid.nl` zonder
+ * koppelteken stond los bij TransIP, heeft nooit post kunnen ontvangen en is
+ * bovendien niet meer van de kliniek — teruggrijpen op dat adres kan dus niet.
+ * Zodra de kliniek bevestigt welk postvak er echt komt, is dit de enige regel
+ * die hoeft te wijzigen — de site, de structured data en llms.txt lezen hier.
+ */
+export const EMAIL = "info@skinstudio-zuid.nl"
 
 export const EMAIL_HREF = `mailto:${EMAIL}`
 

@@ -28,7 +28,7 @@ export function WhyUsSection() {
       <div className="max-w-6xl mx-auto">
         <header className="ssz-op text-center mb-12 md:mb-16">
           <h2 className="font-serif italic text-3xl md:text-5xl text-foreground text-balance max-w-2xl mx-auto leading-tight">
-            Waarom kiezen voor Skin Studio Zuid?
+            Waarom kiezen voor Skinstudio Zuid?
           </h2>
           <div
             className="w-12 h-px mx-auto mt-6"

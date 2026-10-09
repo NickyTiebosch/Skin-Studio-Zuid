@@ -1,3 +1,5 @@
+import { BEDRIJFSNAAM } from "@/lib/contact"
+
 export function QuoteSection() {
   return (
     <section
@@ -16,7 +18,7 @@ export function QuoteSection() {
           className="font-sans text-xs tracking-[0.3em] uppercase"
           style={{ color: "var(--rose-gold)" }}
         >
-          Skin Studio Zuid — Filosofie
+          {BEDRIJFSNAAM} — Filosofie
         </p>
         <div
           className="w-12 h-px mx-auto mt-8"
