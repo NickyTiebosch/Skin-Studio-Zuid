@@ -1,6 +1,6 @@
 # Stand van zaken
 
-Bijgewerkt: 9 oktober 2026. Kort overzicht om een nieuwe sessie snel op gang
+Bijgewerkt: 7 september 2026. Kort overzicht om een nieuwe sessie snel op gang
 te helpen. Details staan in `docs/vercel.md` (migratie) en
 `docs/te-controleren.md` (wat de kliniek moet aanleveren).
 
@@ -10,8 +10,7 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 |---|---|---|
 | Vercel (nieuw) | `skin-studio-zuid.vercel.app` | Productie, bouwt van `main`. Op 6 september volledig nagelopen, in orde |
 | Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
-| Eigen domein | `skinstudio-zuid.nl` | **Vastgelegd op 9 oktober 2026**, mét koppelteken. Nog niet aan het Vercel-project gekoppeld en nog geen postvak. De code wijst er sindsdien naar |
-| Oud domein | `skinstudiozuid.nl` | Zonder koppelteken. **Niet meer van de kliniek** (bevestigd 9 oktober 2026) en ook niet op te kopen: de registratie staat nog op iemand anders. Gedelegeerd aan `ns0/ns1.mailhet.nu` die de zone weigeren, dus hij resolvet nergens naartoe. Doorverwijzen kan dus niet — zie de waarschuwing onder "De naam" |
+| Eigen domein | `skinstudio-zuid.nl` (mét streepje; bevestigd 9 oktober 2026) | **Geregistreerd bij TransIP, toont nog de parkeerpagina.** Productie canonicaliseert er sinds 9 oktober al naartoe; de DNS moet nog naar Vercel. De naam zónder streepje (`skinstudiozuid.nl`) was een vergissing uit het e-mailadres en is dood: gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren, geen A- en geen MX-record. Bovendien **niet meer van de kliniek** en niet op te kopen (nagekeken 9 oktober 2026): doorverwijzen kan niet |
 
 ## De naam
 
@@ -21,7 +20,7 @@ daar bewust van af en dat is geen slordigheid:
 
 - het **logo** is een PNG waarin "Skin Studio" in schrijfletters staat met
   "ZUID" eronder — niet aan te passen in code;
-- het **domein** is `skinstudio-zuid.nl`, mét koppelteken.
+- het **domein** is `skinstudio-zuid.nl`, mét streepje.
 
 De naam staat op één plek: `BEDRIJFSNAAM` in `lib/contact.ts`. Alles wat de
 bezoeker ziet leest daar — paginatitels, de deelafbeelding, de footer, de
@@ -30,10 +29,11 @@ structured data. In het **Google Business Profile** (nog aan te maken, zie
 staan, anders ziet Google twee bedrijven waar er één is.
 
 **Let op bij het doorgeven van het webadres.** De naam is nu één woord, maar
-het domein heeft een koppelteken, en `skinstudiozuid.nl` zonder koppelteken is
-van iemand anders. Wie het adres uit zijn hoofd intypt komt dus nergens uit.
-Zet `skinstudio-zuid.nl` daarom overal als aanklikbare link neer — Instagram-bio,
-Business Profile, flyers, mailhandtekening — en laat niemand het overtypen.
+het domein heeft een streepje, en `skinstudiozuid.nl` zonder streepje is van
+iemand anders. Wie het adres uit zijn hoofd intypt komt dus niet bij de
+kliniek uit. Zet `skinstudio-zuid.nl` daarom overal als aanklikbare link neer
+— Instagram-bio, Business Profile, flyers, mailhandtekening — en laat niemand
+het overtypen.
 
 ## Wat er staat
 
@@ -116,11 +116,9 @@ wat op de homepage klopt en op `/boeken` niet), `llms.txt` wees naar het dode
 domein, en Node stond in het dashboard op 24 terwijl repo en draaiboek 22
 zeiden.
 
-Gevonden: het domein waar de code toen naar wees (`skinstudiozuid.nl`) was wel
-geregistreerd maar had een kapotte delegatie, dus `info@skinstudiozuid.nl` kon
-geen mail ontvangen terwijl het formulier daar naartoe stuurde. Op 7 september
-opgelost door tijdelijk naar `info@22labs.nl` te sturen; op 9 oktober bleek dat
-domein bovendien niet eens meer van de kliniek te zijn.
+Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
+`docs/vercel.md`), en daardoor kan `info@skinstudio-zuid.nl` geen mail ontvangen
+— terwijl het contactformulier precies daar naartoe stuurt.
 
 ## Wat er nog moet
 
@@ -133,25 +131,31 @@ domein bovendien niet eens meer van de kliniek te zijn.
    het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
    activeren. De kliniek heeft nog niet gekozen welk postvak dat wordt (punt
    3), dus dit blijft voorlopig zo.
-2. **Het domein koppelen.** `skinstudio-zuid.nl` is vastgelegd maar nog niet
-   gedelegeerd: op 9 oktober 2026 stond hij nog op `ns1/ns3/ns4.dns.nl`, de
-   nameservers van de .nl-registry zelf. Er is dus geen DNS-zone, geen
-   A-record en geen MX-record, en er valt nog niets te koppelen. Wie het
-   domein heeft geregistreerd zet eerst de nameservers naar een DNS-beheerder
-   en voegt daar de records toe die Vercel toont bij het toevoegen van het
-   domein (nu al bekend: A `76.76.21.21` op het hoofddomein, CNAME
-   `cname.vercel-dns.com` op `www`). Houd dat DNS-beheer bij de registrar —
+2. **Het domein koppelen.** Het echte domein is `skinstudio-zuid.nl` (mét
+   streepje). Op 9 oktober 2026 wezen canonical, sitemap en `robots.txt` van
+   productie al naar dat domein, terwijl het zelf nog de parkeerpagina van
+   TransIP toonde. Op 9 oktober 2026 via de Vercel-API gemeten: het domein
+   hangt aan het project (apex én `www`, allebei geverifieerd), staat op de
+   nameservers van TransIP en heeft één A-record, `37.97.254.27` — dat is
+   TransIP, niet Vercel. Vandaar dat Vercel het als `misconfigured` meldt.
+   Wie het TransIP-account heeft, zet het A-record van het hoofddomein om
+   naar **`76.76.21.21`** en `www` naar **`cname.vercel-dns.com`** (Vercel
+   toont ze ook onder Settings → Domains). Houd het DNS-beheer bij TransIP;
    delegeer de zone niet aan Vercel, anders vallen de MX-records weg zodra de
-   mail geregeld is. Omdat er nu niets resolvet is er geen oude site die
-   tijdens de omschakeling stuk kan gaan: stap 5 en 6 uit het draaiboek
-   vervallen. Daarna `NEXT_PUBLIC_SITE_URL` zetten en `public/llms.txt`
-   bijwerken.
+   mail geregeld is. Omdat er alleen een parkeerpagina staat, is er geen oude site
+   die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen. Zodra het
+   domein "Valid Configuration" heeft: `public/llms.txt` bijwerken (daar
+   staan nog Vercel-URL's) en in Search Console een Change of Address van
+   de Vercel-URL doen. De naam zónder streepje in de oudere notities
+   hieronder was een vergissing; zie `docs/vercel.md`.
 3. **E-mail op het domein.** Er is nog geen postvak en de kliniek denkt nog
-   na over welke provider het wordt (mailbox bij de registrar, Google
-   Workspace, Microsoft 365). Zodra dat gekozen is komen er MX-records bij,
-   plus SPF, DKIM en DMARC. Pas daarna kan het formulier terug naar het eigen
-   adres. De code gaat uit van `info@skinstudio-zuid.nl`; wordt het iets
-   anders, dan is `EMAIL` in `lib/contact.ts` de enige regel die wijzigt.
+   na over welke provider het wordt (TransIP-mailbox, Google Workspace,
+   Microsoft 365). De vraag of er ooit een mailbox bestond is niet meer aan
+   de orde: dit is een gloednieuw domein. Zodra de keuze er is komen de
+   MX-records erbij, plus SPF, DKIM en DMARC. Pas daarna kan het formulier
+   terug naar het eigen adres. De code gaat uit van
+   `info@skinstudio-zuid.nl`; wordt het iets anders, dan is `EMAIL` in
+   `lib/contact.ts` de enige regel die wijzigt.
 4. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
    kliniek is dit een grotere hefboom dan de hele SEO van de site: het bepaalt
    of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.

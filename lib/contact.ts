@@ -74,11 +74,12 @@ export const TELEFOON_WEERGAVE = "073 689 6423"
 export const TELEFOON_HREF = "tel:+31736896423"
 
 /**
- * Het adres volgt het domein dat op 9 oktober 2026 is vastgelegd:
- * skinstudio-zuid.nl, mét koppelteken. Het oude `skinstudiozuid.nl` zonder
- * koppelteken stond los bij TransIP en heeft nooit post kunnen ontvangen.
- * Zodra de kliniek bevestigt welk postvak er echt komt, is dit de enige regel
- * die hoeft te wijzigen — de site, de structured data en llms.txt lezen hier.
+ * Mét streepje, net als het domein. Tot 9 oktober 2026 stond hier de variant
+ * zonder streepje, en daar is nooit een mailbox voor geweest; dat domein is
+ * inmiddels ook niet meer van de kliniek, dus teruggrijpen kan niet.
+ *
+ * Er is nog geen postvak gekozen. Zodra dat er is, is dit de enige regel die
+ * wijzigt — de site, de structured data en llms.txt lezen allemaal hier.
  */
 export const EMAIL = "info@skinstudio-zuid.nl"
 
