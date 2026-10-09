@@ -59,7 +59,11 @@ export const TELEFOON_WEERGAVE = "073 689 6423"
 /** Internationale vorm voor tel:-links en structured data. */
 export const TELEFOON_HREF = "tel:+31736896423"
 
-export const EMAIL = "info@skinstudiozuid.nl"
+/**
+ * Mét streepje, net als het domein. Tot 9 oktober 2026 stond hier de variant
+ * zonder streepje, en daar is nooit een mailbox voor geweest.
+ */
+export const EMAIL = "info@skinstudio-zuid.nl"
 
 export const EMAIL_HREF = `mailto:${EMAIL}`
 

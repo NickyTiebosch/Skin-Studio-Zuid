@@ -94,18 +94,18 @@ domein, en Node stond in het dashboard op 24 terwijl repo en draaiboek 22
 zeiden.
 
 Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
-`docs/vercel.md`), en daardoor kan `info@skinstudiozuid.nl` geen mail ontvangen
+`docs/vercel.md`), en daardoor kan `info@skinstudio-zuid.nl` geen mail ontvangen
 — terwijl het contactformulier precies daar naartoe stuurt.
 
 ## Wat er nog moet
 
 1. **Contactformulier staat tijdelijk op Nicky's adres.** Sinds 7 september
    stuurt het formulier via formsubmit.co naar `info@22labs.nl`
-   (`app/api/contact/route.ts`), omdat `info@skinstudiozuid.nl` geen mail
+   (`app/api/contact/route.ts`), omdat `info@skinstudio-zuid.nl` geen mail
    kan ontvangen zolang het domein geen MX-record heeft. **Nog te doen:** bij
    de eerste aanvraag stuurt formsubmit één activatiemail naar dat adres;
    daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
-   het domein werkt: terug naar `info@skinstudiozuid.nl` en daar opnieuw
+   het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
    activeren.
 2. **Het domein koppelen.** Het echte domein is `skinstudio-zuid.nl` (mét
    streepje). Op 9 oktober 2026 wezen canonical, sitemap en `robots.txt` van
@@ -121,7 +121,7 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
 3. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
    komen voor de mailbox die de kliniek echt gebruikt (TransIP-mailbox,
    Google Workspace, Microsoft 365 — te kiezen). Uitzoeken bij de kliniek: is
-   er ooit een mailbox voor `info@skinstudiozuid.nl` geweest, en zo ja waar?
+   er ooit een mailbox voor `info@skinstudio-zuid.nl` geweest, en zo ja waar?
    Pas daarna kan het formulier terug naar dat adres.
 4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Pas zinvol als het domein er is.

@@ -129,18 +129,20 @@ domein is aan het project gehangen of `NEXT_PUBLIC_SITE_URL` is gezet). Tot
 de DNS bij TransIP naar Vercel wijst, wijzen canonicals, sitemap en robots
 dus naar een parkeerpagina: dat is stap 4 hierboven, en die moet nu snel.
 
-Wat hieronder staat gaat over de naam zónder streepje en is alleen nog van
-belang voor het e-mailadres `info@skinstudiozuid.nl`, dat die naam gebruikt.
+Het e-mailadres is sinds 9 oktober 2026 ook mét streepje:
+`info@skinstudio-zuid.nl` (bevestigd door Nicky). Wat hieronder staat gaat
+over de naam zónder streepje en is historie.
 
 De oude terugval `https://skinstudiozuid.nl` was afgeleid van het e-mailadres
-in de oorspronkelijke code (`info@skinstudiozuid.nl`). Op 6 september 2026
+dat in de oorspronkelijke code stond (`info@skinstudiozuid.nl`, eveneens
+zonder streepje, en eveneens fout). Op 6 september 2026
 uitgezocht via de .nl-servers en SIDN's RDAP: het domein is op 20 maart 2025
 geregistreerd via TransIP (registrar team.blue nl B.V.; houder afgeschermd)
 en laatst gewijzigd op 18 december 2025. De .nl-servers delegeren het aan
 `ns0.mailhet.nu` en `ns1.mailhet.nu`. Die servers bestaan, maar antwoorden
 voor dit domein met "Query refused": de zone staat er niet meer. Daardoor is
 er geen A-record én geen MX-record — niet alleen de site, ook mail naar
-`info@skinstudiozuid.nl` is onbereikbaar.
+het oude adres `info@skinstudiozuid.nl` is onbereikbaar.
 
 Zolang dat niet is hersteld: laat `NEXT_PUBLIC_SITE_URL` leeg op Vercel, dan
 pakt de code de Vercel-URL en wijst alles in elk geval naar iets dat bestaat.

@@ -113,7 +113,7 @@ Gevolgen zolang het niet gekoppeld is:
   intypt.
 - Een GBP kan pas een website-URL krijgen die klanten herkennen als het domein
   werkt.
-- Het e-mailadres `info@skinstudiozuid.nl` staat in de structured data en op
+- Het e-mailadres `info@skinstudio-zuid.nl` staat in de structured data en op
   elke pagina, maar kan geen mail ontvangen (geen MX). Een AI-assistent of
   Google die dat adres doorgeeft, stuurt klanten naar een bodemloze put.
 
