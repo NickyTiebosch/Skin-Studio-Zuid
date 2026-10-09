@@ -37,8 +37,8 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
   toelichting in `components/navbar.tsx`. "Producten" staat in de footer.
 - SEO/GEO-fundament: sitemap, robots met AI-crawlers expliciet toegelaten,
   JSON-LD (`BeautySalon`, `Service`, `FAQPage`, `BreadcrumbList`), canonicals,
-  OpenGraph, `llms.txt`. De absolute URL's in `public/llms.txt` staan op de
-  Vercel-URL tot het echte domein er is.
+  OpenGraph, `llms.txt`. De absolute URL's in `public/llms.txt` staan sinds
+  9 oktober 2026 op `skinstudio-zuid.nl`, net als de canonicals.
 - Meten: Vercel Analytics en Speed Insights (allebei cookieloos, buiten de
   cookiebanner), plus een cookiebanner waarachter GA4 pas laadt ná toestemming.
 - Node 24, overal hetzelfde: `engines.node` is `24.x`, `.nvmrc` zegt 24, het
@@ -113,10 +113,10 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    TransIP toonde. Wie het TransIP-account heeft, zet de DNS om naar de
    records die Vercel bij het domein toont (Settings → Domains), of naar
    Vercel DNS. Omdat er alleen een parkeerpagina staat, is er geen oude site
-   die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen. Zodra het
-   domein "Valid Configuration" heeft: `public/llms.txt` bijwerken (daar
-   staan nog Vercel-URL's) en in Search Console een Change of Address van
-   de Vercel-URL doen. De naam zónder streepje in de oudere notities
+   die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen. `llms.txt`
+   staat al op het domein (sinds 9 oktober). Zodra het domein "Valid
+   Configuration" heeft: in Search Console een Change of Address van de
+   Vercel-URL doen. De naam zónder streepje in de oudere notities
    hieronder was een vergissing; zie `docs/vercel.md`.
 3. **E-mail op het domein.** Bij het herstel van DNS moeten er MX-records
    komen voor de mailbox die de kliniek echt gebruikt (TransIP-mailbox,
