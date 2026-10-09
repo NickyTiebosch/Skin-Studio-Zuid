@@ -55,12 +55,12 @@ export const metadata: Metadata = {
   // en in chat-apps leeg blijven.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Gezichtsbehandelingen & laserontharing in Den Bosch | Skin Studio Zuid',
+    default: `Gezichtsbehandelingen & laserontharing in Den Bosch | ${SITE_NAAM}`,
     // Subpagina's krijgen hun eigen titel met de merknaam erachter.
-    template: '%s | Skin Studio Zuid',
+    template: `%s | ${SITE_NAAM}`,
   },
   description:
-    'Skin Studio Zuid in ‘s-Hertogenbosch: definitieve laserontharing met de ' +
+    `${SITE_NAAM} in ‘s-Hertogenbosch: definitieve laserontharing met de ` +
     'Atres Triple Wave en huidverbetering met de Atres HydraSpa. Vrijblijvend ' +
     'kennismaken kan.',
   alternates: {

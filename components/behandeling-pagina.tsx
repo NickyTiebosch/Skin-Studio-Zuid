@@ -11,7 +11,7 @@ import {
   faqSchema,
   kruimelpadSchema,
 } from "@/lib/site"
-import { TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
+import { BEDRIJFSNAAM, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
 import { Paginaovergang, behandelingOvergang } from "@/components/paginaovergang"
 
 /**
@@ -212,7 +212,7 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
                     className="font-sans text-xs tracking-[0.2em] uppercase block mb-2"
                     style={{ color: "var(--rose-gold)" }}
                   >
-                    Ook bij Skin Studio Zuid
+                    Ook bij {BEDRIJFSNAAM}
                   </span>
                   <span className="font-serif text-xl text-foreground">{b.tag}</span>
                 </div>

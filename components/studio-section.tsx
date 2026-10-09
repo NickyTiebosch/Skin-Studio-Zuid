@@ -1,5 +1,6 @@
 import Image from "next/image"
 import StudioImage from "@/Images/1000026036.jpg"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 
 export function StudioSection() {
   return (
@@ -19,7 +20,7 @@ export function StudioSection() {
             </h2>
             <div className="ssz-lijn w-10 h-px mb-6" style={{ backgroundColor: "var(--rose-gold)" }} />
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
-              Welkom bij de skinstudio van de toekomst. Bij Skin Studio Zuid draait alles om huidoptimalisatie op het hoogste niveau. Onze studio is ontstaan uit een passie voor huidverbetering en innovatie. Wij geloven dat echte resultaten niet pijnlijk hoeven te zijn.
+              Welkom bij de skinstudio van de toekomst. Bij {BEDRIJFSNAAM} draait alles om huidoptimalisatie op het hoogste niveau. Onze studio is ontstaan uit een passie voor huidverbetering en innovatie. Wij geloven dat echte resultaten niet pijnlijk hoeven te zijn.
             </p>
             <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
               Wij werken uitsluitend met gecertificeerde specialisten en de meest geavanceerde apparatuur: de Atres Triple Wave Laser voor definitieve ontharing en de Atres HydraSpa voor huidverbetering en lift. Techniek en expertise in één.
@@ -37,7 +38,7 @@ export function StudioSection() {
             >
               <Image
                 src={StudioImage}
-                alt="Interieur van Skin Studio Zuid met visgraatvloer en latjeswand"
+                alt={`Interieur van ${BEDRIJFSNAAM} met visgraatvloer en latjeswand`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 640px"
                 className="ssz-drift object-cover object-center"

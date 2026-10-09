@@ -8,6 +8,7 @@ import {
   labelDagdeel,
   parseAfspraakdatum,
 } from "@/lib/agenda"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 
 /**
  * Bestemming van het contactformulier.
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
       afspraak && datum
         ? `Afspraakaanvraag: ${afspraak.naam} op ${formatteerDatumKort(datum)}` +
           (dagdeel !== "geen-voorkeur" ? ` (${labelDagdeel(dagdeel).toLowerCase()})` : "")
-        : "Nieuwe aanvraag via Skin Studio Zuid"
+        : `Nieuwe aanvraag via ${BEDRIJFSNAAM}`
 
     // Formsubmit.co: geen account nodig. Bij de eerste aanvraag krijgt het
     // adres hierboven een activatiemail – één keer op de link klikken, daarna

@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Skin Studio Zuid — Quiet Luxury Theme */
+  /* Skinstudio Zuid — Quiet Luxury Theme */
   /* Sand / off-white background */
   --background: oklch(0.971 0.008 78);
   --foreground: oklch(0.22 0.01 60);
