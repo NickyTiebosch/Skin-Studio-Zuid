@@ -6,7 +6,7 @@ import { Footer } from "@/components/editie2/footer"
 import { Paginakop } from "@/components/editie2/paginakop"
 import { TarievenMelder } from "@/components/tarieven-melder"
 import { behandelingen } from "@/lib/behandelingen"
-import { ADRES, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
+import { ADRES, BEDRIJFSNAAM, TELEFOON_HREF, TELEFOON_WEERGAVE } from "@/lib/contact"
 import { OPENGRAPH_BASIS, SITE_URL, kruimelpadSchema } from "@/lib/site"
 import {
   KUUR_ADVIES,
@@ -21,7 +21,7 @@ const tarievenBekend = heeftTarieven()
 
 export const metadata: Metadata = {
   title: "Tarieven laserontharing en gezichtsbehandelingen",
-  description: `Tarieven van Skin Studio Zuid in ${ADRES.plaats}: laserontharing per lichaamsdeel voor vrouwen en mannen, kuren en gezichtsbehandelingen. Gratis intakegesprek.`,
+  description: `Tarieven van ${BEDRIJFSNAAM} in ${ADRES.plaats}: laserontharing per lichaamsdeel voor vrouwen en mannen, kuren en gezichtsbehandelingen. Gratis intakegesprek.`,
   alternates: { canonical: "/tarieven" },
   robots: tarievenBekend
     ? { index: true, follow: true }
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     ...OPENGRAPH_BASIS,
     type: "website",
     url: "/tarieven",
-    title: "Tarieven — Skin Studio Zuid",
-    description: `Wat laserontharing en gezichtsbehandelingen kosten bij Skin Studio Zuid in ${ADRES.plaats}.`,
+    title: `Tarieven — ${BEDRIJFSNAAM}`,
+    description: `Wat laserontharing en gezichtsbehandelingen kosten bij ${BEDRIJFSNAAM} in ${ADRES.plaats}.`,
   },
 }
 

@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 import { heroPoort } from "@/lib/editie2/beeld"
 import { EASE, MEDIA, SCRUB } from "@/lib/editie2/beweging"
 import { useScrollScene } from "./beweging/use-scroll-scene"
@@ -155,7 +156,7 @@ export function HeroPortaal() {
             className="ssz-intro-op font-sans text-xs tracking-[0.4em] uppercase mb-6"
             style={{ color: "var(--rose-gold)" }}
           >
-            Skin Studio Zuid &mdash; &rsquo;s-Hertogenbosch
+            {BEDRIJFSNAAM} &mdash; &rsquo;s-Hertogenbosch
           </p>
           {/* Eén masker om de hele kop: zie de LCP-toelichting hierboven. */}
           <div className="ssz-regel mb-8">
@@ -167,7 +168,7 @@ export function HeroPortaal() {
             </h1>
           </div>
           <p className="ssz-intro-op ssz-vertraag-2 font-sans text-sm md:text-base leading-relaxed text-muted-foreground max-w-md mb-10">
-            Ontdek de geavanceerde behandelingen van Skin Studio Zuid. Wij combineren
+            Ontdek de geavanceerde behandelingen van {BEDRIJFSNAAM}. Wij combineren
             expertise met ontspanning voor een stralend resultaat.
           </p>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">

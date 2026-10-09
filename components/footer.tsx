@@ -117,7 +117,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[color:var(--cream)]/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-sans text-xs text-[color:var(--cream)]/40">
-            © {new Date().getFullYear()} Skin Studio Zuid. Alle rechten voorbehouden.
+            © {new Date().getFullYear()} Skinstudio Zuid. Alle rechten voorbehouden.
           </p>
           <div className="flex items-center gap-6">
             <Link
@@ -130,7 +130,7 @@ export function Footer() {
               href={INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram van Skin Studio Zuid"
+              aria-label="Instagram van Skinstudio Zuid"
               className="text-[color:var(--cream)]/40 hover:text-[color:var(--cream)] transition-colors"
             >
               <Instagram size={16} />

@@ -1,5 +1,5 @@
 /**
- * De behandelingen van Skin Studio Zuid, als één bron.
+ * De behandelingen van Skinstudio Zuid, als één bron.
  *
  * Deze inhoud stond eerder als module-lokale const in specialties-section.tsx
  * en was daardoor nergens anders bruikbaar. Nu putten zowel de sectie op de
@@ -96,7 +96,7 @@ export const behandelingen: Behandeling[] = [
     ],
     detail: "Kalahari Productlijn",
     image: "/images/facial-treatment.jpg",
-    imageAlt: "Luxe gezichtsbehandeling bij Skin Studio Zuid",
+    imageAlt: "Luxe gezichtsbehandeling bij Skinstudio Zuid",
     schemaBeschrijving:
       "Gezichtsbehandeling met de Atres HydraSpa in 's-Hertogenbosch: " +
       "reiniging met Vortex-technologie, verstrakking met radiofrequentie en " +
@@ -196,7 +196,7 @@ export const behandelingen: Behandeling[] = [
     ],
     detail: "ATRES Technologie",
     image: "/images/laser-treatment.jpg",
-    imageAlt: "Professionele laserontharing bij Skin Studio Zuid",
+    imageAlt: "Professionele laserontharing bij Skinstudio Zuid",
     schemaBeschrijving:
       "Definitieve laserontharing in 's-Hertogenbosch met de Atres Triple " +
       "Wave, een medisch gecertificeerde laser die drie golflengtes combineert " +

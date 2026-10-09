@@ -46,7 +46,7 @@ export type Beeld = {
 export const heroPoort: Beeld = {
   id: "hero-poort",
   src: behandelkamerRaam,
-  alt: "Behandelkamer van Skin Studio Zuid: het behandelbed bij het raam met het logo op het glas",
+  alt: "Behandelkamer van Skinstudio Zuid: het behandelbed bij het raam met het logo op het glas",
   soort: "foto",
   positie: "50% 62%",
 }
@@ -112,7 +112,7 @@ export const laserKop: Beeld = {
 export const gezichtKop: Beeld = {
   id: "gezicht-water",
   src: behandelkamerLatten,
-  alt: "De rustige behandelkamer van Skin Studio Zuid",
+  alt: "De rustige behandelkamer van Skinstudio Zuid",
   soort: "placeholder",
   positie: "30% 40%",
 }

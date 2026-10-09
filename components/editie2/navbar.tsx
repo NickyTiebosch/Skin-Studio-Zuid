@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 import { hoofdnavigatie } from "@/lib/navigatie"
 import Logo from "@/Images/logo-skin-studio-zuid.png"
 
@@ -60,7 +61,7 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between gap-6">
         <Link href="/" className="flex items-center leading-none" onClick={() => setMenuOpen(false)}>
-          <Image src={Logo} alt="Skin Studio Zuid" className="h-16 w-auto" priority />
+          <Image src={Logo} alt={BEDRIJFSNAAM} className="h-16 w-auto" priority />
         </Link>
 
         {/* Menu in de balk, vanaf 1024px. Gemeten: vijf labels op 11px met

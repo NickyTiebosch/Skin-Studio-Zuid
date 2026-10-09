@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { BEDRIJFSNAAM } from "@/lib/contact"
 import { rondgang } from "@/lib/editie2/beeld"
 import { Ring } from "./accenten/ring"
 
@@ -26,7 +27,7 @@ export function Studio() {
           </h2>
           <div className="ssz-lijn mb-6 h-px w-10" style={{ backgroundColor: "var(--rose-gold)" }} />
           <p className="mb-4 font-sans text-sm leading-relaxed text-muted-foreground">
-            Welkom bij de skinstudio van de toekomst. Bij Skin Studio Zuid draait alles om
+            Welkom bij de skinstudio van de toekomst. Bij {BEDRIJFSNAAM} draait alles om
             huidoptimalisatie op het hoogste niveau. Onze studio is ontstaan uit een passie
             voor huidverbetering en innovatie. Wij geloven dat echte resultaten niet pijnlijk
             hoeven te zijn.

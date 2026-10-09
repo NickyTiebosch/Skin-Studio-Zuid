@@ -4,18 +4,18 @@ import { Footer } from "@/components/editie2/footer"
 import { Sfeerband } from "@/components/editie2/sfeerband"
 import { ContactSection } from "@/components/contact-section"
 import { behandelingen } from "@/lib/behandelingen"
-import { ADRES } from "@/lib/contact"
+import { ADRES, BEDRIJFSNAAM } from "@/lib/contact"
 import { OPENGRAPH_BASIS } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Afspraak maken",
-  description: `Maak een afspraak bij Skin Studio Zuid in ${ADRES.plaats}: kies een gezichtsbehandeling of een gratis intakegesprek voor laserontharing en een datum die u schikt.`,
+  description: `Maak een afspraak bij ${BEDRIJFSNAAM} in ${ADRES.plaats}: kies een gezichtsbehandeling of een gratis intakegesprek voor laserontharing en een datum die u schikt.`,
   alternates: { canonical: "/boeken" },
   openGraph: {
     ...OPENGRAPH_BASIS,
     type: "website",
     url: "/boeken",
-    title: "Afspraak maken bij Skin Studio Zuid",
+    title: `Afspraak maken bij ${BEDRIJFSNAAM}`,
     description: `Plan een afspraak in ${ADRES.plaats} voor een gezichtsbehandeling of laserontharing.`,
   },
 }

@@ -39,7 +39,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center leading-none">
           <Image
             src={Logo}
-            alt="Skin Studio Zuid"
+            alt="Skinstudio Zuid"
             className="h-18 w-auto"
             priority
           />

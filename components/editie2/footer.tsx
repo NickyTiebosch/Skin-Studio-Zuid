@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Instagram, MapPin, Phone, Mail } from "lucide-react"
-import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM } from "@/lib/contact"
+import { TELEFOON_HREF, TELEFOON_WEERGAVE, EMAIL, ADRES, INSTAGRAM, BEDRIJFSNAAM } from "@/lib/contact"
 import { behandelingsnavigatie, sectienavigatie } from "@/lib/navigatie"
 import { BEELD_VERANTWOORDING, heeftAiBeelden } from "@/lib/editie2/beeld"
 
@@ -103,7 +103,7 @@ export function Footer() {
 
         <div className="border-t border-[color:var(--cream)]/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-sans text-xs text-[color:var(--cream)]/40">
-            © {new Date().getFullYear()} Skin Studio Zuid. Alle rechten voorbehouden.
+            © {new Date().getFullYear()} {BEDRIJFSNAAM}. Alle rechten voorbehouden.
           </p>
           <div className="flex items-center gap-6">
             <Link
@@ -116,7 +116,7 @@ export function Footer() {
               href={INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram van Skin Studio Zuid"
+              aria-label={`Instagram van ${BEDRIJFSNAAM}`}
               className="text-[color:var(--cream)]/40 hover:text-[color:var(--cream)] transition-colors"
             >
               <Instagram size={16} />

@@ -1,6 +1,6 @@
 # Stand van zaken
 
-Bijgewerkt: 7 september 2026. Kort overzicht om een nieuwe sessie snel op gang
+Bijgewerkt: 9 oktober 2026. Kort overzicht om een nieuwe sessie snel op gang
 te helpen. Details staan in `docs/vercel.md` (migratie) en
 `docs/te-controleren.md` (wat de kliniek moet aanleveren).
 
@@ -12,6 +12,22 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 | Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
 | Eigen domein | `skinstudio-zuid.nl` | **Vastgelegd op 9 oktober 2026**, mét koppelteken. Nog niet aan het Vercel-project gekoppeld en nog geen postvak. De code wijst er sindsdien naar |
 | Oud domein | `skinstudiozuid.nl` | Zonder koppelteken, bij TransIP, gedelegeerd aan `ns0/ns1.mailhet.nu` die de zone weigeren. Geen A- en geen MX-record. Nagaan of het nog van de kliniek is; zo ja, laten doorverwijzen naar het domein mét koppelteken |
+
+## De naam
+
+Sinds 9 oktober 2026 heet de site **Skinstudio Zuid**, één woord. Dat is de
+schrijfwijze van de kliniek zelf en van de Instagram-naam. Twee dingen wijken
+daar bewust van af en dat is geen slordigheid:
+
+- het **logo** is een PNG waarin "Skin Studio" in schrijfletters staat met
+  "ZUID" eronder — niet aan te passen in code;
+- het **domein** is `skinstudio-zuid.nl`, mét koppelteken.
+
+De naam staat op één plek: `BEDRIJFSNAAM` in `lib/contact.ts`. Alles wat de
+bezoeker ziet leest daar — paginatitels, de deelafbeelding, de footer, de
+structured data. Nog na te gaan bij de kliniek: in het **Google Business
+Profile** hoort dezelfde schrijfwijze te staan, anders ziet Google twee
+bedrijven waar er één is.
 
 ## Wat er staat
 
