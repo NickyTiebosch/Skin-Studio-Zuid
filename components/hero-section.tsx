@@ -52,6 +52,8 @@ export function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/boeken"
+            data-analytics="click_afspraak"
+            data-analytics-plek="hero"
             className="ssz-veeg ssz-intro-op ssz-vertraag-3 font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 transition-colors duration-300 text-[color:var(--cream)]"
             style={{ backgroundColor: "var(--rose-gold)" }}
           >

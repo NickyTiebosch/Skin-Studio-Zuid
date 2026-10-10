@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  * wanneer de tekst verandert — bezoekers en toezichthouders mogen zien
  * hoe actueel de verklaring is.
  */
-const LAATST_BIJGEWERKT = "4 september 2026"
+const LAATST_BIJGEWERKT = "10 oktober 2026"
 
 export default function Privacybeleid() {
   return (
@@ -111,7 +111,8 @@ export default function Privacybeleid() {
               <ul className="flex flex-col gap-3 list-disc pl-5">
                 <li>
                   <span className="text-foreground">Vercel</span> — host de website
-                  en verzamelt geanonimiseerde bezoekcijfers en laadtijden.
+                  en verzamelt geanonimiseerde bezoekcijfers, laadtijden en het
+                  gebruik van knoppen zoals bellen, mailen en afspraak maken.
                   Hierbij worden geen cookies geplaatst en worden bezoekers niet
                   individueel gevolgd.
                 </li>

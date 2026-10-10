@@ -18,7 +18,7 @@ export const BIJGEWERKT: Record<string, string> = {
   "/tarieven": "2026-09-07",
   "/contact": "2026-10-09",
   "/boeken": "2026-09-07",
-  "/privacybeleid": "2026-09-04",
+  "/privacybeleid": "2026-10-10",
 }
 
 /** De datum voor de sitemap; valt terug op vandaag voor een onbekende route. */

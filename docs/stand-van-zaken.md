@@ -64,6 +64,14 @@ het overtypen.
   9 oktober 2026 op `skinstudio-zuid.nl`, net als de canonicals.
 - Meten: Vercel Analytics en Speed Insights (allebei cookieloos, buiten de
   cookiebanner), plus een cookiebanner waarachter GA4 pas laadt ná toestemming.
+  Sinds 10 oktober 2026 gaan álle gebeurtenissen (bellen, mailen, Instagram,
+  "Afspraak maken" met de plek van de knop, tarieven bekeken, aanvraag
+  gestart en verstuurd) ook als custom event naar Vercel, dus die tellen ook
+  bij bezoekers die de banner weigeren. Google Analytics krijgt dezelfde
+  gebeurtenissen zodra `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel staat; tot
+  die tijd meet alleen Vercel. Let op: custom events in Vercel Web Analytics
+  hangen af van het Vercel-plan; staan ze niet in het dashboard onder
+  "Events", dan vraagt het plan om een upgrade of is het limiet bereikt.
 - Node 24, overal hetzelfde: `engines.node` is `24.x`, `.nvmrc` zegt 24, het
   Vercel-dashboard staat op 24.x en de draagbare Node in `install.ps1` en
   `start-dev.ps1` was al 24.

@@ -255,10 +255,25 @@ Inrichten: https://analytics.google.com → account op naam van de kliniek →
 property "Skinstudio Zuid" → gegevensstream Web `https://skinstudio-zuid.nl`
 → de Meting-ID (vorm `G-XXXXXXXXXX`) als `NEXT_PUBLIC_GA_MEASUREMENT_ID` in
 Vercel zetten (Settings → Environment Variables, Production) en opnieuw
-deployen. De gebeurtenissen `generate_lead`, `booking_started`,
-`booking_completed`, `click_telefoon` en `click_email` staan al in de code
-(`lib/analytics.ts`); markeer `generate_lead` en `booking_completed` in GA4
-als belangrijke gebeurtenis. Koppel daarna Search Console aan GA4 (Beheer →
+deployen. De gebeurtenissen staan al in de code (`lib/analytics.ts`) en gaan
+ook zonder toestemming naar Vercel Analytics:
+
+| Gebeurtenis | Wanneer | Eigenschap |
+|---|---|---|
+| `click_afspraak` | klik op een "Afspraak maken"-knop | `plek`: hero, menu, menu-mobiel, laserontharing, gezichtsbehandelingen, tarieven, contact, producten |
+| `click_telefoon` | klik op het telefoonnummer | |
+| `click_email` | klik op het e-mailadres | |
+| `click_instagram` | klik naar Instagram | `plek`: footer, contact |
+| `view_tarieven` | tarievenpagina geopend | |
+| `booking_started` | datum gekozen in de aanvraagkalender | `behandeling` |
+| `generate_lead` | formulier verstuurd | `behandeling` |
+| `booking_completed` | aanvraag met datum verstuurd | `behandeling`, `dagdeel` |
+
+Markeer in GA4 `generate_lead` en `booking_completed` als belangrijke
+gebeurtenis (conversie). Laat in GA4 de "Verbeterde meting" aan staan: die
+telt de paginaweergaven bij navigatie binnen de site; de code stuurt die
+niet nog eens. In Vercel staan dezelfde gebeurtenissen onder Analytics →
+Events; custom events hangen af van het Vercel-plan. Koppel daarna Search Console aan GA4 (Beheer →
 Productkoppelingen) en maak een kanaalgroep "AI" voor verwijzingen van
 `chatgpt.com`, `perplexity.ai`, `copilot.microsoft.com`, `gemini.google.com`
 en `claude.ai`.

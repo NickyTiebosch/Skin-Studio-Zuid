@@ -96,6 +96,8 @@ export function BehandelingPagina({ behandeling }: { behandeling: Behandeling })
           <div className="flex flex-wrap gap-4 mt-10">
             <Link
               href={`/boeken?behandeling=${behandeling.formulierWaarde}`}
+              data-analytics="click_afspraak"
+              data-analytics-plek={behandeling.slug}
               className="font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
               style={{ backgroundColor: "var(--rose-gold)" }}
             >

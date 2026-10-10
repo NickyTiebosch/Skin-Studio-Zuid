@@ -74,6 +74,8 @@ export function Navbar() {
         <div className="hidden xl:block">
           <Link
             href="/boeken"
+            data-analytics="click_afspraak"
+            data-analytics-plek="menu"
             className="ssz-cta font-sans text-xs tracking-[0.2em] uppercase px-6 py-3"
           >
             Afspraak maken
@@ -106,6 +108,8 @@ export function Navbar() {
           <Link
             href="/boeken"
             onClick={() => setMenuOpen(false)}
+            data-analytics="click_afspraak"
+            data-analytics-plek="menu-mobiel"
             className="ssz-cta font-sans text-xs tracking-[0.2em] uppercase px-6 py-3 text-center"
           >
             Afspraak maken
