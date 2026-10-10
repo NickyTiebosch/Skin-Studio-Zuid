@@ -296,6 +296,8 @@ export default function Tarieven() {
           <div className="mt-16 flex flex-wrap gap-4">
             <Link
               href="/boeken?behandeling=consult"
+              data-analytics="click_afspraak"
+              data-analytics-plek="tarieven"
               className="ssz-veeg font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
               style={{ backgroundColor: "var(--rose-gold)" }}
             >

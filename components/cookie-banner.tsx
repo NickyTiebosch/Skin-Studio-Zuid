@@ -5,6 +5,7 @@ import Script from "next/script"
 import Link from "next/link"
 import {
   GA_MEASUREMENT_ID,
+  isKlikGebeurtenis,
   leesToestemming,
   meld,
   slaToestemmingOp,
@@ -32,25 +33,25 @@ export function CookieBanner() {
     setGeladen(true)
   }, [])
 
-  // Klikken op bellen en mailen zijn voor een kliniek belangrijke conversies.
-  // Eén luisteraar op document-niveau vangt ze allemaal, zodat de knoppen zelf
-  // geen meetcode hoeven te bevatten.
+  // Klikken op bellen, mailen, Instagram en "Afspraak maken" zijn voor een
+  // kliniek de conversies. Eén luisteraar op document-niveau vangt ze
+  // allemaal, zodat de knoppen zelf geen meetcode hoeven te bevatten. De
+  // luisteraar hangt er altijd: `meld` stuurt naar Vercel (cookieloos) en
+  // alleen naar Google Analytics als dat na toestemming geladen is.
   useEffect(() => {
-    if (keuze !== "verleend") return
-
     function opKlik(event: MouseEvent) {
       const doel = (event.target as HTMLElement | null)?.closest<HTMLElement>(
         "[data-analytics]"
       )
       const naam = doel?.dataset.analytics
-      if (naam === "click_telefoon" || naam === "click_email") {
-        meld(naam)
-      }
+      if (!isKlikGebeurtenis(naam)) return
+      const plek = doel?.dataset.analyticsPlek
+      meld(naam, plek ? { plek } : undefined)
     }
 
     document.addEventListener("click", opKlik)
     return () => document.removeEventListener("click", opKlik)
-  }, [keuze])
+  }, [])
 
   function kies(nieuweKeuze: Toestemming) {
     slaToestemmingOp(nieuweKeuze)

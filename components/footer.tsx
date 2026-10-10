@@ -130,6 +130,8 @@ export function Footer() {
               href={INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics="click_instagram"
+              data-analytics-plek="footer"
               aria-label={`Instagram van ${BEDRIJFSNAAM}`}
               className="text-[color:var(--cream)]/40 hover:text-[color:var(--cream)] transition-colors"
             >

@@ -55,7 +55,12 @@ const gegevens: { label: string; waarde: string; href?: string; analytics?: stri
   },
   { label: "E-mail", waarde: EMAIL, href: EMAIL_HREF, analytics: "click_email" },
   { label: "Openingstijden", waarde: OPENINGSTIJDEN_TEKST },
-  { label: "Instagram", waarde: "@skinstudio_zuid", href: INSTAGRAM },
+  {
+    label: "Instagram",
+    waarde: "@skinstudio_zuid",
+    href: INSTAGRAM,
+    analytics: "click_instagram",
+  },
 ]
 
 export default function Contact() {
@@ -152,6 +157,8 @@ export default function Contact() {
           <div className="mt-12 flex flex-wrap gap-4">
             <Link
               href="/boeken"
+              data-analytics="click_afspraak"
+              data-analytics-plek="contact"
               className="ssz-veeg font-sans text-xs tracking-[0.2em] uppercase px-8 py-4 text-[color:var(--cream)] transition-opacity duration-200 hover:opacity-90"
               style={{ backgroundColor: "var(--rose-gold)" }}
             >
