@@ -131,12 +131,16 @@ Vercel-API nagekeken waardoor dat komt: **het domein hangt aan het project**
 gezet. Daarmee is `VERCEL_PROJECT_PRODUCTION_URL` het eigen domein geworden,
 en dat is stap 2 van de keten hierboven.
 
-Het domein staat op de nameservers van TransIP en heeft één A-record:
-`37.97.254.27` — TransIP, niet Vercel. Vercel meldt het daarom als
-`misconfigured`. Tot dat record naar Vercel wijst, wijzen canonicals, sitemap
-en robots naar een parkeerpagina. Dat is de dringendste openstaande actie:
-A-record op het hoofddomein naar **`76.76.21.21`**, `www` naar
-**`cname.vercel-dns.com`**.
+Het domein staat op de nameservers van TransIP. Tot 10 oktober 2026 had het
+één A-record, `37.97.254.27` (TransIP's parkeerpagina), en meldde Vercel het
+als `misconfigured`. Op 10 oktober omgezet in het TransIP-paneel met de
+rang-1-waarden uit Vercel's API: twee A-records **`216.150.1.1`** en
+**`216.150.16.1`**, `www` als CNAME naar
+**`0896e9641334cf22.vercel-dns-016.com`**, en het AAAA-record naar de
+parkeerpagina verwijderd — zonder die stap bleef IPv6-verkeer op de
+parkeerpagina uitkomen. `76.76.21.21` en `cname.vercel-dns.com` uit eerdere
+versies van dit document zijn rang 2 en werken ook. Direct daarna meldde
+Vercel apex en `www` als correct geconfigureerd.
 
 Het e-mailadres is sinds 9 oktober 2026 ook mét streepje:
 `info@skinstudio-zuid.nl` (bevestigd door Nicky). Wat hieronder staat gaat
@@ -169,11 +173,10 @@ domein op. Wil je terug naar een adres dat gegarandeerd bestaat, dan moet
 `NEXT_PUBLIC_SITE_URL` juist expliciet op de Vercel-URL gezet worden. Beter is
 het A-record omzetten — dat is vijf minuten werk en lost het echt op.
 
-Voor de omschakeling betekent dit dat stap 5 en 6 vervallen: er is geen
-werkende oude site die tijdens de omschakeling stuk kan gaan. Wie het
-TransIP-account heeft, zet de nameservers om (naar TransIP's eigen DNS met de
-records die Vercel toont bij het toevoegen van het domein, of naar Vercel DNS)
-en voegt MX-records toe voor de mailbox die de kliniek gebruikt.
+Stap 5 en 6 zijn overgeslagen: er was geen werkende oude site die tijdens de
+omschakeling stuk kon gaan. De nameservers zijn die van TransIP gebleven en
+de zone is niet aan Vercel gedelegeerd, zodat de MX-records voor de mailbox
+van de kliniek straks op dezelfde plek komen als de rest.
 
 ## Verificatie achteraf
 

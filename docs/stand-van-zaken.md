@@ -1,6 +1,6 @@
 # Stand van zaken
 
-Bijgewerkt: 7 september 2026. Kort overzicht om een nieuwe sessie snel op gang
+Bijgewerkt: 10 oktober 2026. Kort overzicht om een nieuwe sessie snel op gang
 te helpen. Details staan in `docs/vercel.md` (migratie) en
 `docs/te-controleren.md` (wat de kliniek moet aanleveren).
 
@@ -10,7 +10,7 @@ te helpen. Details staan in `docs/vercel.md` (migratie) en
 |---|---|---|
 | Vercel (nieuw) | `skin-studio-zuid.vercel.app` | Productie, bouwt van `main`. Op 6 september volledig nagelopen, in orde |
 | Netlify (oud) | `skin-studio-zuid.netlify.app` | **Verwijderd op 6 september 2026.** Geeft 404; geen webhooks meer op de repo. Staat de URL nog ergens (Instagram-bio, Google Business Profile), vervang hem door de Vercel-URL |
-| Eigen domein | `skinstudio-zuid.nl` (mét streepje; bevestigd 9 oktober 2026) | **Geregistreerd bij TransIP, toont nog de parkeerpagina.** Productie canonicaliseert er sinds 9 oktober al naartoe; de DNS moet nog naar Vercel. De naam zónder streepje (`skinstudiozuid.nl`) was een vergissing uit het e-mailadres en is dood: gedelegeerd aan `ns0/ns1.mailhet.nu`, die de zone weigeren, geen A- en geen MX-record. Bovendien **niet meer van de kliniek** en niet op te kopen (nagekeken 9 oktober 2026): doorverwijzen kan niet |
+| Eigen domein | `skinstudio-zuid.nl` (mét streepje) | **Gekoppeld aan Vercel op 10 oktober 2026.** DNS bij TransIP wijst naar Vercel (twee A-records, `www` als CNAME, AAAA verwijderd); Vercel meldt apex en `www` als correct geconfigureerd. De naam zónder streepje (`skinstudiozuid.nl`) is van iemand anders en niet op te kopen: zet het adres overal als aanklikbare link neer |
 
 ## De naam
 
@@ -37,8 +37,8 @@ het overtypen.
 
 ## Wat er staat
 
-- Zes pagina's: `/`, `/laserontharing`, `/gezichtsbehandelingen`, `/tarieven`,
-  `/boeken`, `/privacybeleid`. Elke pagina heeft precies één `<h1>`. Op
+- Zeven pagina's: `/`, `/laserontharing`, `/gezichtsbehandelingen`, `/tarieven`,
+  `/boeken`, `/contact`, `/privacybeleid`. Elke pagina heeft precies één `<h1>`. Op
   `/boeken` is dat sinds 6 september de kop van `ContactSection` (prop
   `kopNiveau`); op de homepage blijft diezelfde kop een `<h2>` onder de hero.
 - Tarieven: laserontharing voor vrouwen (sinds 7 september) én mannen
@@ -92,9 +92,42 @@ doorgevoerd:
 - Homepage: label boven de kop noemt behandeling en Den Bosch; "2026" uit de
   kop "Medische Innovatie"; ligging en werkgebied onder "Over ons".
 
-Nog open uit de beoordeling, buiten de code: domein, Google Business Profile,
+Nog open uit de beoordeling, buiten de code: Google Business Profile,
 reviews, Search Console, en de feiten van de kliniek (behandelaar,
 openingstijden, duur, sessies, nazorg). Zie `docs/te-controleren.md`.
+
+## Domein gekoppeld op 10 oktober 2026
+
+Nicky heeft in het TransIP-paneel de DNS van `skinstudio-zuid.nl` omgezet,
+met de waarden die Vercel's API als rang 1 opgeeft. Het draaiboek noemde nog
+`76.76.21.21` en `cname.vercel-dns.com`; dat is rang 2 en werkt ook, maar het
+dashboard toont tegenwoordig deze:
+
+| Record | Waarde |
+|---|---|
+| `@` A | `216.150.1.1` én `216.150.16.1` (twee records) |
+| `@` AAAA | **verwijderd** — wees naar TransIP's parkeerpagina; met alleen het A-record omgezet was de site via IPv6 nog steeds de parkeerpagina geweest |
+| `www` CNAME | `0896e9641334cf22.vercel-dns-016.com` |
+| MX, SPF, DKIM, DMARC | ongemoeid: TransIP's standaardregels, zie punt 2 |
+
+Direct daarna meldde Vercel apex en `www` als correct geconfigureerd
+(`misconfigured: false`, challenge `http-01`). `www` stuurt met 308 door naar
+het hoofddomein (instelling op het project). DNS-beheer blijft bij TransIP;
+de zone is niet aan Vercel gedelegeerd, zodat de mailrecords straks op
+dezelfde plek staan.
+
+Het certificaat kwam niet vanzelf: tien minuten na de omzetting stond er in
+Vercel's certificaatlijst nog niets voor dit domein. Via de API aangevraagd
+(`POST /v8/certs`, per hostnaam één, zoals Vercel zelf ook doet); beide
+werden direct uitgegeven door Let's Encrypt, geldig tot 8 januari 2027, met
+automatische verlenging. Daarna gecontroleerd: `https://skinstudio-zuid.nl`
+geeft 200 met geldig certificaat, `www` stuurt met 308 door, sitemap en
+`robots.txt` noemen het domein en de canonical van de homepage is
+`https://skinstudio-zuid.nl`. Let op bij een eigen controle vlak na zo'n
+wijziging: een resolver of pc-cache die het oude A- of AAAA-record nog
+vasthoudt (TTL tot een uur) toont nog de parkeerpagina van TransIP, met een
+`*.vdx.nl`-certificaat; `ipconfig /flushdns` helpt lokaal, de rest verloopt
+vanzelf.
 
 ## Controle van 6 september 2026
 
@@ -116,7 +149,7 @@ wat op de homepage klopt en op `/boeken` niet), `llms.txt` wees naar het dode
 domein, en Node stond in het dashboard op 24 terwijl repo en draaiboek 22
 zeiden.
 
-Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
+Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein is geregistreerd maar de delegatie is kapot (zie
 `docs/vercel.md`), en daardoor kan `info@skinstudio-zuid.nl` geen mail ontvangen
 — terwijl het contactformulier precies daar naartoe stuurt.
 
@@ -130,25 +163,8 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
    het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
    activeren. De kliniek heeft nog niet gekozen welk postvak dat wordt (punt
-   3), dus dit blijft voorlopig zo.
-2. **Het domein koppelen.** Het echte domein is `skinstudio-zuid.nl` (mét
-   streepje). Op 9 oktober 2026 wezen canonical, sitemap en `robots.txt` van
-   productie al naar dat domein, terwijl het zelf nog de parkeerpagina van
-   TransIP toonde. Op 9 oktober 2026 via de Vercel-API gemeten: het domein
-   hangt aan het project (apex én `www`, allebei geverifieerd), staat op de
-   nameservers van TransIP en heeft één A-record, `37.97.254.27` — dat is
-   TransIP, niet Vercel. Vandaar dat Vercel het als `misconfigured` meldt.
-   Wie het TransIP-account heeft, zet het A-record van het hoofddomein om
-   naar **`76.76.21.21`** en `www` naar **`cname.vercel-dns.com`** (Vercel
-   toont ze ook onder Settings → Domains). Houd het DNS-beheer bij TransIP;
-   delegeer de zone niet aan Vercel, anders vallen de MX-records weg zodra de
-   mail geregeld is. Omdat er alleen een parkeerpagina staat, is er geen oude
-   site die stuk kan gaan: stap 5 en 6 uit het draaiboek vervallen.
-   `llms.txt` staat al op het domein (sinds 9 oktober). Zodra het domein
-   "Valid Configuration" heeft: in Search Console een Change of Address van
-   de Vercel-URL doen. De naam zónder streepje in de oudere notities
-   hieronder was een vergissing; zie `docs/vercel.md`.
-3. **E-mail op het domein.** Er is nog geen postvak en de kliniek denkt nog
+   2), dus dit blijft voorlopig zo.
+2. **E-mail op het domein.** Er is nog geen postvak en de kliniek denkt nog
    na over welke provider het wordt (TransIP-mailbox, Google Workspace,
    Microsoft 365). De vraag of er ooit een mailbox bestond is niet meer aan
    de orde: dit is een gloednieuw domein. Zodra de keuze er is komen de
@@ -156,20 +172,27 @@ Gevonden, nog open: het domein is geregistreerd maar de delegatie is kapot (zie
    terug naar het eigen adres. De code gaat uit van
    `info@skinstudio-zuid.nl`; wordt het iets anders, dan is `EMAIL` in
    `lib/contact.ts` de enige regel die wijzigt.
-4. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
+   TransIP heeft in de zone al een standaardset klaargezet: MX `10 @`,
+   SPF `v=spf1 ~all`, DKIM-CNAMEs naar `transip.email` en DMARC `p=none`.
+   Die MX wijst naar het hoofddomein, dus sinds 10 oktober naar Vercel, en
+   levert niets af. Bij de keuze voor een provider komen diens records in de
+   plaats van die set.
+3. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
    kliniek is dit een grotere hefboom dan de hele SEO van de site: het bepaalt
    of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.
    Nicky maakt hem aan; `docs/google-business-profile.md` bevat per veld de
    exacte waarde, zodat profiel en structured data letterlijk gelijk zijn.
-5. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-   zetten. Pas zinvol als het domein er is.
-6. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
+4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+   zetten. Het domein is er sinds 10 oktober, dus dit kan nu: meld
+   `skinstudio-zuid.nl` aan als domein-property. De Vercel-URL is nooit
+   aangemeld, dus een Change of Address is niet nodig.
+5. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
    Stap twee is echte beschikbaarheid: de Apple/iCloud-agenda via Cal.com,
    zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar
    agenda staat. Dat wacht op de **behandelduur per behandeling** en de
    **beschikbaarheid** (welke dagen en uren), plus een Cal.com-account en een
    app-specifiek wachtwoord van het Apple ID, aan te maken door de kliniek.
-7. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
+6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
    of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
    vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee
    tegenstrijdigheden tussen flyer en site (Diode Ice Laser versus Atres
