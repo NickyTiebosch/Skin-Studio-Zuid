@@ -180,7 +180,7 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.
    Nicky maakt hem aan; `docs/google-business-profile.md` bevat per veld de
    exacte waarde, zodat profiel en structured data letterlijk gelijk zijn.
-4. **GA4 en Search Console** aanmaken, dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+4. **GA4 en Search Console** aanmaken (draaiboek: `docs/google-inrichten.md`, samen met het Business Profile), dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
    zetten. Het domein is er sinds 10 oktober, dus dit kan nu: meld
    `skinstudio-zuid.nl` aan als domein-property. De Vercel-URL is nooit
    aangemeld, dus een Change of Address is niet nodig.
