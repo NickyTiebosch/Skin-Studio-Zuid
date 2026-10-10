@@ -155,28 +155,26 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
 
 ## Wat er nog moet
 
-1. **Contactformulier staat tijdelijk op Nicky's adres.** Sinds 7 september
-   stuurt het formulier via formsubmit.co naar `info@22labs.nl`
-   (`app/api/contact/route.ts`), omdat `info@skinstudio-zuid.nl` geen mail
-   kan ontvangen zolang het domein geen MX-record heeft. **Nog te doen:** bij
-   de eerste aanvraag stuurt formsubmit één activatiemail naar dat adres;
-   daar één keer op klikken, anders wordt niets doorgestuurd. Zodra mail op
-   het domein werkt: terug naar `info@skinstudio-zuid.nl` en daar opnieuw
-   activeren. De kliniek heeft nog niet gekozen welk postvak dat wordt (punt
-   2), dus dit blijft voorlopig zo.
-2. **E-mail op het domein.** Er is nog geen postvak en de kliniek denkt nog
-   na over welke provider het wordt (TransIP-mailbox, Google Workspace,
-   Microsoft 365). De vraag of er ooit een mailbox bestond is niet meer aan
-   de orde: dit is een gloednieuw domein. Zodra de keuze er is komen de
-   MX-records erbij, plus SPF, DKIM en DMARC. Pas daarna kan het formulier
-   terug naar het eigen adres. De code gaat uit van
-   `info@skinstudio-zuid.nl`; wordt het iets anders, dan is `EMAIL` in
-   `lib/contact.ts` de enige regel die wijzigt.
-   TransIP heeft in de zone al een standaardset klaargezet: MX `10 @`,
-   SPF `v=spf1 ~all`, DKIM-CNAMEs naar `transip.email` en DMARC `p=none`.
-   Die MX wijst naar het hoofddomein, dus sinds 10 oktober naar Vercel, en
-   levert niets af. Bij de keuze voor een provider komen diens records in de
-   plaats van die set.
+1. **Contactformulier activeren.** Sinds 10 oktober stuurt het formulier
+   weer naar `info@skinstudio-zuid.nl` (`EMAIL` in `lib/contact.ts`, sinds
+   die dag ook de bestemming in `app/api/contact/route.ts`). Formsubmit
+   koppelt dat adres pas na activatie: bij de eerste aanvraag komt er één
+   activatiemail in de TransIP-mailbox (webmail: `transip.email`); daar één
+   keer op klikken, anders wordt niets doorgestuurd. Daarna één testaanvraag
+   via de site doen en kijken of hij aankomt — dat is meteen het bewijs dat
+   de mailbox bestaat en de MX klopt. Van 7 september tot 10 oktober ging
+   het formulier tijdelijk naar het adres van Nicky.
+2. **E-mail op het domein staat bij TransIP**, sinds 10 oktober 2026. Er is
+   een TransIP-mailpakket met `info@skinstudio-zuid.nl` (aangemaakt door
+   Nicky; de activatiemail hierboven is de eerste echte test), en in het
+   TransIP-paneel staan de records die TransIP's kennisbank voorschrijft:
+   MX `10 mx.transip.email.`, SPF `v=spf1 include:_spf.transip.email ~all`,
+   de drie DKIM-CNAMEs naar `transip.email`, DMARC `p=none`, en
+   `autoconfig`/`autodiscover` naar TransIP. Gecontroleerd op alle drie de
+   nameservers en bij de publieke resolvers. Nog open: DMARC staat op
+   `p=none` (alleen rapporteren); zodra blijkt dat alle mail netjes via
+   TransIP gaat, kan dat naar `p=quarantine`. Verandert het adres ooit, dan
+   is `EMAIL` in `lib/contact.ts` de enige regel die wijzigt.
 3. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
    kliniek is dit een grotere hefboom dan de hele SEO van de site: het bepaalt
    of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.

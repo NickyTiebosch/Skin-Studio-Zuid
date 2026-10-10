@@ -175,8 +175,10 @@ het A-record omzetten — dat is vijf minuten werk en lost het echt op.
 
 Stap 5 en 6 zijn overgeslagen: er was geen werkende oude site die tijdens de
 omschakeling stuk kon gaan. De nameservers zijn die van TransIP gebleven en
-de zone is niet aan Vercel gedelegeerd, zodat de MX-records voor de mailbox
-van de kliniek straks op dezelfde plek komen als de rest.
+de zone is niet aan Vercel gedelegeerd, zodat de mailrecords op dezelfde plek
+staan als de rest. Sinds 10 oktober 2026 wijzen MX en SPF naar TransIP's
+mailplatform (`mx.transip.email`, `_spf.transip.email`); de mailbox zelf
+staat in het TransIP-paneel onder E-mailhosting.
 
 ## Verificatie achteraf
 
