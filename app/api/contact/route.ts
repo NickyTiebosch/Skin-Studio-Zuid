@@ -8,20 +8,23 @@ import {
   labelDagdeel,
   parseAfspraakdatum,
 } from "@/lib/agenda"
-import { BEDRIJFSNAAM } from "@/lib/contact"
+import { BEDRIJFSNAAM, EMAIL } from "@/lib/contact"
 
 /**
- * Bestemming van het contactformulier.
+ * Bestemming van het contactformulier: het adres van de kliniek, `EMAIL` in
+ * lib/contact.ts, zodat het op één plek staat.
  *
- * TIJDELIJK het adres van Nicky, sinds 7 september 2026: zo komen aanvragen
- * aan terwijl `info@skinstudio-zuid.nl` geen mail kan ontvangen (het domein
- * heeft geen MX-record, zie docs/stand-van-zaken.md). Het adres dat de
- * bezoeker op de site ziet, blijft dat van de kliniek (`EMAIL` in
- * lib/contact.ts). Zodra mail op het domein werkt: hier terug naar
- * info@skinstudio-zuid.nl en daar opnieuw één keer op de activatiemail van
- * formsubmit klikken.
+ * Van 7 september tot 10 oktober 2026 stond hier tijdelijk het adres van
+ * Nicky, omdat `info@skinstudio-zuid.nl` toen geen mail kon ontvangen (geen
+ * mailbox, geen MX-record). Sinds 10 oktober staat de mail bij TransIP en
+ * wijzen MX, SPF, DKIM en DMARC daarnaartoe; zie docs/stand-van-zaken.md.
+ *
+ * Formsubmit koppelt een bestemming pas na activatie: bij de eerste aanvraag
+ * naar een nieuw adres stuurt het één activatiemail naar dat adres, en pas
+ * na het klikken daarop wordt er doorgestuurd. Verandert dit adres, dan
+ * moet dat opnieuw.
  */
-const CONTACT_EMAIL = "info@22labs.nl"
+const CONTACT_EMAIL = EMAIL
 const FORMSUBMIT_URL = `https://formsubmit.co/${CONTACT_EMAIL}`
 
 export async function POST(request: Request) {
