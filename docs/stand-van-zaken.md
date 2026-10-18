@@ -1,6 +1,6 @@
 # Stand van zaken
 
-Bijgewerkt: 10 oktober 2026. Kort overzicht om een nieuwe sessie snel op gang
+Bijgewerkt: 18 oktober 2026. Kort overzicht om een nieuwe sessie snel op gang
 te helpen. Details staan in `docs/vercel.md` (migratie) en
 `docs/te-controleren.md` (wat de kliniek moet aanleveren).
 
@@ -24,9 +24,9 @@ daar bewust van af en dat is geen slordigheid:
 
 De naam staat op één plek: `BEDRIJFSNAAM` in `lib/contact.ts`. Alles wat de
 bezoeker ziet leest daar — paginatitels, de deelafbeelding, de footer, de
-structured data. In het **Google Business Profile** (nog aan te maken, zie
-`docs/google-business-profile.md`) hoort letterlijk dezelfde schrijfwijze te
-staan, anders ziet Google twee bedrijven waar er één is.
+structured data. In het **Google Business Profile** staat letterlijk dezelfde
+schrijfwijze, gecontroleerd op 18 oktober 2026. Houd dat zo, anders ziet
+Google twee bedrijven waar er één is.
 
 **Let op bij het doorgeven van het webadres.** De naam is nu één woord, maar
 het domein heeft een streepje, en `skinstudiozuid.nl` zonder streepje is van
@@ -186,15 +186,22 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    `p=none` (alleen rapporteren); zodra blijkt dat alle mail netjes via
    TransIP gaat, kan dat naar `p=quarantine`. Verandert het adres ooit, dan
    is `EMAIL` in `lib/contact.ts` de enige regel die wijzigt.
-3. **Google Business Profile aanmaken.** Bestaat nog niet. Voor een lokale
-   kliniek is dit een grotere hefboom dan de hele SEO van de site: het bepaalt
-   of je in de kaartresultaten en in "schoonheidssalon in de buurt" verschijnt.
-   Nicky maakt hem aan; `docs/google-business-profile.md` bevat per veld de
-   exacte waarde, zodat profiel en structured data letterlijk gelijk zijn.
-4. **GA4 en Search Console** aanmaken (draaiboek: `docs/google-inrichten.md`, samen met het Business Profile), dan `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-   zetten. Het domein is er sinds 10 oktober, dus dit kan nu: meld
-   `skinstudio-zuid.nl` aan als domein-property. De Vercel-URL is nooit
-   aangemeld, dus een Change of Address is niet nodig.
+3. **Google Business Profile afmaken.** Het profiel bestond al, op het
+   Google-account van de kliniek, en is op 18 oktober 2026 bijgewerkt met
+   telefoon, website, afspraaklink, categorieën, beschrijving en tien
+   diensten met prijs. Voor een lokale kliniek is dit een grotere hefboom dan
+   de hele SEO van de site: het bepaalt of je in de kaartresultaten en in
+   "schoonheidssalon in de buurt" verschijnt. Nog open: foto's en overige
+   attributen. Er staan ook nog oude gegevens in: een Facebook-link naar een
+   Plesk-pagina, een WhatsApp-knop met het oude nummer en de dienst
+   Microneedling, die niet op de site staat. Daarna Apple Business Connect en
+   Bing Places met dezelfde gegevens. De exacte waarde per veld staat in
+   `docs/google-business-profile.md`, de checklist onderaan
+   `docs/google-inrichten.md`.
+4. **Search Console, GA4 en Bing Webmaster Tools staan.** Search Console
+   sinds 10 oktober 2026 als domeinproperty, GA4 en Bing Webmaster Tools
+   sinds 18 oktober 2026. De ID's en instellingen staan in
+   `docs/google-inrichten.md`, met daarin ook de maandelijkse controle.
 5. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
    Stap twee is echte beschikbaarheid: de Apple/iCloud-agenda via Cal.com,
    zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar

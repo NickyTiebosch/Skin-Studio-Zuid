@@ -225,8 +225,11 @@ staat er in één regel.
    signalen dan samen op het domein. Een Change of Address is niet nodig
    zolang de vercel.app-URL nooit substantieel is geïndexeerd.
 5. **Bing Webmaster Tools** (https://www.bing.com/webmasters): "Importeren
-   uit Google Search Console" neemt de property en sitemap in één keer over.
-   Bing voedt Copilot, en via de Bing-index ook ChatGPT-zoekopdrachten.
+   uit Google Search Console" neemt de property over. Bing voedt Copilot, en
+   via de Bing-index ook ChatGPT-zoekopdrachten. Bij de import van
+   18 oktober 2026 kwam de sitemap niet mee. Dien hem daarom zelf in onder
+   Sitemaps → "Submit sitemap" en bied de zeven URL's aan onder URL
+   Submission. Deze site mag daar 100 URL's per dag aanbieden.
 
 ### Stap 4: wat je de eerste weken ziet
 
@@ -318,5 +321,5 @@ beheerder.
 - [x] Sitemap ingediend, zeven URL's ter indexering aangevraagd (10 oktober 2026)
 - [x] Instelling generatieve AI-functies gecontroleerd: staat op "Opnemen"
 - [x] Vercel-URL doorsturen als hij geïndexeerd blijkt: `site:skin-studio-zuid.vercel.app` en `site:skinstudiozuid.nl` geven niets, dus niet nodig
-- [ ] Bing Webmaster Tools geïmporteerd
+- [x] Bing Webmaster Tools geïmporteerd (18 oktober 2026, op het Microsoft-account van Nicky via de Search Console van info@22labs.nl; sitemap met de hand ingediend en verwerkt met zeven URL's, de zeven URL's ook via URL Submission aangeboden)
 - [x] GA4 met Meting-ID in Vercel, gekoppeld aan Search Console (18 oktober 2026, live na de redeploy van die dag)
