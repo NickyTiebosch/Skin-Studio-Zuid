@@ -62,13 +62,15 @@ het overtypen.
   JSON-LD (`BeautySalon`, `Service`, `FAQPage`, `BreadcrumbList`), canonicals,
   OpenGraph, `llms.txt`. De absolute URL's in `public/llms.txt` staan sinds
   9 oktober 2026 op `skinstudio-zuid.nl`, net als de canonicals.
-- Meten: Vercel Analytics en Speed Insights (allebei cookieloos, buiten de
-  cookiebanner), plus een cookiebanner waarachter GA4 pas laadt ná toestemming.
+- Meten: Vercel Analytics en Speed Insights (allebei cookieloos), plus GA4.
+  De cookiebanner is op 18 oktober 2026 op verzoek van Nicky verwijderd; GA4
+  laadt nu direct, privacyvriendelijk ingesteld volgens de Autoriteit
+  Persoonsgegevens (zie `components/google-analytics.tsx`).
   Sinds 10 oktober 2026 gaan álle gebeurtenissen (bellen, mailen, Instagram,
   "Afspraak maken" met de plek van de knop, tarieven bekeken, aanvraag
   gestart en verstuurd) ook als custom event naar Vercel, dus die tellen ook
-  bij bezoekers die de banner weigeren. Google Analytics krijgt dezelfde
-  gebeurtenissen na toestemming: de Meting-ID `G-YQ12XEGYZM` staat sinds
+  bij bezoekers die Google Analytics blokkeren. Google Analytics krijgt
+  dezelfde gebeurtenissen: de Meting-ID `G-YQ12XEGYZM` staat sinds
   18 oktober 2026 als `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel, alleen voor
   Production, en zit sinds de redeploy van die dag in de site. Let op: custom events in Vercel Web Analytics
   hangen af van het Vercel-plan; staan ze niet in het dashboard onder

@@ -3,7 +3,7 @@ import { Playfair_Display, Raleway } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { IS_PREVIEW, SITE_BESCHRIJVING, SITE_NAAM, SITE_URL, bedrijfsSchema } from '@/lib/site'
-import { CookieBanner } from '@/components/cookie-banner'
+import { GoogleAnalytics } from '@/components/google-analytics'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -140,12 +140,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(bedrijfsSchema()) }}
         />
         {children}
-        <CookieBanner />
+        <GoogleAnalytics />
         {/* Vercel Analytics en Speed Insights meten allebei cookieloos en
-            volgen bezoekers niet individueel, dus ze hoeven niet achter de
-            cookiebanner. Speed Insights meet de Core Web Vitals bij echte
-            bezoekers — de cijfers waar het werk aan de laadtijd op stuurde
-            zijn tot nu toe alleen in een testopstelling gemeten. */}
+            volgen bezoekers niet individueel. Speed Insights meet de Core Web
+            Vitals bij echte bezoekers — de cijfers waar het werk aan de
+            laadtijd op stuurde zijn tot nu toe alleen in een testopstelling
+            gemeten. */}
         <Analytics />
         <SpeedInsights />
       </body>

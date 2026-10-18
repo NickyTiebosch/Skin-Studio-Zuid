@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  * wanneer de tekst verandert — bezoekers en toezichthouders mogen zien
  * hoe actueel de verklaring is.
  */
-const LAATST_BIJGEWERKT = "10 oktober 2026"
+const LAATST_BIJGEWERKT = "18 oktober 2026"
 
 export default function Privacybeleid() {
   return (
@@ -70,8 +70,8 @@ export default function Privacybeleid() {
                 Welke gegevens verzamelen wij?
               </h2>
               <p className="mb-4">
-                Wij verzamelen alleen de gegevens die u zelf invult in het
-                contactformulier op deze website:
+                Via het contactformulier op deze website verzamelen wij alleen de
+                gegevens die u zelf invult:
               </p>
               <ul className="flex flex-col gap-2 list-disc pl-5">
                 <li>uw naam</li>
@@ -85,6 +85,11 @@ export default function Privacybeleid() {
                 gezondheidsgegevens. Wat er nodig is over uw huid, medicijngebruik
                 of gezondheid bespreken wij persoonlijk tijdens de intake in de
                 studio, niet via een webformulier.
+              </p>
+              <p className="mt-4">
+                Daarnaast meten wij hoe de website gebruikt wordt, zonder dat wij
+                weten wie u bent. Hoe dat werkt, staat hieronder bij Vercel en
+                Google.
               </p>
             </section>
 
@@ -115,6 +120,18 @@ export default function Privacybeleid() {
                   gebruik van knoppen zoals bellen, mailen en afspraak maken.
                   Hierbij worden geen cookies geplaatst en worden bezoekers niet
                   individueel gevolgd.
+                </li>
+                <li>
+                  <span className="text-foreground">Google</span> — meet met Google
+                  Analytics hoe de website gebruikt wordt: welke pagina&apos;s
+                  bezocht worden, via welke weg bezoekers binnenkomen en welke
+                  knoppen ze gebruiken. Google Analytics plaatst daarvoor een cookie
+                  met een willekeurig nummer en slaat geen IP-adressen op. Wij
+                  hebben met Google een verwerkersovereenkomst gesloten, het delen
+                  van gegevens met Google uitgezet en Google Analytics niet
+                  gekoppeld aan advertentiediensten. Google kan gegevens ook
+                  buiten de Europese Unie verwerken. Wilt u niet gemeten worden,
+                  dan kunt u cookies van Google Analytics in uw browser blokkeren.
                 </li>
                 <li>
                   <span className="text-foreground">FormSubmit</span> — verwerkt de

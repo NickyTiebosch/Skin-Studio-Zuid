@@ -1,31 +1,26 @@
 import { track } from "@vercel/analytics"
 
 /**
- * Meetgebeurtenissen en toestemmingsbeheer.
+ * Meetgebeurtenissen.
  *
  * Twee lagen met verschillende doelen:
  *
  * - Vercel Analytics draait altijd. Die zet geen cookies en volgt bezoekers
- *   niet individueel, dus daar is geen toestemming voor nodig. Dit is de
- *   betrouwbare basis voor "hoeveel bezoekers komen er" én, sinds 10 oktober
- *   2026, voor de conversies: elke gebeurtenis hieronder gaat ook als
- *   "custom event" naar Vercel, zodat bellen, mailen en aanvragen geteld
- *   worden óók als de bezoeker de cookiebanner weigert.
- * - Google Analytics laadt pas ná expliciete toestemming en vult de rest in:
- *   welke bron, welke campagne, de funnel per pagina.
+ *   niet individueel. Dit is de betrouwbare basis voor "hoeveel bezoekers
+ *   komen er" én, sinds 10 oktober 2026, voor de conversies: elke
+ *   gebeurtenis hieronder gaat ook als "custom event" naar Vercel.
+ * - Google Analytics vult de rest in: welke bron, welke campagne, de funnel
+ *   per pagina. Sinds 18 oktober 2026 zonder cookiebanner, privacyvriendelijk
+ *   ingesteld; de voorwaarden daarvoor staan in components/google-analytics.tsx.
  *
- * Het gevolg van dat onderscheid is belangrijk om te weten bij het lezen van
- * de cijfers: bezoekers die de banner wegklikken verdwijnen uit Google
- * Analytics maar niet uit Vercel Analytics. Vercel is dus de volledige
- * telling; Google Analytics de verrijkte deelverzameling.
+ * Bij het lezen van de cijfers: wie Google Analytics blokkeert, of in de oude
+ * cookiebanner op "Weigeren" klikte, ontbreekt in Google Analytics maar wordt
+ * door Vercel Analytics wel geteld. Vercel is dus de volledige telling;
+ * Google Analytics de verrijkte deelverzameling.
  */
 
 /** Zonder ID wordt Google Analytics helemaal niet geladen. */
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
-
-export const CONSENT_OPSLAGSLEUTEL = "ssz-cookie-toestemming"
-
-export type Toestemming = "verleend" | "geweigerd"
 
 /**
  * De gebeurtenissen die we meten. Als vaste lijst, zodat een typfout in een
@@ -66,32 +61,27 @@ declare global {
   }
 }
 
-/** Leest de eerder gemaakte keuze; `null` betekent: nog niet gekozen. */
-export function leesToestemming(): Toestemming | null {
-  if (typeof window === "undefined") return null
-  try {
-    const waarde = window.localStorage.getItem(CONSENT_OPSLAGSLEUTEL)
-    return waarde === "verleend" || waarde === "geweigerd" ? waarde : null
-  } catch {
-    // Privémodus of geblokkeerde opslag: dan behandelen we het als "nog niet
-    // gekozen" en vragen we het opnieuw, in plaats van de pagina te breken.
-    return null
-  }
-}
+/**
+ * De sleutel waaronder de cookiebanner tot 18 oktober 2026 de keuze van de
+ * bezoeker bewaarde. Er wordt niets meer opgeslagen, alleen nog gelezen: wie
+ * toen op "Weigeren" klikte, krijgt ook nu geen Google Analytics.
+ */
+const OUDE_TOESTEMMINGSSLEUTEL = "ssz-cookie-toestemming"
 
-export function slaToestemmingOp(keuze: Toestemming) {
+export function eerderGeweigerd(): boolean {
+  if (typeof window === "undefined") return false
   try {
-    window.localStorage.setItem(CONSENT_OPSLAGSLEUTEL, keuze)
+    return window.localStorage.getItem(OUDE_TOESTEMMINGSSLEUTEL) === "geweigerd"
   } catch {
-    // Niet kunnen opslaan is vervelend maar niet fataal; de bezoeker krijgt
-    // de vraag dan bij een volgend bezoek opnieuw.
+    // Privémodus of geblokkeerde opslag: dan is er ook geen oude keuze.
+    return false
   }
 }
 
 /**
  * Registreert een gebeurtenis bij Vercel Analytics (altijd) en bij Google
- * Analytics (alleen als dat na toestemming geladen is). Aanroepen is dus
- * altijd veilig; de aanroeper hoeft niet te weten of er gemeten wordt.
+ * Analytics (als dat geladen is). Aanroepen is dus altijd veilig; de
+ * aanroeper hoeft niet te weten of er gemeten wordt.
  *
  * Vercel accepteert alleen platte waarden (tekst, getal, boolean, null) als
  * eigenschappen; geneste objecten worden stilzwijgend genegeerd. Houd de

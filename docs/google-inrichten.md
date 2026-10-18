@@ -257,13 +257,15 @@ Eén vaste check per maand, samen met het Business Profile:
 ## Deel 3 — Google Analytics 4, als het meten verder moet
 
 Vercel Analytics meet al bezoekers zonder cookies. GA4 voegt funnels en
-bronnen toe en laadt op de site pas na toestemming via de cookiebanner.
+bronnen toe. Sinds 18 oktober 2026 laadt het zonder cookiebanner, omdat het
+privacyvriendelijk is ingesteld; de voorwaarden staan in
+`components/google-analytics.tsx`.
 Inrichten: https://analytics.google.com → account op naam van de kliniek →
 property "Skinstudio Zuid" → gegevensstream Web `https://skinstudio-zuid.nl`
 → de Meting-ID (vorm `G-XXXXXXXXXX`) als `NEXT_PUBLIC_GA_MEASUREMENT_ID` in
 Vercel zetten (Settings → Environment Variables, Production) en opnieuw
 deployen. De gebeurtenissen staan al in de code (`lib/analytics.ts`) en gaan
-ook zonder toestemming naar Vercel Analytics:
+ook naar Vercel Analytics:
 
 | Gebeurtenis | Wanneer | Eigenschap |
 |---|---|---|
