@@ -68,8 +68,9 @@ het overtypen.
   "Afspraak maken" met de plek van de knop, tarieven bekeken, aanvraag
   gestart en verstuurd) ook als custom event naar Vercel, dus die tellen ook
   bij bezoekers die de banner weigeren. Google Analytics krijgt dezelfde
-  gebeurtenissen zodra `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel staat; tot
-  die tijd meet alleen Vercel. Let op: custom events in Vercel Web Analytics
+  gebeurtenissen na toestemming: de Meting-ID `G-YQ12XEGYZM` staat sinds
+  18 oktober 2026 als `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel, alleen voor
+  Production, en zit sinds de redeploy van die dag in de site. Let op: custom events in Vercel Web Analytics
   hangen af van het Vercel-plan; staan ze niet in het dashboard onder
   "Events", dan vraagt het plan om een upgrade of is het limiet bereikt.
 - Node 24, overal hetzelfde: `engines.node` is `24.x`, `.nvmrc` zegt 24, het

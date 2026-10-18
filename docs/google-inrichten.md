@@ -285,6 +285,22 @@ Productkoppelingen) en maak een kanaalgroep "AI" voor verwijzingen van
 `chatgpt.com`, `perplexity.ai`, `copilot.microsoft.com`, `gemini.google.com`
 en `claude.ai`.
 
+**Ingericht op 18 oktober 2026.** Account en property "Skinstudio Zuid"
+(account-ID 412406205, property-ID 559407236) staan op info@22labs.nl, met
+de webstream `https://skinstudio-zuid.nl` en Meting-ID `G-YQ12XEGYZM`. Het
+delen van gegevens met Google staat helemaal uit en de
+gegevensverwerkingsvoorwaarden (AVG) zijn geaccepteerd. `generate_lead` en
+`booking_completed` zijn belangrijke gebeurtenissen zonder standaardwaarde;
+`close_convert_lead`, `qualify_lead` en `purchase` zette Google er zelf bij
+en verstuurt de site niet. Search Console is gekoppeld. De kanaalgroep
+"Kanalen met AI" heeft het kanaal AI bovenaan: de bron komt gedeeltelijk
+overeen met een regex van de vijf domeinen hierboven. De standaardkanaalgroep
+heeft inmiddels zelf ook een kanaal "AI Assistant". De variabele
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` staat in Vercel, alleen voor Production en
+als type Config. Na de redeploy van 18 oktober 2026 zit de ID in de live
+site. Het Google-account van de kliniek is sinds 18 oktober 2026 ook
+beheerder.
+
 ---
 
 ## Checklist
@@ -296,9 +312,9 @@ en `claude.ai`.
 - [ ] Reviewlink in bevestigingsmail en op de balie (link staat bij stap 5)
 - [ ] Apple Business Connect en Bing Places met dezelfde gegevens
 - [x] Maps-URL in `sameAs` en `hasMap` in `lib/site.ts` (18 oktober 2026, via `GOOGLE_MAPS` in `lib/contact.ts`)
-- [x] Search Console: domeinproperty `skinstudio-zuid.nl`, TXT-record bij TransIP (10 oktober 2026, op info@22labs.nl; kliniek nog als eigenaar toevoegen)
+- [x] Search Console: domeinproperty `skinstudio-zuid.nl`, TXT-record bij TransIP (10 oktober 2026, op info@22labs.nl; het account van de kliniek is sinds 18 oktober 2026 mede-eigenaar)
 - [x] Sitemap ingediend, zeven URL's ter indexering aangevraagd (10 oktober 2026)
 - [x] Instelling generatieve AI-functies gecontroleerd: staat op "Opnemen"
 - [x] Vercel-URL doorsturen als hij geïndexeerd blijkt: `site:skin-studio-zuid.vercel.app` en `site:skinstudiozuid.nl` geven niets, dus niet nodig
 - [ ] Bing Webmaster Tools geïmporteerd
-- [ ] GA4 met Meting-ID in Vercel, gekoppeld aan Search Console
+- [x] GA4 met Meting-ID in Vercel, gekoppeld aan Search Console (18 oktober 2026, live na de redeploy van die dag)
