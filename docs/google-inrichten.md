@@ -125,16 +125,62 @@ Alles invullen, in deze volgorde:
    team. Eigen foto's, geen stockbeeld; Google herkent stock en toont het niet.
    Daarna maandelijks één nieuwe foto: profielen met recente foto's scoren
    hoger op volledigheid.
+
+   Op 18 oktober 2026 stonden er vijf eigen foto's van de behandelkamers in,
+   zonder logo en zonder omslagfoto. Toegevoegd: het logo uit `Images/`, een
+   liggende uitsnede van `Images/1000026002.jpg` als omslagfoto (het raam
+   met het logo erop) en de twee foto's uit `Images/`. Google beoordeelt de
+   omslag en de nieuwe foto's nog. Nog nodig, door de kliniek te maken: de
+   gevel met huisnummer, de laser en het team. De drie beelden in
+   `public/images/` zijn geen foto's van de studio zelf en horen daarom niet
+   in het profiel.
 5. **Attributen**: toegankelijkheid, betaalmethoden, "Vrouwelijke eigenaar"
    alleen als dat klopt, "Afspraak vereist".
+
+   "Afspraak verplicht" staat er sinds 18 oktober 2026 in. Google had zelf
+   al ingevuld: pinpassen, contactloos mobiel betalen, niet alleen contant,
+   niet geschikt voor kinderen, geen recycling van plastic flessen en een
+   toilet. Die staan erin met de melding "geüpdatet door Google"; laat de
+   kliniek ze nalopen. Nog leeg, omdat de feiten ontbreken:
+   toegankelijkheid, parkeren en "door vrouwen geleid".
 6. **Vragen en antwoorden**: zet zelf de vijf vragen uit de FAQ op de site
    erin (doet laserontharing pijn, hoeveel behandelingen, kan ik in de zomer
    laseren, is er een intake, wat kost het) met korte antwoorden. Anders vult
    het publiek ze in. Op 18 oktober 2026 stond hier in het beheerpaneel in
    Google Zoeken geen knop voor.
 7. **Berichten**: wekelijks één bericht (foto, tip, actie). De kuuractie als
-   terugkerend bericht (Google ondersteunt sinds april 2026 herhaalde
-   berichten).
+   terugkerend bericht (Google zou sinds april 2026 herhaalde berichten
+   ondersteunen, maar zie hieronder). Voorzet voor dat eerste bericht, alleen met wat al op
+   `/tarieven` staat en zonder telefoonnummer, want Google weigert berichten
+   met een nummer erin:
+
+   > **Kuuractie laserontharing: zes behandelingen**
+   >
+   > Laserontharing werkt het best in een kuur van zes behandelingen. Daarom
+   > hebben wij vaste kuurprijzen, met de Atres Triple Wave.
+   >
+   > Voor vrouwen: Smooth Essentials, oksels en bikinilijn, € 450 (€ 375 bij
+   > betaling in één keer). Total Smooth, oksels, bikinilijn en onderbenen,
+   > € 750 (€ 600 in één keer).
+   >
+   > Voor mannen: hele bovenlichaam € 900 (€ 750 in één keer). Schouders en
+   > rug € 600 (€ 500 in één keer).
+   >
+   > Elk traject begint met een gratis intake in de studio. De kuur voor
+   > vrouwen geldt voor nieuwe klanten. De behandelingen worden binnen
+   > 18 maanden afgenomen en de actie is niet te combineren met andere
+   > acties.
+
+   Knop: "Afspraak maken" naar `https://skinstudio-zuid.nl/boeken`. Verandert
+   er iets aan de kuur, dan eerst `lib/tarieven.ts` en daarna dit bericht.
+
+   Geplaatst op 18 oktober 2026 als Update, met deze tekst en de knop
+   "Boeken" naar `/boeken`, zonder foto. Google beoordeelt het nog. Een
+   herhaaloptie stond er niet in het beheerpaneel: "Deze post plannen" kent
+   alleen een datum en tijd. Herhaal het bericht dus zelf, bijvoorbeeld elke
+   maand met een nieuwe foto. Na het plaatsen biedt Google aan het bericht
+   naar TwentyTwo Labs te kopiëren, het andere profiel op info@22labs.nl;
+   kies daar altijd "Overslaan".
 
 ### Stap 5: reviews
 
@@ -148,7 +194,11 @@ eigenaar zwaarder dan het aantal.
   WhatsApp-bevestiging na de behandeling. De link van Skinstudio Zuid is
   `https://g.page/r/Ccym1M4uAzm3EBM/review` (knop "Review vragen"). Een
   bevestigingsmail aan de klant bestaat nog niet: het formulier mailt alleen
-  de kliniek.
+  de kliniek. Het kaartje voor de balie staat klaar in
+  `docs/drukwerk/reviewkaartje-a6.pdf`: A6, met logo en QR-code, en de code
+  is na het maken teruggelezen. Op 100 % afdrukken; het script ernaast maakt
+  hem opnieuw als de link ooit verandert. Op 18 oktober 2026 had het profiel
+  nog geen reviews.
 - Vraag elke klant na de eerste of tweede sessie, niet pas na de kuur.
 - Beantwoord elke review binnen een paar dagen, ook de positieve, met de
   voornaam van de reviewer en de behandeling erin.
@@ -163,12 +213,34 @@ profielen. Eén keer per maand het profiel openen en controleren of er iets
 bijgekomen is dat niet klopt (bijvoorbeeld "Hydrafacial" als dienst, of een
 verkeerde prijs), en dat verwijderen of corrigeren.
 
+Bij de eerste controle op 18 oktober 2026 stonden er drie dingen in die niet
+kloppen of niet te controleren zijn:
+
+- **Facebook**: Google koppelde de Facebook-pagina van Plesk, een
+  hostingbedrijf. De link komt van de standaardpagina van een webserver en
+  moet eruit. De automatische rechtencontrole van Claude hield het
+  verwijderen tegen; Nicky haalt hem weg onder Profiel bewerken → Contact →
+  Socialmedia-profielen, en zet daar het Instagram-account
+  `https://www.instagram.com/skinstudio_zuid` voor in de plaats.
+- **WhatsApp**: Google zette een chatknop op het oude nummer 073-2032756.
+  Of die weg moet of naar het nieuwe nummer gaat, hangt af van het nummer
+  waarop de kliniek WhatsApp gebruikt.
+- **Microneedling** staat als dienst in het profiel, maar niet op de site.
+  Biedt de kliniek het niet aan, dan moet het eruit.
+
 ### Daarna, zelfde gegevens
 
 - **Apple Business Connect** (https://businessconnect.apple.com): zelfde
   NAP, voor Apple Kaarten en Siri. Relevant omdat de agenda op iCloud draait.
+  Het adres stuurt sinds 2026 door naar Apple Business
+  (https://business.apple.com). Daar begint het met een Apple Account en een
+  bedrijfsaccount; dat maakt de kliniek of Nicky zelf aan, Claude mag geen
+  accounts aanmaken.
 - **Bing Places** (https://www.bingplaces.com): import vanuit het Google
   Business Profile is één klik. Voedt Copilot en ChatGPT-zoekresultaten.
+  Aanmelden gaat via een apart venster van Microsoft dat Claude niet kan
+  bedienen; Nicky meldt zich aan met het Microsoft-account en kiest daarna
+  de import uit Google.
 - Zodra de Google Maps-URL van het profiel bekend is: toevoegen aan `sameAs`
   en als `hasMap` in `lib/site.ts`, zodat de structured data en het profiel
   naar elkaar verwijzen.
@@ -313,9 +385,11 @@ beheerder.
 - [x] Google-account van de kliniek, Nicky als beheerder (18 oktober 2026: het profiel staat op het account van de kliniek, info@22labs.nl is beheerder)
 - [x] Business Profile gevonden of aangemaakt, naam exact "Skinstudio Zuid" (bestond al)
 - [x] Geverifieerd (stond al op "Geverifieerd")
-- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A. Gedaan op 18 oktober 2026, ter beoordeling bij Google: telefoon, website, afspraaklink, categorieën, beschrijving, tien diensten met prijs, "Afspraak verplicht". Openingstijden kloppen: dezelfde als de zonnestudio, bevestigd op 18 oktober 2026. Open: foto's, overige attributen, Q&A
-- [ ] Reviewlink in bevestigingsmail en op de balie (link staat bij stap 5)
-- [ ] Apple Business Connect en Bing Places met dezelfde gegevens
+- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A. Gedaan op 18 oktober 2026, ter beoordeling bij Google: telefoon, website, afspraaklink, categorieën, beschrijving, tien diensten met prijs, "Afspraak verplicht". Openingstijden kloppen: dezelfde als de zonnestudio, bevestigd op 18 oktober 2026. Foto's: logo, omslagfoto en twee foto's toegevoegd op 18 oktober 2026, samen met de vijf die er stonden zeven foto's. Open: foto's van gevel, laser en team; toegankelijkheid, parkeren en "door vrouwen geleid"; Q&A heeft geen knop meer
+- [ ] Oude gegevens opruimen (stap 6): Facebook-link van Plesk eruit, WhatsApp-knop op het oude nummer en de dienst Microneedling laten beoordelen door de kliniek
+- [x] Eerste bericht met de kuuractie geplaatst (18 oktober 2026, als Update met de knop "Boeken"; ter beoordeling bij Google)
+- [ ] Reviewlink in bevestigingsmail en op de balie (link staat bij stap 5; kaartje klaar in `docs/drukwerk/`, nog afdrukken; de bevestigingsmail bestaat niet)
+- [ ] Apple Business Connect en Bing Places met dezelfde gegevens (allebei eerst aanmelden door Nicky of de kliniek, zie "Daarna, zelfde gegevens")
 - [x] Maps-URL in `sameAs` en `hasMap` in `lib/site.ts` (18 oktober 2026, via `GOOGLE_MAPS` in `lib/contact.ts`)
 - [x] Search Console: domeinproperty `skinstudio-zuid.nl`, TXT-record bij TransIP (10 oktober 2026, op info@22labs.nl; het account van de kliniek is sinds 18 oktober 2026 mede-eigenaar)
 - [x] Sitemap ingediend, zeven URL's ter indexering aangevraagd (10 oktober 2026)

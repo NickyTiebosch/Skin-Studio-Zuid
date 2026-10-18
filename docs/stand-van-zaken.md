@@ -188,14 +188,18 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    is `EMAIL` in `lib/contact.ts` de enige regel die wijzigt.
 3. **Google Business Profile afmaken.** Het profiel bestond al, op het
    Google-account van de kliniek, en is op 18 oktober 2026 bijgewerkt met
-   telefoon, website, afspraaklink, categorieën, beschrijving en tien
-   diensten met prijs. Voor een lokale kliniek is dit een grotere hefboom dan
-   de hele SEO van de site: het bepaalt of je in de kaartresultaten en in
-   "schoonheidssalon in de buurt" verschijnt. Nog open: foto's en overige
-   attributen. Er staan ook nog oude gegevens in: een Facebook-link naar een
-   Plesk-pagina, een WhatsApp-knop met het oude nummer en de dienst
-   Microneedling, die niet op de site staat. Daarna Apple Business Connect en
-   Bing Places met dezelfde gegevens. De exacte waarde per veld staat in
+   telefoon, website, afspraaklink, categorieën, beschrijving, tien
+   diensten met prijs, een logo, een omslagfoto en twee extra foto's. Voor
+   een lokale kliniek is dit een grotere hefboom dan de hele SEO van de site:
+   het bepaalt of je in de kaartresultaten en in "schoonheidssalon in de
+   buurt" verschijnt. Het eerste bericht, over de kuuractie, staat er sinds
+   18 oktober 2026 in. Nog open: foto's van gevel, laser en team en een paar
+   attributen. Er staan ook nog oude gegevens in: een Facebook-link naar
+   een Plesk-pagina, een WhatsApp-knop met het oude nummer en de dienst
+   Microneedling, die niet op de site staat. Het reviewkaartje voor de balie
+   staat in `docs/drukwerk/`. Daarna Apple Business Connect en Bing Places
+   met dezelfde gegevens; voor allebei moet Nicky of de kliniek zich eerst
+   zelf aanmelden. De exacte waarde per veld staat in
    `docs/google-business-profile.md`, de checklist onderaan
    `docs/google-inrichten.md`.
 4. **Search Console, GA4 en Bing Webmaster Tools staan.** Search Console
