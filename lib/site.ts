@@ -3,8 +3,10 @@ import {
   BEDRIJFSNAAM,
   EMAIL,
   GEO,
+  GOOGLE_MAPS,
   GOOGLE_PLAY,
   INSTAGRAM,
+  OPENINGSTIJDEN,
   PLAATS_ZOEKNAAM,
   TELEFOON_HREF,
   WERKGEBIED,
@@ -107,9 +109,8 @@ export const OPENGRAPH_BASIS = {
  * lokale kliniek is dat het verschil tussen wel en niet in de kaartresultaten
  * verschijnen.
  *
- * Nog aan te vullen zodra de gegevens er zijn: openingstijden
- * (`openingHoursSpecification`), de behandelaar als `Person` met credentials,
- * en het Google Business Profile bij `sameAs` en `hasMap`.
+ * Nog aan te vullen zodra de gegevens er zijn: de behandelaar als `Person`
+ * met credentials.
  */
 export function bedrijfsSchema() {
   const bereik = prijsbereik()
@@ -135,6 +136,13 @@ export function bedrijfsSchema() {
       latitude: GEO.latitude,
       longitude: GEO.longitude,
     },
+    hasMap: GOOGLE_MAPS,
+    openingHoursSpecification: OPENINGSTIJDEN.map((r) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: r.dagen,
+      opens: r.open,
+      closes: r.dicht,
+    })),
     // Het bereik van de tarievenpagina, zodat het klopt met wat er zichtbaar
     // staat; Google eist dat structured data de pagina niet tegenspreekt.
     ...(bereik ? { priceRange: `€${bereik.min} - €${bereik.max}` } : {}),
@@ -143,7 +151,7 @@ export function bedrijfsSchema() {
       "@type": "City",
       name: naam,
     })),
-    sameAs: [INSTAGRAM, GOOGLE_PLAY],
+    sameAs: [INSTAGRAM, GOOGLE_PLAY, GOOGLE_MAPS],
     knowsAbout: [
       "Laserontharing",
       "Definitieve ontharing",

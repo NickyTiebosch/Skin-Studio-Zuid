@@ -30,8 +30,12 @@ export function labelDagdeel(id: DagdeelId): string {
   return DAGDELEN.find((d) => d.id === id)?.label ?? id
 }
 
-/** 0 = zondag. Nog te bevestigen door de kliniek; de site zegt "op afspraak". */
-export const GESLOTEN_WEEKDAGEN: number[] = [0]
+/**
+ * Dagen waarop geen datum gekozen kan worden; 0 = zondag. Leeg, want de
+ * studio is elke dag open: zie `OPENINGSTIJDEN` in lib/contact.ts, bevestigd
+ * op 18 oktober 2026.
+ */
+export const GESLOTEN_WEEKDAGEN: number[] = []
 
 /** Hoe ver vooruit een datum gekozen kan worden. */
 export const MAANDEN_VOORUIT = 3

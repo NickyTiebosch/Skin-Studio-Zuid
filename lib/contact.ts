@@ -96,8 +96,35 @@ export const INSTAGRAM = "https://www.instagram.com/skinstudio_zuid"
 export const GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=nl.skinstudiozuid.app"
 
 /**
- * Openingstijden zijn bewust nog niet ingevuld: er staat op de site alleen
- * "Op afspraak". Zodra de echte tijden bekend zijn horen ze hier te komen,
- * zodat ze meteen ook in de structured data en Google Business Profile kloppen.
+ * Het Google Business Profile, als vaste CID-link van Google Maps. Op
+ * 18 oktober 2026 uit het profiel zelf gehaald (plaats-ID
+ * ChIJNQ2-3P3vxkcRzKbUzi4DObc). Staat in `sameAs` en `hasMap` van de
+ * structured data, zodat de site en het profiel naar elkaar verwijzen.
  */
-export const OPENINGSTIJDEN_TEKST = "Op afspraak"
+export const GOOGLE_MAPS = "https://maps.google.com/?cid=13202587282186741452"
+
+/**
+ * Openingstijden: dezelfde als die van Zonnestudio Zuiderzon, in hetzelfde
+ * pand. Bevestigd door Nicky op 18 oktober 2026 en overgenomen uit het
+ * Google-profiel van de zonnestudio; het Business Profile van Skinstudio Zuid
+ * staat op dezelfde tijden. Behandelingen blijven op afspraak.
+ *
+ * De tekst op de site en de structured data komen hiervandaan;
+ * public/llms.txt staat los en moet met de hand mee. Verandert er iets, pas
+ * dan ook het Business Profile aan, en `GESLOTEN_WEEKDAGEN` in lib/agenda.ts
+ * als er een dag dicht gaat.
+ */
+export const OPENINGSTIJDEN = [
+  {
+    label: "Ma t/m za",
+    dagen: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    open: "09:00",
+    dicht: "22:00",
+  },
+  { label: "zo", dagen: ["Sunday"], open: "11:00", dicht: "20:00" },
+] as const
+
+/** Zoals de bezoeker het leest: "Ma t/m za 09:00–22:00, zo 11:00–20:00, op afspraak". */
+export const OPENINGSTIJDEN_TEKST =
+  OPENINGSTIJDEN.map((r) => `${r.label} ${r.open}–${r.dicht}`).join(", ") +
+  ", op afspraak"

@@ -85,8 +85,8 @@ missen de pagina's precies datgene waar bezoekers naar zoeken:
 - **Nazorg** — wat wel en niet te doen na een behandeling.
 - **Contra-indicaties** — wanneer een behandeling niet geschikt is. Bewust
   weggelaten: hierover een fout maken op een website is een reëel risico.
-- **Openingstijden.** Er staat nu alleen "Op afspraak". Dat is te vaag voor de
-  structured data en voor Google Business Profile.
+- **Openingstijden.** Opgelost op 18 oktober 2026: dezelfde tijden als
+  Zonnestudio Zuiderzon, zie `OPENINGSTIJDEN` in `lib/contact.ts`.
 - **Wie er behandelt**, met naam, opleiding en certificering. De site zegt nu
   "gecertificeerde specialisten" zonder te zeggen wie of waarin. Voor het
   vertrouwenssignaal waar Google en AI-modellen op letten, is een naam met
@@ -121,7 +121,7 @@ online staan.
 | Wat | Op de flyer | Op de website | Stand |
 |---|---|---|---|
 | **Telefoonnummer** | 073-2032756 | 073 689 6423 | **Opgelost** |
-| **De laser** | "Professionele Diode Ice Laser" | "Atres Triple Wave, drie golflengtes" | Open |
+| **De laser** | "Professionele Diode Ice Laser" | "Atres Triple Wave, drie golflengtes" | **Opgelost** |
 | **De gezichtsbehandeling** | "Hydrafacial" | "Atres HydraSpa" | Open |
 
 **Het telefoonnummer is opgehelderd.** Het nummer op de site (073 689 6423) is
@@ -129,14 +129,10 @@ het juiste; de flyer is oud. Er hoeft dus niets aan de site te veranderen. Wel
 goed om te weten voor wie nog drukwerk uitdeelt: daar staat een nummer op dat
 niet meer klopt.
 
-**De laser vraagt om opheldering.** De behandelpagina legt uit dat de Atres
-Triple Wave drie golflengtes combineert, en waarom dat uitmaakt voor lichte
-haartjes en een donkere huid. Een diode-laser werkt doorgaans met één
-golflengte. Als de flyer klopt, moet die uitleg van de site af — dan klopt de
-belangrijkste onderbouwing van de pagina niet. Mogelijke verklaringen: er
-staan twee apparaten in de studio, de flyer is ouder, of "Diode Ice Laser" is
-de handelsnaam van hetzelfde apparaat. Graag uitzoeken vóórdat hier
-advertentiebudget op gezet wordt.
+**De laser is opgehelderd.** Het apparaat is de Atres Triple Wave, zoals de
+site zegt; bevestigd door Nicky op 18 oktober 2026. De uitleg over drie
+golflengtes op de behandelpagina en in het Google Business Profile blijft dus
+staan. Bij een herdruk van de flyer kan dezelfde naam erop.
 
 **Hydrafacial versus HydraSpa** is een kleinere kwestie, maar Hydrafacial is
 een beschermde merknaam van een andere fabrikant. Als de behandeling met een
@@ -276,7 +272,8 @@ teksten die de kliniek moet nalopen:
 | **Spaarapp in Google Play** als extern profiel | `lib/contact.ts`, structured data `sameAs` | Is `nl.skinstudiozuid.app` de app van de kliniek? De App Store-URL ontbreekt nog. |
 | **Kop "Medische Innovatie"** (was "Medische Innovatie 2026") | `components/why-us-section.tsx` | Jaartal weggehaald zodat de kop niet veroudert. |
 
-Wat bewust níét is gedaan, omdat de gegevens ontbreken: openingstijden in de
-structured data, behandelduur en aantal sessies in de teksten, een
-over-ons-pagina met naam en certificering van de behandelaar, en een
-nazorg-sectie. Die staan onder "Wat er bewust níét op staat" hierboven.
+Wat bewust níét is gedaan, omdat de gegevens ontbreken: behandelduur en
+aantal sessies in de teksten, een over-ons-pagina met naam en certificering
+van de behandelaar, en een nazorg-sectie. Die staan onder "Wat er bewust
+níét op staat" hierboven. De openingstijden staan sinds 18 oktober 2026 wel
+in de structured data.

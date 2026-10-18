@@ -201,12 +201,11 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    **beschikbaarheid** (welke dagen en uren), een **Cal.com-account** en een
    **app-specifiek wachtwoord** van het Apple ID; die drie voert de
    eigenaresse zelf in Cal.com in.
-6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
-   of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
-   vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee
-   tegenstrijdigheden tussen flyer en site (Diode Ice Laser versus Atres
-   Triple Wave, Hydrafacial versus HydraSpa) — die laatste vóór er
-   advertentiebudget op gaat. Zie `docs/te-controleren.md`.
+6. **Van de kliniek**: wie er behandelt met certificering, of de kuuractie
+   ook bij mannen alleen voor nieuwe klanten geldt (op de vrouwenflyer staat
+   dat wel, op de mannenflyer niet), en Hydrafacial versus HydraSpa, vóór er
+   advertentiebudget op gaat. Openingstijden en de laser zijn op 18 oktober
+   2026 opgehelderd. Zie `docs/te-controleren.md`.
 
 ## Twee dingen om te weten bij het verder bouwen
 
