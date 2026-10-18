@@ -60,11 +60,11 @@ uitkomsten:
 | Veld | Invullen | Waarom zo |
 |---|---|---|
 | Bedrijfsnaam | `Skinstudio Zuid` | Exact de naam op de gevel en de site. Geen "Den Bosch" of "laserontharing" erbij: dat is tegen de regels en Google schort profielen daarvoor op |
-| Primaire categorie | Laserontharingscentrum | Dit is de categorie waarop het profiel meedoet voor "laserontharing den bosch" |
+| Primaire categorie | Ontharing met laser | Zo heet de categorie in de Nederlandse interface van Google. Hiermee doet het profiel mee voor "laserontharing den bosch" |
 | Extra categorieën | Schoonheidssalon, Huidverzorgingskliniek | Voor "gezichtsbehandeling den bosch" en "schoonheidssalon den bosch". Maximaal negen; alleen wat echt klopt |
 | Locatie die klanten bezoeken | Ja | Nodig om op de kaart te staan |
 | Adres | Hildebrandstraat 8, 5216 VR, 's-Hertogenbosch | Zonder toevoegingen |
-| Servicegebied | Optioneel: Vught, Rosmalen, Sint-Michielsgestel, Vlijmen, Engelen, Boxtel | Hetzelfde lijstje als op de site. Het verandert de kaartpositie niet, wel de relevantie voor zoekers uit die plaatsen |
+| Servicegebied | Leeg laten | Google wil een servicegebied alleen bij bedrijven die naar de klant toe gaan. Klanten komen naar de studio, dus het werkgebied staat alleen op de site |
 | Telefoon | 073 689 6423 | |
 | Website | https://skinstudio-zuid.nl | De homepage; de contactpagina mag ook maar de homepage is de conventie |
 | Afspraaklink | https://skinstudio-zuid.nl/boeken | Aparte knop "Afspraak maken" in het profiel |
@@ -108,8 +108,11 @@ Alles invullen, in deze volgorde:
    > voor reiniging, verstrakking met radiofrequentie en een anti-aging boost in
    > één behandeling. Een traject laserontharing begint altijd met een gratis
    > intake in de studio. Klanten komen uit 's-Hertogenbosch, Vught, Rosmalen,
-   > Sint-Michielsgestel, Vlijmen, Engelen en Boxtel. Afspraken op
-   > skinstudio-zuid.nl of via 073 689 6423.
+   > Sint-Michielsgestel, Vlijmen, Engelen en Boxtel. Afspraken via de
+   > website of telefonisch.
+
+   Google weigert een webadres in de beschrijving ("Een URL is hier niet
+   toegestaan"). Website en telefoonnummer staan al als knop in het profiel.
 
 3. **Diensten.** Per dienst een eigen regel met prijs, overgenomen uit
    `lib/tarieven.ts`: Gratis intakegesprek laserontharing (€ 0), Laserontharing
@@ -127,7 +130,8 @@ Alles invullen, in deze volgorde:
 6. **Vragen en antwoorden**: zet zelf de vijf vragen uit de FAQ op de site
    erin (doet laserontharing pijn, hoeveel behandelingen, kan ik in de zomer
    laseren, is er een intake, wat kost het) met korte antwoorden. Anders vult
-   het publiek ze in.
+   het publiek ze in. Op 18 oktober 2026 stond hier in het beheerpaneel in
+   Google Zoeken geen knop voor.
 7. **Berichten**: wekelijks één bericht (foto, tip, actie). De kuuractie als
    terugkerend bericht (Google ondersteunt sinds april 2026 herhaalde
    berichten).
@@ -141,7 +145,10 @@ eigenaar zwaarder dan het aantal.
 - In het profiel: "Vraag om reviews" → de korte link (vorm
   `g.page/r/…/review`) kopiëren. Zet hem in de bevestigingsmail van het
   aanvraagformulier, op een kaartje met QR-code bij de balie, en in de
-  WhatsApp-bevestiging na de behandeling.
+  WhatsApp-bevestiging na de behandeling. De link van Skinstudio Zuid is
+  `https://g.page/r/Ccym1M4uAzm3EBM/review` (knop "Review vragen"). Een
+  bevestigingsmail aan de klant bestaat nog niet: het formulier mailt alleen
+  de kliniek.
 - Vraag elke klant na de eerste of tweede sessie, niet pas na de kuur.
 - Beantwoord elke review binnen een paar dagen, ook de positieve, met de
   voornaam van de reviewer en de behandeling erin.
@@ -282,16 +289,16 @@ en `claude.ai`.
 
 ## Checklist
 
-- [ ] Google-account van de kliniek, Nicky als beheerder
-- [ ] Business Profile gevonden of aangemaakt, naam exact "Skinstudio Zuid"
-- [ ] Geverifieerd (video)
-- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A
-- [ ] Reviewlink in bevestigingsmail en op de balie
+- [x] Google-account van de kliniek, Nicky als beheerder (18 oktober 2026: het profiel staat op het account van de kliniek, info@22labs.nl is beheerder)
+- [x] Business Profile gevonden of aangemaakt, naam exact "Skinstudio Zuid" (bestond al)
+- [x] Geverifieerd (stond al op "Geverifieerd")
+- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A. Gedaan op 18 oktober 2026, ter beoordeling bij Google: telefoon, website, afspraaklink, categorieën, beschrijving, tien diensten met prijs, "Afspraak verplicht". Openingstijden kloppen: dezelfde als de zonnestudio, bevestigd op 18 oktober 2026. Open: foto's, overige attributen, Q&A
+- [ ] Reviewlink in bevestigingsmail en op de balie (link staat bij stap 5)
 - [ ] Apple Business Connect en Bing Places met dezelfde gegevens
-- [ ] Maps-URL in `sameAs` en `hasMap` in `lib/site.ts`
-- [ ] Search Console: domeinproperty `skinstudio-zuid.nl`, TXT-record bij TransIP
-- [ ] Sitemap ingediend, zeven URL's ter indexering aangevraagd
-- [ ] Instelling generatieve AI-functies gecontroleerd
-- [ ] Vercel-URL doorsturen als hij geïndexeerd blijkt
+- [x] Maps-URL in `sameAs` en `hasMap` in `lib/site.ts` (18 oktober 2026, via `GOOGLE_MAPS` in `lib/contact.ts`)
+- [x] Search Console: domeinproperty `skinstudio-zuid.nl`, TXT-record bij TransIP (10 oktober 2026, op info@22labs.nl; kliniek nog als eigenaar toevoegen)
+- [x] Sitemap ingediend, zeven URL's ter indexering aangevraagd (10 oktober 2026)
+- [x] Instelling generatieve AI-functies gecontroleerd: staat op "Opnemen"
+- [x] Vercel-URL doorsturen als hij geïndexeerd blijkt: `site:skin-studio-zuid.vercel.app` en `site:skinstudiozuid.nl` geven niets, dus niet nodig
 - [ ] Bing Webmaster Tools geïmporteerd
 - [ ] GA4 met Meting-ID in Vercel, gekoppeld aan Search Console
