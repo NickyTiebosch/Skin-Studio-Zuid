@@ -53,86 +53,100 @@ export function AfspraakKiezer({
         </p>
       )}
 
-      <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-        <DayPicker
-          mode="single"
-          locale={nl}
-          weekStartsOn={1}
-          selected={datum}
-          onSelect={onDatum}
-          startMonth={vandaag}
-          endMonth={laatsteMaand}
-          disabled={[{ before: morgen }, { dayOfWeek: GESLOTEN_WEEKDAGEN }]}
-          showOutsideDays={false}
-          formatters={{
-            formatCaption: (maand) =>
-              metHoofdletter(format(maand, "LLLL yyyy", { locale: nl })),
-          }}
-          labels={{
-            labelPrevious: () => "Vorige maand",
-            labelNext: () => "Volgende maand",
-          }}
-          classNames={{
-            root: "font-sans text-sm w-fit shrink-0",
-            months: "relative",
-            month: "flex flex-col",
-            nav: "absolute top-0 inset-x-0 z-10 flex items-center justify-between",
-            button_previous:
-              "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
-            button_next:
-              "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
-            chevron: "w-4 h-4 fill-current",
-            month_caption: "flex items-center justify-center h-9 px-10 mb-3",
-            caption_label: "font-serif text-lg text-foreground",
-            month_grid: "border-collapse",
-            weekdays: "",
-            weekday:
-              "h-8 w-9 text-center align-middle font-sans font-normal text-[10px] tracking-[0.15em] uppercase text-muted-foreground",
-            weeks: "",
-            week: "",
-            day: "p-0 text-center",
-            day_button:
-              "h-9 w-9 flex items-center justify-center font-sans text-sm text-foreground transition-colors duration-200 hover:bg-[color:var(--sand)] focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-[color:var(--rose-gold)]",
-            selected:
-              "[&>button]:bg-[color:var(--rose-gold)] [&>button]:text-[color:var(--cream)] [&>button]:hover:bg-[color:var(--rose-gold)]",
-            today: "[&>button]:underline [&>button]:underline-offset-4",
-            disabled:
-              "[&>button]:text-muted-foreground [&>button]:opacity-30 [&>button]:cursor-not-allowed [&>button]:hover:bg-transparent",
-            outside: "invisible",
-            hidden: "invisible",
-          }}
-        />
+      {/* Kalender en dagdelen staan naast elkaar zodra de kiezer daar zelf
+          breed genoeg voor is. Dat hangt af van het formulier eromheen, niet
+          van het scherm: op /boeken staat het vanaf 1024px in een halve kolom,
+          en dan bleef er naast de kalender amper ruimte over voor de knoppen.
+          38rem is de kalender (252px), de tussenruimte en twee knoppen met
+          "Geen voorkeur" op één regel. */}
+      <div className="@container">
+        <div className="flex flex-col @min-[38rem]:flex-row gap-6 @min-[38rem]:gap-10">
+          <DayPicker
+            mode="single"
+            locale={nl}
+            weekStartsOn={1}
+            selected={datum}
+            onSelect={onDatum}
+            startMonth={vandaag}
+            endMonth={laatsteMaand}
+            disabled={[{ before: morgen }, { dayOfWeek: GESLOTEN_WEEKDAGEN }]}
+            showOutsideDays={false}
+            formatters={{
+              formatCaption: (maand) =>
+                metHoofdletter(format(maand, "LLLL yyyy", { locale: nl })),
+            }}
+            labels={{
+              labelPrevious: () => "Vorige maand",
+              labelNext: () => "Volgende maand",
+            }}
+            classNames={{
+              root: "font-sans text-sm w-fit shrink-0",
+              months: "relative",
+              month: "flex flex-col",
+              nav: "absolute top-0 inset-x-0 z-10 flex items-center justify-between",
+              button_previous:
+                "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
+              button_next:
+                "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
+              chevron: "w-4 h-4 fill-current",
+              month_caption: "flex items-center justify-center h-9 px-10 mb-3",
+              caption_label: "font-serif text-lg text-foreground",
+              month_grid: "border-collapse",
+              weekdays: "",
+              weekday:
+                "h-8 w-9 text-center align-middle font-sans font-normal text-[10px] tracking-[0.15em] uppercase text-muted-foreground",
+              weeks: "",
+              week: "",
+              day: "p-0 text-center",
+              day_button:
+                "h-9 w-9 flex items-center justify-center font-sans text-sm text-foreground transition-colors duration-200 hover:bg-[color:var(--sand)] focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-[color:var(--rose-gold)]",
+              selected:
+                "[&>button]:bg-[color:var(--rose-gold)] [&>button]:text-[color:var(--cream)] [&>button]:hover:bg-[color:var(--rose-gold)]",
+              today: "[&>button]:underline [&>button]:underline-offset-4",
+              disabled:
+                "[&>button]:text-muted-foreground [&>button]:opacity-30 [&>button]:cursor-not-allowed [&>button]:hover:bg-transparent",
+              outside: "invisible",
+              hidden: "invisible",
+            }}
+          />
 
-        <div className="flex flex-col gap-3 md:pt-12 min-w-0">
-          <p className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
-            Dagdeel
-          </p>
-          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Dagdeel">
-            {DAGDELEN.map((d) => {
-              const actief = d.id === dagdeel
-              return (
-                <button
-                  key={d.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={actief}
-                  onClick={() => onDagdeel(d.id)}
-                  className={cn(
-                    "border px-3 py-3 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200",
-                    actief
-                      ? "text-[color:var(--cream)]"
-                      : "text-foreground hover:border-[color:var(--rose-gold)]"
-                  )}
-                  style={
-                    actief
-                      ? { backgroundColor: "var(--rose-gold)", borderColor: "var(--rose-gold)" }
-                      : { borderColor: "var(--border)" }
-                  }
-                >
-                  {d.label}
-                </button>
-              )
-            })}
+          <div className="flex flex-col gap-3 @min-[38rem]:pt-12 min-w-0">
+            <p className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+              Dagdeel
+            </p>
+            {/* Een knop met "voorkeur" is alleen al ruim 100px breed; op de
+                smalste telefoons staan de knoppen daarom onder elkaar. */}
+            <div
+              className="grid grid-cols-1 @min-[14rem]:grid-cols-2 gap-2"
+              role="radiogroup"
+              aria-label="Dagdeel"
+            >
+              {DAGDELEN.map((d) => {
+                const actief = d.id === dagdeel
+                return (
+                  <button
+                    key={d.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={actief}
+                    onClick={() => onDagdeel(d.id)}
+                    className={cn(
+                      "border px-3 py-3 font-sans text-xs tracking-[0.15em] uppercase transition-colors duration-200",
+                      actief
+                        ? "text-[color:var(--cream)]"
+                        : "text-foreground hover:border-[color:var(--rose-gold)]"
+                    )}
+                    style={
+                      actief
+                        ? { backgroundColor: "var(--rose-gold)", borderColor: "var(--rose-gold)" }
+                        : { borderColor: "var(--border)" }
+                    }
+                  >
+                    {d.label}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
