@@ -7,10 +7,9 @@
  * lastig te lezen door lichtweerkaatsing en staan als te controleren
  * gemarkeerd in docs/te-controleren.md.
  *
- * NOG NIET AANGELEVERD:
- * - De behandelduur per behandeling. Die staat op geen van de flyers, en is
- *   technisch onmisbaar voor het boekingssysteem: zonder duur kan geen enkel
- *   systeem tijdsloten berekenen.
+ * Behandelduur: aangeleverd op 10 oktober 2026 (Nicky): reken een uur per
+ * behandeling, geen buffer; het intakegesprek een kwartier. Die duur staat
+ * per afspraaktype in lib/agenda.ts, niet per tariefregel — zie `duurMinuten`.
  */
 
 export type Tariefregel = {
@@ -20,7 +19,10 @@ export type Tariefregel = {
   /** Doorgestreepte prijs bij een aanbieding. */
   vanPrijs?: number
   toelichting?: string
-  /** Nog nergens bekend; nodig voor het boekingssysteem. */
+  /**
+   * Alleen invullen als een regel afwijkt van de planregel "een uur per
+   * behandeling" uit lib/agenda.ts. Wordt nog nergens getoond.
+   */
   duurMinuten?: number
 }
 

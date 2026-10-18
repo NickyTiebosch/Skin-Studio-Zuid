@@ -77,9 +77,10 @@ missen de pagina's precies datgene waar bezoekers naar zoeken:
 - **Prijzen** stonden hier tot 4 september 2026. Sindsdien staan de
   mannenprijzen op `/tarieven`, en sinds 7 september ook de vrouwenprijzen.
   Zie de twee tarievensecties onderaan.
-- **Behandelduur per behandeling.** Nodig voor de site én technisch onmisbaar
-  voor het boekingssysteem: zonder duur kan geen enkel systeem tijdsloten
-  berekenen.
+- **Behandelduur per behandeling.** Aangeleverd op 10 oktober 2026 door
+  Nicky: reken een uur per behandeling, afspraken direct achter elkaar (geen
+  buffer), het intakegesprek een kwartier. Staat in `lib/agenda.ts`; nog
+  niet in de teksten van de site verwerkt.
 - **Aantal sessies en het interval ertussen** bij laserontharing.
 - **Nazorg** — wat wel en niet te doen na een behandeling.
 - **Contra-indicaties** — wanneer een behandeling niet geschikt is. Bewust
@@ -154,10 +155,10 @@ Even nalopen of dat klopt.
 
 ### Wat er nog ontbreekt
 
-- **Behandelduur per behandeling.** Staat op geen van de flyers. Dit is
-  technisch onmisbaar voor het boekingssysteem: zonder duur kan geen enkel
-  systeem tijdsloten berekenen. Dit is nu het enige dat het boekingssysteem
-  nog blokkeert.
+- **Behandelduur per behandeling.** Aangeleverd op 10 oktober 2026 door
+  Nicky: reken een uur per behandeling, afspraken direct achter elkaar (geen
+  buffer), het intakegesprek een kwartier. Staat in `lib/agenda.ts`; nog
+  niet in de teksten van de site verwerkt.
 - **Geldigheid van de kuuractie.** Er staat geen einddatum op de flyer. Als
   de actie afloopt, moet iemand eraan denken de site bij te werken.
 
@@ -246,7 +247,11 @@ Wat daar bij hoort, zodat niemand later verrast wordt:
 - **Privé-afspraken moeten óók in de gekoppelde agenda staan**, anders blijft
   dat slot boekbaar.
 
-**Nog nodig voordat er gebouwd kan worden:** de **behandelduur per
+**Nog nodig voordat er gebouwd kan worden:** de beschikbaarheid (welke dagen
+en uren), een Cal.com-account en het app-specifieke wachtwoord van het Apple
+ID — alle drie door de eigenaresse zelf in Cal.com in te voeren. De
+behandelduur is sinds 10 oktober 2026 bekend: een uur per behandeling, het
+intakegesprek een kwartier, geen buffer.
 behandeling**. Dat is het enige dat nu nog blokkeert.
 
 **Niet in het boekingsformulier zetten:** vragen over huidtype, medicijngebruik

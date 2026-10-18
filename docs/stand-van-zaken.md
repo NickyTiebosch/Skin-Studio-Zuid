@@ -195,9 +195,12 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
 5. **Boekingssysteem.** Stap één staat: de aanvraagkalender op `/boeken`.
    Stap twee is echte beschikbaarheid: de Apple/iCloud-agenda via Cal.com,
    zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar
-   agenda staat. Dat wacht op de **behandelduur per behandeling** en de
-   **beschikbaarheid** (welke dagen en uren), plus een Cal.com-account en een
-   app-specifiek wachtwoord van het Apple ID, aan te maken door de kliniek.
+   agenda staat. De duur is sinds 10 oktober bekend (Nicky): een uur per
+   behandeling, afspraken direct achter elkaar, het intakegesprek een
+   kwartier — vastgelegd in `lib/agenda.ts`. Wat nog ontbreekt: de
+   **beschikbaarheid** (welke dagen en uren), een **Cal.com-account** en een
+   **app-specifiek wachtwoord** van het Apple ID; die drie voert de
+   eigenaresse zelf in Cal.com in.
 6. **Van de kliniek**: openingstijden, wie er behandelt met certificering,
    of de kuuractie ook bij mannen alleen voor nieuwe klanten geldt (op de
    vrouwenflyer staat dat wel, op de mannenflyer niet), en de twee

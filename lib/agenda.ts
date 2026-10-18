@@ -41,7 +41,22 @@ export type Afspraak = {
   naam: string
   /** Uitleg boven de kalender, waar die nodig is. */
   toelichting?: string
+  /**
+   * Hoe lang de afspraak duurt. Nog niet zichtbaar op de site; dit is de
+   * duur die het boekingssysteem (Cal.com) straks per afspraaktype krijgt.
+   */
+  duurMinuten: number
 }
+
+/**
+ * Duur en buffer, aangeleverd door Nicky op 10 oktober 2026: reken een uur
+ * per behandeling, afspraken mogen direct op elkaar volgen, en het gratis
+ * intakegesprek duurt een kwartier. Het is een planregel per afspraaktype;
+ * daarom staat de duur hier en niet per tariefregel in lib/tarieven.ts.
+ */
+export const BEHANDELING_MINUTEN = 60
+export const INTAKE_MINUTEN = 15
+export const BUFFER_MINUTEN = 0
 
 /**
  * Welke keuze in het formulier tot welke afspraak leidt. "overig" staat er
@@ -51,13 +66,14 @@ export type Afspraak = {
  * de behandelpagina), dus wie laserontharing kiest, vraagt een intake aan.
  */
 export const AFSPRAAK_PER_KEUZE: Record<string, Afspraak> = {
-  gezichtsbehandeling: { naam: "Gezichtsbehandeling" },
+  gezichtsbehandeling: { naam: "Gezichtsbehandeling", duurMinuten: BEHANDELING_MINUTEN },
   laserontharing: {
     naam: "Intakegesprek laserontharing",
+    duurMinuten: INTAKE_MINUTEN,
     toelichting:
       "Laserontharing begint altijd met een gratis intakegesprek. Kies hieronder een datum voor de intake; de behandeldata leggen we daarna samen vast.",
   },
-  consult: { naam: "Gratis intakegesprek" },
+  consult: { naam: "Gratis intakegesprek", duurMinuten: INTAKE_MINUTEN },
 }
 
 export function afspraakVoor(keuze: string | undefined): Afspraak | undefined {
