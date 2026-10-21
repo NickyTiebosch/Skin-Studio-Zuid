@@ -184,8 +184,10 @@ export function ContactSection({
             </div>
           </div>
 
-          {/* Form */}
-          <div className="bg-[color:var(--cream)] p-8 md:p-12">
+          {/* Form. Op telefoons een smallere binnenrand: dan past de kalender
+              op /boeken (zeven vakjes van 36px) al vanaf een 348px breed
+              scherm op ware grootte, dus ook op de gangbare 360px. */}
+          <div className="bg-[color:var(--cream)] p-6 sm:p-8 md:p-12">
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
                 <CheckCircle size={40} style={{ color: "var(--rose-gold)" }} />

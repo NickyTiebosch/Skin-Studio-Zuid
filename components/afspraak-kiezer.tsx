@@ -58,7 +58,12 @@ export function AfspraakKiezer({
           van het scherm: op /boeken staat het vanaf 1024px in een halve kolom,
           en dan bleef er naast de kalender amper ruimte over voor de knoppen.
           38rem is de kalender (252px), de tussenruimte en twee knoppen met
-          "Geen voorkeur" op één regel. */}
+          "Geen voorkeur" op één regel.
+
+          Op de smalste schermen is de kiezer zelf smaller dan die 252px. Dan
+          worden de dagvakjes 32px (onder 15.75rem, de breedte van de kalender)
+          en 28px (onder 14rem), zodat de kalender binnen het formulier blijft.
+          De pijltjes krimpen mee en blijven zo boven maandag en zondag staan. */}
       <div className="@container">
         <div className="flex flex-col @min-[38rem]:flex-row gap-6 @min-[38rem]:gap-10">
           <DayPicker
@@ -85,21 +90,23 @@ export function AfspraakKiezer({
               month: "flex flex-col",
               nav: "absolute top-0 inset-x-0 z-10 flex items-center justify-between",
               button_previous:
-                "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
+                "h-9 w-9 @max-[15.75rem]:w-8 @max-[14rem]:w-7 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
               button_next:
-                "h-9 w-9 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
+                "h-9 w-9 @max-[15.75rem]:w-8 @max-[14rem]:w-7 flex items-center justify-center text-muted-foreground transition-colors duration-200 hover:text-[color:var(--rose-gold)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-muted-foreground",
               chevron: "w-4 h-4 fill-current",
-              month_caption: "flex items-center justify-center h-9 px-10 mb-3",
+              // Met 28px-vakjes is de kalender 196px; "September 2026" past
+              // daar alleen naast de pijltjes met een smallere marge.
+              month_caption: "flex items-center justify-center h-9 px-10 @max-[14rem]:px-8 mb-3",
               caption_label: "font-serif text-lg text-foreground",
               month_grid: "border-collapse",
               weekdays: "",
               weekday:
-                "h-8 w-9 text-center align-middle font-sans font-normal text-[10px] tracking-[0.15em] uppercase text-muted-foreground",
+                "h-8 w-9 @max-[15.75rem]:w-8 @max-[14rem]:w-7 text-center align-middle font-sans font-normal text-[10px] tracking-[0.15em] uppercase text-muted-foreground",
               weeks: "",
               week: "",
               day: "p-0 text-center",
               day_button:
-                "h-9 w-9 flex items-center justify-center font-sans text-sm text-foreground transition-colors duration-200 hover:bg-[color:var(--sand)] focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-[color:var(--rose-gold)]",
+                "size-9 @max-[15.75rem]:size-8 @max-[14rem]:size-7 flex items-center justify-center font-sans text-sm text-foreground transition-colors duration-200 hover:bg-[color:var(--sand)] focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-[color:var(--rose-gold)]",
               selected:
                 "[&>button]:bg-[color:var(--rose-gold)] [&>button]:text-[color:var(--cream)] [&>button]:hover:bg-[color:var(--rose-gold)]",
               today: "[&>button]:underline [&>button]:underline-offset-4",
