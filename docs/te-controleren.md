@@ -28,7 +28,7 @@ Alles staat in `lib/behandelingen.ts`, dus corrigeren kan op één plek.
 
 ### Veelgestelde vragen
 
-Zes vragen met antwoorden. Twee daarvan verwijzen bewust door naar de intake
+Zeven vragen met antwoorden. Twee daarvan verwijzen bewust door naar de intake
 in plaats van een getal te noemen:
 
 - **"Kan ik direct een behandeling inplannen?"** — nieuw sinds 6 september
@@ -45,6 +45,12 @@ in plaats van een getal te noemen:
   geschiktheid van de Atres, maar laat de beoordeling voor een individueel
   geval aan de intake.
 
+Sinds 21 oktober 2026 staat op beide behandelpagina's als laatste vraag
+**"Kan ik bij de studio parkeren, en is die rolstoeltoegankelijk?"**. De
+feiten komen van de kliniek en staan zo ook in het Business Profile; alleen
+de formulering is nieuw. Op verzoek van Nicky staat het alleen in de
+veelgestelde vragen, niet op de contactpagina.
+
 ---
 
 ## Gezichtsbehandelingen
@@ -59,7 +65,8 @@ in plaats van een getal te noemen:
 
 ### Veelgestelde vragen
 
-Vijf vragen. Aandachtspunt:
+Zes vragen, waarvan de laatste over parkeren en toegankelijkheid (zie bij
+laserontharing). Aandachtspunt:
 
 - **"Wat doet radiofrequentie precies met de huid?"** — het antwoord zegt dat
   RF warmte in de diepere huidlagen brengt en collageenaanmaak stimuleert, met

@@ -9,6 +9,7 @@ import {
   OPENINGSTIJDEN,
   PLAATS_ZOEKNAAM,
   TELEFOON_HREF,
+  VOORZIENINGEN,
   WERKGEBIED,
 } from "./contact"
 import type { Behandeling, VeelgesteldeVraag } from "./behandelingen"
@@ -142,6 +143,13 @@ export function bedrijfsSchema() {
       dayOfWeek: r.dagen,
       opens: r.open,
       closes: r.dicht,
+    })),
+    // Dezelfde kenmerken als in het Business Profile; de bezoeker leest ze in
+    // de veelgestelde vragen van de behandelpagina's.
+    amenityFeature: VOORZIENINGEN.map((naam) => ({
+      "@type": "LocationFeatureSpecification",
+      name: naam,
+      value: true,
     })),
     // Het bereik van de tarievenpagina, zodat het klopt met wat er zichtbaar
     // staat; Google eist dat structured data de pagina niet tegenspreekt.

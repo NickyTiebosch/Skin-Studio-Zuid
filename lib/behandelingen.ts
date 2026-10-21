@@ -70,6 +70,20 @@ export type Behandeling = {
   formulierWaarde: string
 }
 
+/**
+ * Hoort onder beide behandelingen: wie voor een intake of behandeling komt,
+ * wil weten of er te parkeren valt. Bevestigd door Nicky op 21 oktober 2026.
+ * Dezelfde feiten staan als `VOORZIENINGEN` in lib/contact.ts, voor de
+ * structured data; verandert er iets, pas dan ook die aan, public/llms.txt en
+ * het Business Profile.
+ */
+const BEREIKBAARHEID: VeelgesteldeVraag = {
+  vraag: "Kan ik bij de studio parkeren, en is die rolstoeltoegankelijk?",
+  antwoord:
+    "Ja. U parkeert gratis op straat, voor de deur, en de studio is " +
+    "rolstoeltoegankelijk.",
+}
+
 export const behandelingen: Behandeling[] = [
   {
     slug: "gezichtsbehandelingen",
@@ -170,6 +184,7 @@ export const behandelingen: Behandeling[] = [
           "precies nodig is, bespreken we tijdens een persoonlijke intake in de " +
           "studio — daar kijken we naar uw huid en stemmen we de behandeling af.",
       },
+      BEREIKBAARHEID,
     ],
   },
   {
@@ -304,6 +319,7 @@ export const behandelingen: Behandeling[] = [
           "Daarna leggen we de data van de behandelingen vast. Een intake " +
           "vraagt u aan via het contactformulier.",
       },
+      BEREIKBAARHEID,
     ],
   },
 ]

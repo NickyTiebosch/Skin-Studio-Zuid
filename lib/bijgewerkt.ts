@@ -13,8 +13,8 @@
  */
 export const BIJGEWERKT: Record<string, string> = {
   "/": "2026-10-09",
-  "/laserontharing": "2026-10-09",
-  "/gezichtsbehandelingen": "2026-10-09",
+  "/laserontharing": "2026-10-21",
+  "/gezichtsbehandelingen": "2026-10-21",
   "/tarieven": "2026-09-07",
   "/contact": "2026-10-09",
   "/boeken": "2026-09-07",

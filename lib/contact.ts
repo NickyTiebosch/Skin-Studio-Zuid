@@ -67,6 +67,18 @@ export const WERKGEBIED = [
   "Boxtel",
 ] as const
 
+/**
+ * Parkeren en toegankelijkheid, bevestigd door Nicky op 21 oktober 2026, met
+ * dezelfde namen als de kenmerken in het Business Profile. Ze gaan in de
+ * structured data; de bezoeker leest ze alleen in de veelgestelde vragen
+ * (`BEREIKBAARHEID` in lib/behandelingen.ts). public/llms.txt staat los en
+ * moet met de hand mee.
+ */
+export const VOORZIENINGEN = [
+  "Gratis parkeren op straat",
+  "Rolstoeltoegankelijke ingang",
+] as const
+
 /** Weergavevorm, zoals de bezoeker het nummer leest. */
 export const TELEFOON_WEERGAVE = "073 689 6423"
 
