@@ -193,10 +193,13 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    een lokale kliniek is dit een grotere hefboom dan de hele SEO van de site:
    het bepaalt of je in de kaartresultaten en in "schoonheidssalon in de
    buurt" verschijnt. Het eerste bericht, over de kuuractie, staat er sinds
-   18 oktober 2026 in. Nog open: foto's van gevel, laser en team en een paar
-   attributen. Er staan ook nog oude gegevens in: een Facebook-link naar
-   een Plesk-pagina, een WhatsApp-knop met het oude nummer en de dienst
-   Microneedling, die niet op de site staat. Het reviewkaartje voor de balie
+   18 oktober 2026 in. Sinds 21 oktober 2026 staat erin dat de ingang
+   rolstoeltoegankelijk is en dat je gratis op straat parkeert. Nog open:
+   foto's van gevel, laser en team en "door vrouwen geleid". Er staan ook
+   nog oude gegevens in: een WhatsApp-knop met het oude nummer en de dienst
+   Microneedling, die niet op de site staat. De Facebook-link naar een
+   Plesk-pagina is op 21 oktober 2026 verwijderd en staat bij Google in
+   behandeling. Het reviewkaartje voor de balie
    staat in `docs/drukwerk/`. Daarna Apple Business Connect en Bing Places
    met dezelfde gegevens; voor allebei moet Nicky of de kliniek zich eerst
    zelf aanmelden. De exacte waarde per veld staat in

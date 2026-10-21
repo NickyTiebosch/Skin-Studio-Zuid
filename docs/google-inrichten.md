@@ -140,9 +140,14 @@ Alles invullen, in deze volgorde:
    "Afspraak verplicht" staat er sinds 18 oktober 2026 in. Google had zelf
    al ingevuld: pinpassen, contactloos mobiel betalen, niet alleen contant,
    niet geschikt voor kinderen, geen recycling van plastic flessen en een
-   toilet. Die staan erin met de melding "geüpdatet door Google"; laat de
-   kliniek ze nalopen. Nog leeg, omdat de feiten ontbreken:
-   toegankelijkheid, parkeren en "door vrouwen geleid".
+   toilet, elk met de melding "geüpdatet door Google". Op 21 oktober 2026
+   bevestigde de kliniek pinnen, contactloos betalen, het toilet en "niet
+   geschikt voor kinderen"; die meldingen zijn met OK afgevinkt. De melding
+   bij recycling staat nog open. Sinds die dag staat bij toegankelijkheid
+   "Rolstoeltoegankelijke ingang"; of ook het toilet en een parkeerplaats
+   rolstoeltoegankelijk zijn, is niet bekend. Parkeren staat sinds die dag
+   op "Gratis parkeren op straat": klanten parkeren gratis voor de deur.
+   "Door vrouwen geleid" is nog open.
 6. **Vragen en antwoorden**: zet zelf de vijf vragen uit de FAQ op de site
    erin (doet laserontharing pijn, hoeveel behandelingen, kan ik in de zomer
    laseren, is er een intake, wat kost het) met korte antwoorden. Anders vult
@@ -218,10 +223,13 @@ kloppen of niet te controleren zijn:
 
 - **Facebook**: Google koppelde de Facebook-pagina van Plesk, een
   hostingbedrijf. De link komt van de standaardpagina van een webserver en
-  moet eruit. De automatische rechtencontrole van Claude hield het
-  verwijderen tegen; Nicky haalt hem weg onder Profiel bewerken → Contact →
-  Socialmedia-profielen, en zet daar het Instagram-account
-  `https://www.instagram.com/skinstudio_zuid` voor in de plaats.
+  moet eruit. Op 21 oktober 2026 verwijderd onder Profiel bewerken →
+  Contact → Socialmedia-profielen, op uitdrukkelijk verzoek van Nicky. Google
+  toont hem doorgestreept onder "In behandeling", met de melding dat de
+  bewerking langer duurt dan verwacht. Staat hij er over een week nog, neem
+  dan contact op met support via de knop in die melding. Het
+  Instagram-account `https://www.instagram.com/skinstudio_zuid` kan er nog
+  bij.
 - **WhatsApp**: Google zette een chatknop op het oude nummer 073-2032756.
   Of die weg moet of naar het nieuwe nummer gaat, hangt af van het nummer
   waarop de kliniek WhatsApp gebruikt.
@@ -385,8 +393,8 @@ beheerder.
 - [x] Google-account van de kliniek, Nicky als beheerder (18 oktober 2026: het profiel staat op het account van de kliniek, info@22labs.nl is beheerder)
 - [x] Business Profile gevonden of aangemaakt, naam exact "Skinstudio Zuid" (bestond al)
 - [x] Geverifieerd (stond al op "Geverifieerd")
-- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A. Gedaan op 18 oktober 2026, ter beoordeling bij Google: telefoon, website, afspraaklink, categorieën, beschrijving, tien diensten met prijs, "Afspraak verplicht". Openingstijden kloppen: dezelfde als de zonnestudio, bevestigd op 18 oktober 2026. Foto's: logo, omslagfoto en twee foto's toegevoegd op 18 oktober 2026, samen met de vijf die er stonden zeven foto's. Open: foto's van gevel, laser en team; toegankelijkheid, parkeren en "door vrouwen geleid"; Q&A heeft geen knop meer
-- [ ] Oude gegevens opruimen (stap 6): Facebook-link van Plesk eruit, WhatsApp-knop op het oude nummer en de dienst Microneedling laten beoordelen door de kliniek
+- [ ] Openingstijden, beschrijving, diensten met prijzen, tien foto's, attributen, Q&A. Gedaan op 18 oktober 2026, ter beoordeling bij Google: telefoon, website, afspraaklink, categorieën, beschrijving, tien diensten met prijs, "Afspraak verplicht". Openingstijden kloppen: dezelfde als de zonnestudio, bevestigd op 18 oktober 2026. Foto's: logo, omslagfoto en twee foto's toegevoegd op 18 oktober 2026, samen met de vijf die er stonden zeven foto's. Kenmerken op 21 oktober 2026: rolstoeltoegankelijke ingang en gratis parkeren op straat erbij, betalen, kinderen en toilet bevestigd. Open: foto's van gevel, laser en team; "door vrouwen geleid"; Q&A heeft geen knop meer
+- [ ] Oude gegevens opruimen (stap 6): de Facebook-link van Plesk is op 21 oktober 2026 verwijderd en staat bij Google in behandeling; de WhatsApp-knop op het oude nummer en de dienst Microneedling laten beoordelen door de kliniek
 - [x] Eerste bericht met de kuuractie geplaatst (18 oktober 2026, als Update met de knop "Boeken"; ter beoordeling bij Google)
 - [ ] Reviewlink in bevestigingsmail en op de balie (link staat bij stap 5; kaartje klaar in `docs/drukwerk/`, nog afdrukken; de bevestigingsmail bestaat niet)
 - [ ] Apple Business Connect en Bing Places met dezelfde gegevens (allebei eerst aanmelden door Nicky of de kliniek, zie "Daarna, zelfde gegevens")
