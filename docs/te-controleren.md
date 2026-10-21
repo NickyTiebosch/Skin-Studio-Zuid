@@ -211,7 +211,7 @@ per mail binnen en de kliniek bevestigt. Vier aannames, allemaal in
 
 | Aanname | Nakijken op |
 |---|---|
-| **Zondag gesloten.** Op zondag is geen datum te kiezen. | Klopt dat, en zijn er nog andere vaste sluitingsdagen? |
+| **Elke dag open.** Sinds 18 oktober 2026 is ook de zondag te kiezen, want de studio heeft dezelfde openingstijden als de zonnestudio (`OPENINGSTIJDEN` in `lib/contact.ts`). | Zijn er vaste sluitingsdagen? Die gaan in `GESLOTEN_WEEKDAGEN`. |
 | **Dagdelen: ochtend, middag, avond, geen voorkeur.** | Werkt de kliniek 's avonds? Zo niet, dan hoort "Avond" eruit. |
 | **Drie maanden vooruit** te kiezen. | Verder of korter vooruit is één getal. |
 | **Laserontharing = intake.** Wie laserontharing kiest, vraagt een intakegesprek aan; de behandeldata volgen daarna. | Zo staat het ook in de veelgestelde vragen. Bevestig dat dit de werkwijze blijft. |
