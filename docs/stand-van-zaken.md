@@ -211,10 +211,13 @@ Gevonden, destijds nog open (het ging om de naam zónder streepje): dat domein i
    zodat alleen vrije momenten te kiezen zijn en de boeking meteen in haar
    agenda staat. De duur is sinds 10 oktober bekend (Nicky): een uur per
    behandeling, afspraken direct achter elkaar, het intakegesprek een
-   kwartier — vastgelegd in `lib/agenda.ts`. Wat nog ontbreekt: de
-   **beschikbaarheid** (welke dagen en uren), een **Cal.com-account** en een
-   **app-specifiek wachtwoord** van het Apple ID; die drie voert de
-   eigenaresse zelf in Cal.com in.
+   kwartier — vastgelegd in `lib/agenda.ts`. Het Cal.com-account met de drie
+   afspraaktypes staat sinds 19 oktober 2026 klaar, en de site sinds
+   21 oktober: `ECHTE_AGENDA_AAN` in `lib/agenda.ts` zet de agenda van
+   Cal.com op /boeken. Wat nog ontbreekt: de eigenaresse koppelt haar
+   **iCloud-agenda** met een app-specifiek wachtwoord en loopt haar
+   **werktijden** na. Daarna gaat de schakelaar om; de stappen staan in
+   `docs/te-controleren.md`.
 6. **Van de kliniek**: wie er behandelt met certificering, of de kuuractie
    ook bij mannen alleen voor nieuwe klanten geldt (op de vrouwenflyer staat
    dat wel, op de mannenflyer niet), en Hydrafacial versus HydraSpa, vóór er

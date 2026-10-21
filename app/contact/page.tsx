@@ -17,6 +17,7 @@ import {
 } from "@/lib/contact"
 import { OPENGRAPH_BASIS, kruimelpadSchema } from "@/lib/site"
 import { bijgewerktTekst } from "@/lib/bijgewerkt"
+import { ECHTE_AGENDA_AAN } from "@/lib/agenda"
 
 /**
  * De contactpagina: één adres met de bedrijfsgegevens.
@@ -109,8 +110,10 @@ export default function Contact() {
           <div className="w-10 h-px mb-8" style={{ backgroundColor: "var(--rose-gold)" }} />
           <p className="font-sans text-sm md:text-base leading-relaxed text-foreground max-w-2xl mb-4">
             {BEDRIJFSNAAM} is een kliniek voor laserontharing en gezichtsbehandelingen
-            aan de {ADRES.straat} {WIJK}. Bel {TELEFOON_WEERGAVE}, mail naar {EMAIL} of
-            vraag online een afspraak aan; wij bevestigen per e-mail of telefoon.
+            aan de {ADRES.straat} {WIJK}. Bel {TELEFOON_WEERGAVE}, mail naar {EMAIL} of{" "}
+            {ECHTE_AGENDA_AAN
+              ? "plan online zelf een afspraak; u krijgt direct een bevestiging per e-mail."
+              : "vraag online een afspraak aan; wij bevestigen per e-mail of telefoon."}
           </p>
           <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-2xl">
             Wij werken op afspraak. Een intakegesprek voor laserontharing is gratis en

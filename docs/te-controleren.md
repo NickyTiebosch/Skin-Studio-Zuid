@@ -219,7 +219,7 @@ per mail binnen en de kliniek bevestigt. Vier aannames, allemaal in
 Het is bewust een aanvraag en geen boeking: de site kent de agenda niet, dus
 een dubbele boeking is onmogelijk, maar de kliniek moet elke aanvraag wel
 zelf bevestigen. De echte agenda (Cal.com op iCloud, hieronder) neemt dat
-over zodra de behandelduur en de beschikbaarheid bekend zijn.
+over zodra de eigenaresse haar agenda in Cal.com heeft gekoppeld.
 
 ---
 
@@ -243,12 +243,51 @@ Wat daar bij hoort, zodat niemand later verrast wordt:
 - **Privé-afspraken moeten óók in de gekoppelde agenda staan**, anders blijft
   dat slot boekbaar.
 
-**Nog nodig voordat er gebouwd kan worden:** de beschikbaarheid (welke dagen
-en uren), een Cal.com-account en het app-specifieke wachtwoord van het Apple
-ID — alle drie door de eigenaresse zelf in Cal.com in te voeren. De
-behandelduur is sinds 10 oktober 2026 bekend: een uur per behandeling, het
-intakegesprek een kwartier, geen buffer.
-behandeling**. Dat is het enige dat nu nog blokkeert.
+**Ingericht op 19 oktober 2026.** Het account staat op `cal.com/skinstudio-zuid`,
+op info@skinstudio-zuid.nl, in het gratis plan, met het logo als
+profielfoto. Er zijn drie afspraaktypes, gelijk aan de keuzes van de site
+(`AFSPRAAK_PER_KEUZE` in `lib/agenda.ts`):
+
+| Afspraaktype | Link | Duur |
+|---|---|---|
+| Gezichtsbehandeling | `cal.com/skinstudio-zuid/gezichtsbehandeling` | een uur |
+| Intakegesprek laserontharing | `cal.com/skinstudio-zuid/intakegesprek-laserontharing` | een kwartier |
+| Gratis intakegesprek | `cal.com/skinstudio-zuid/gratis-intakegesprek` | een kwartier |
+
+Alle drie zijn persoonlijk in de studio, met het adres zichtbaar op de
+boekingspagina. Ze vragen naam en e-mail, en een telefoonnummer als de klant
+dat wil; "gasten toevoegen" staat uit. Boeken kan tot 90 kalenderdagen vooruit
+en minstens twee uur van tevoren, zonder buffer. De beschikbaarheid heet
+"Openingstijden studio" en staat voorlopig op de openingstijden van de studio;
+de eigenaresse zet hem op haar eigen behandeltijden. Verder: Nederlands,
+24-uursnotatie, week vanaf maandag, licht thema, en indexering door
+zoekmachines uit, zodat Google de site toont in plaats van de boekingspagina.
+Eigen merkkleuren en het weghalen van het Cal.com-logo kunnen alleen in een
+betaald plan.
+
+**Nog open:** de eigenaresse koppelt haar agenda en loopt haar werktijden na.
+De stappen voor haar staan in het gedeelde document "Skinstudio Zuid: wie
+doet wat voor agenda, profiel en formulier".
+
+**De site staat klaar.** Met `ECHTE_AGENDA_AAN = true` in `lib/agenda.ts`
+toont /boeken de agenda van Cal.com in plaats van de aanvraagkalender,
+over de volle breedte onder het formulier, en pas nadat een bezoeker een
+behandeling heeft gekozen. Bij "overig" blijft het formulier. De teksten op
+/boeken en /contact en het privacybeleid schakelen mee. Getest op 21 oktober
+2026 op een computer- en een telefoonbreedte, zonder echte boeking.
+
+Zo gaat hij aan, als haar agenda gekoppeld is:
+
+1. `ECHTE_AGENDA_AAN` op `true` in `lib/agenda.ts`.
+2. `LAATST_BIJGEWERKT` in `app/privacybeleid/page.tsx` en `/privacybeleid` in
+   `lib/bijgewerkt.ts` op de datum van die dag.
+3. De regel over /boeken in `public/llms.txt`: zelf boeken, directe
+   bevestiging per e-mail.
+4. Push, en daarna één testboeking op eigen naam: staat hij in haar agenda,
+   komt er een bevestigingsmail, en verschijnen `booking_completed` en
+   `generate_lead` in GA4 en Vercel? Annuleer de test via de link in de mail.
+5. De verwerkersovereenkomst van Cal.com nalopen; Cal.com bewaart gegevens in
+   de Verenigde Staten.
 
 **Niet in het boekingsformulier zetten:** vragen over huidtype, medicijngebruik
 of zwangerschap. Dat zijn gezondheidsgegevens onder artikel 9 AVG, met een

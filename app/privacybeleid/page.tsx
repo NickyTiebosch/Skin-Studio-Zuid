@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { ECHTE_AGENDA_AAN } from "@/lib/agenda"
 import {
   ADRES,
   BEDRIJFSNAAM,
@@ -70,14 +71,16 @@ export default function Privacybeleid() {
                 Welke gegevens verzamelen wij?
               </h2>
               <p className="mb-4">
-                Via het contactformulier op deze website verzamelen wij alleen de
-                gegevens die u zelf invult:
+                {ECHTE_AGENDA_AAN
+                  ? "Via het contactformulier en de afsprakenagenda op deze website verzamelen wij alleen de gegevens die u zelf invult:"
+                  : "Via het contactformulier op deze website verzamelen wij alleen de gegevens die u zelf invult:"}
               </p>
               <ul className="flex flex-col gap-2 list-disc pl-5">
                 <li>uw naam</li>
                 <li>uw e-mailadres</li>
                 <li>uw telefoonnummer, als u dat invult</li>
                 <li>de behandeling waarin u geïnteresseerd bent</li>
+                {ECHTE_AGENDA_AAN && <li>de dag en tijd van uw afspraak, als u via de agenda boekt</li>}
                 <li>het bericht dat u achterlaat</li>
               </ul>
               <p className="mt-4">
@@ -138,6 +141,17 @@ export default function Privacybeleid() {
                   verzending van het contactformulier en stuurt uw bericht door naar
                   onze mailbox.
                 </li>
+                {ECHTE_AGENDA_AAN && (
+                  <li>
+                    <span className="text-foreground">Cal.com</span> — verzorgt de
+                    afsprakenagenda op de pagina Afspraak maken. Kiest u daar een tijd,
+                    dan ontvangt Cal.com uw naam, e-mailadres, uw telefoonnummer als u
+                    dat invult en uw opmerking, zet de afspraak in onze agenda en
+                    stuurt u een bevestiging. Het boekingsscherm van Cal.com laadt pas
+                    als u een behandeling kiest. Cal.com kan gegevens buiten de
+                    Europese Unie verwerken.
+                  </li>
+                )}
               </ul>
               <p className="mt-4">
                 De lettertypen op deze website worden vanaf onze eigen server
@@ -156,6 +170,8 @@ export default function Privacybeleid() {
                 gegevens in onze klantadministratie voor de duur die daarvoor
                 wettelijk geldt. Leidt uw aanvraag niet tot een afspraak, dan
                 verwijderen wij uw bericht zodra de vraag is afgehandeld.
+                {ECHTE_AGENDA_AAN &&
+                  " Afspraken die u via de agenda maakt, staan in onze agenda bij Cal.com en bewaren wij net zo lang."}
               </p>
             </section>
 

@@ -349,9 +349,9 @@ ook naar Vercel Analytics:
 | `click_email` | klik op het e-mailadres | |
 | `click_instagram` | klik naar Instagram | `plek`: footer, contact |
 | `view_tarieven` | tarievenpagina geopend | |
-| `booking_started` | datum gekozen in de aanvraagkalender | `behandeling` |
-| `generate_lead` | formulier verstuurd | `behandeling` |
-| `booking_completed` | aanvraag met datum verstuurd | `behandeling`, `dagdeel` |
+| `booking_started` | datum gekozen in de aanvraagkalender; met de echte agenda: de agenda van Cal.com verschijnt | `behandeling` |
+| `generate_lead` | formulier verstuurd; met de echte agenda ook bij een boeking in Cal.com | `behandeling` |
+| `booking_completed` | aanvraag met datum verstuurd; met de echte agenda: boeking in Cal.com gelukt | `behandeling`, `dagdeel` (alleen bij de aanvraag) |
 
 Markeer in GA4 `generate_lead` en `booking_completed` als belangrijke
 gebeurtenis (conversie). Laat in GA4 de "Verbeterde meting" aan staan: die

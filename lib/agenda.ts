@@ -1,11 +1,12 @@
 /**
- * De aanvraagkalender op /boeken.
+ * De agenda op /boeken.
  *
- * Dit is bewust een aanvraag, geen boeking: de site kent de agenda van de
- * kliniek nog niet (dat wordt Cal.com op de iCloud-agenda, zie
- * docs/te-controleren.md), dus een gekozen datum is een voorkeur die de
- * kliniek per e-mail of telefoon bevestigt. Wat hier staat is alles wat de
- * kalender over de kliniek aanneemt; klopt iets niet, dan is het hier één
+ * Zolang `ECHTE_AGENDA_AAN` uit staat, is dit bewust een aanvraag en geen
+ * boeking: de site kent de agenda van de kliniek niet, dus een gekozen datum
+ * is een voorkeur die de kliniek per e-mail of telefoon bevestigt. Staat hij
+ * aan, dan boekt de bezoeker zelf in Cal.com, dat aan de iCloud-agenda van de
+ * kliniek gekoppeld is (zie docs/te-controleren.md). Wat hier staat is alles
+ * wat de agenda over de kliniek aanneemt; klopt iets niet, dan is het hier één
  * regel.
  */
 import { format, isValid, parseISO, startOfToday } from "date-fns"
@@ -40,16 +41,39 @@ export const GESLOTEN_WEEKDAGEN: number[] = []
 /** Hoe ver vooruit een datum gekozen kan worden. */
 export const MAANDEN_VOORUIT = 3
 
+/**
+ * De echte agenda: Cal.com, gekoppeld aan de iCloud-agenda van de kliniek.
+ * Het account en de drie afspraaktypes staan sinds 19 oktober 2026 klaar.
+ * Zolang haar agenda nog niet in Cal.com gekoppeld is, weet Cal.com niet
+ * wanneer zij bezet is; daarom blijft /boeken tot die tijd de aanvraag.
+ *
+ * Aanzetten is deze regel op `true` en een deploy. Zet dan op dezelfde dag
+ * ook `LAATST_BIJGEWERKT` in app/privacybeleid/page.tsx en /privacybeleid in
+ * lib/bijgewerkt.ts op die datum, en pas de regel over /boeken in
+ * public/llms.txt aan. De volledige lijst staat in docs/te-controleren.md.
+ */
+export const ECHTE_AGENDA_AAN = false
+
+/** De gebruikersnaam in cal.com/<gebruiker>/<afspraaktype>. */
+export const CAL_GEBRUIKER = "skinstudio-zuid"
+
+/** De boekingspagina van een afspraaktype, ook als terugvaloptie voor de bezoeker. */
+export function calLink(afspraak: Afspraak): string {
+  return `https://cal.com/${CAL_GEBRUIKER}/${afspraak.calAfspraaktype}`
+}
+
 export type Afspraak = {
   /** Zoals in de aanvraag en de bevestiging: "Gezichtsbehandeling". */
   naam: string
   /** Uitleg boven de kalender, waar die nodig is. */
   toelichting?: string
   /**
-   * Hoe lang de afspraak duurt. Nog niet zichtbaar op de site; dit is de
-   * duur die het boekingssysteem (Cal.com) straks per afspraaktype krijgt.
+   * Hoe lang de afspraak duurt. Dezelfde duur staat in Cal.com bij het
+   * afspraaktype; verandert hij, pas hem dan op beide plekken aan.
    */
   duurMinuten: number
+  /** Het afspraaktype in Cal.com: het laatste deel van de boekingslink. */
+  calAfspraaktype: string
 }
 
 /**
@@ -70,14 +94,23 @@ export const BUFFER_MINUTEN = 0
  * de behandelpagina), dus wie laserontharing kiest, vraagt een intake aan.
  */
 export const AFSPRAAK_PER_KEUZE: Record<string, Afspraak> = {
-  gezichtsbehandeling: { naam: "Gezichtsbehandeling", duurMinuten: BEHANDELING_MINUTEN },
+  gezichtsbehandeling: {
+    naam: "Gezichtsbehandeling",
+    duurMinuten: BEHANDELING_MINUTEN,
+    calAfspraaktype: "gezichtsbehandeling",
+  },
   laserontharing: {
     naam: "Intakegesprek laserontharing",
     duurMinuten: INTAKE_MINUTEN,
+    calAfspraaktype: "intakegesprek-laserontharing",
     toelichting:
       "Laserontharing begint altijd met een gratis intakegesprek. Kies hieronder een datum voor de intake; de behandeldata leggen we daarna samen vast.",
   },
-  consult: { naam: "Gratis intakegesprek", duurMinuten: INTAKE_MINUTEN },
+  consult: {
+    naam: "Gratis intakegesprek",
+    duurMinuten: INTAKE_MINUTEN,
+    calAfspraaktype: "gratis-intakegesprek",
+  },
 }
 
 export function afspraakVoor(keuze: string | undefined): Afspraak | undefined {

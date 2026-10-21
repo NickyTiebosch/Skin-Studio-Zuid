@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ContactSection } from "@/components/contact-section"
 import { behandelingen } from "@/lib/behandelingen"
+import { ECHTE_AGENDA_AAN } from "@/lib/agenda"
 import { ADRES, BEDRIJFSNAAM } from "@/lib/contact"
 import { OPENGRAPH_BASIS } from "@/lib/site"
 
@@ -23,9 +24,10 @@ export const metadata: Metadata = {
  * Vaste bestemming voor elke actieknop op de site.
  *
  * Hier staat het aanvraagformulier met de kalender: de bezoeker kiest een
- * behandeling, een datum en een dagdeel, en de kliniek bevestigt. Zodra de
- * echte agenda gekoppeld is (Cal.com op iCloud) verandert alleen deze
- * pagina — alle knoppen die ernaartoe wijzen blijven kloppen.
+ * behandeling, een datum en een dagdeel, en de kliniek bevestigt. Staat
+ * `ECHTE_AGENDA_AAN` in lib/agenda.ts aan, dan boekt de bezoeker hier zelf in
+ * de echte agenda (Cal.com op iCloud). Alleen deze pagina verandert dan; alle
+ * knoppen die ernaartoe wijzen blijven kloppen.
  */
 export default async function Boeken({
   searchParams,
@@ -48,6 +50,23 @@ export default async function Boeken({
     (params.behandeling && overigeKeuzes.includes(params.behandeling)
       ? params.behandeling
       : "")
+
+  // Met de echte agenda bevestigt Cal.com de afspraak meteen; zonder is het
+  // een aanvraag die de kliniek zelf bevestigt.
+  const intro = gekozen
+    ? `U heeft interesse in ${gekozen.tag.toLowerCase()}. ` +
+      (ECHTE_AGENDA_AAN
+        ? "Kies hieronder een dag en tijd die u schikt; u krijgt direct een bevestiging per e-mail."
+        : "Kies hieronder een datum die u schikt en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon.")
+    : isIntake
+      ? "Tijdens het intakegesprek kijken we naar uw huid, bespreken we wat er mogelijk is en krijgt u een concrete prijsopgave. U zit daarbij nergens aan vast. " +
+        (ECHTE_AGENDA_AAN
+          ? "Kies hieronder een dag en tijd die u schikt."
+          : "Kies hieronder een datum die u schikt.")
+      : (ECHTE_AGENDA_AAN
+          ? "Kies een behandeling en daarna een dag en tijd die u schikt; u krijgt direct een bevestiging per e-mail."
+          : "Kies een behandeling en een datum die u schikt, en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon.") +
+        " Weet u nog niet welke behandeling bij u past? Kies dan een gratis intakegesprek; we kijken samen wat er nodig is."
 
   return (
     <main className="overflow-x-clip">
@@ -80,13 +99,7 @@ export default async function Boeken({
               ? "Een gratis intakegesprek"
               : "Maak een afspraak"
         }
-        intro={
-          gekozen
-            ? `U heeft interesse in ${gekozen.tag.toLowerCase()}. Kies hieronder een datum die u schikt en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon.`
-            : isIntake
-              ? "Tijdens het intakegesprek kijken we naar uw huid, bespreken we wat er mogelijk is en krijgt u een concrete prijsopgave. U zit daarbij nergens aan vast. Kies hieronder een datum die u schikt."
-              : "Kies een behandeling en een datum die u schikt, en laat uw gegevens achter; wij bevestigen de afspraak per e-mail of telefoon. Weet u nog niet welke behandeling bij u past? Kies dan een gratis intakegesprek; we kijken samen wat er nodig is."
-        }
+        intro={intro}
       />
 
       <Footer />

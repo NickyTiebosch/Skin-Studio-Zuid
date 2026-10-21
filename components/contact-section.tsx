@@ -1,11 +1,13 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import Link from "next/link"
 import { CalendarDays, CheckCircle } from "lucide-react"
 import { format } from "date-fns"
 import { AfspraakKiezer } from "@/components/afspraak-kiezer"
+import { CalAgenda } from "@/components/cal-agenda"
 import {
+  ECHTE_AGENDA_AAN,
   STANDAARD_DAGDEEL,
   type DagdeelId,
   afspraakVoor,
@@ -39,6 +41,7 @@ export function ContactSection({
   intro,
   kopNiveau = "h2",
   metAgenda = false,
+  echteAgenda = ECHTE_AGENDA_AAN,
 }: {
   /** Vult het behandelingsveld voor, bijvoorbeeld vanaf een behandelpagina. */
   standaardBehandeling?: string
@@ -54,6 +57,11 @@ export function ContactSection({
    * aan op /boeken; op de homepage blijft het een kort contactformulier.
    */
   metAgenda?: boolean
+  /**
+   * Boeken in de echte agenda (Cal.com) in plaats van een aanvraag. Volgt
+   * `ECHTE_AGENDA_AAN` in lib/agenda.ts; alleen een test zet hem los daarvan.
+   */
+  echteAgenda?: boolean
 } = {}) {
   const Kop = kopNiveau
   const [submitted, setSubmitted] = useState(false)
@@ -79,6 +87,13 @@ export function ContactSection({
   }, [])
 
   const afspraak = metAgenda ? afspraakVoor(form.treatment) : undefined
+
+  // Met de echte agenda boekt de bezoeker zelf in Cal.com, dat ook naam,
+  // e-mail en telefoon vraagt. De keuze van de behandeling staat dan bovenaan,
+  // en de velden van de site verschijnen alleen nog voor een vraag zonder
+  // afspraak ("overig"). Zonder de echte agenda verandert er niets.
+  const zelfBoeken = metAgenda && echteAgenda
+  const formulierVelden = !zelfBoeken || form.treatment === "overig"
 
   function kiesDatum(nieuweDatum: Date | undefined) {
     setDatum(nieuweDatum)
@@ -132,6 +147,52 @@ export function ContactSection({
     } finally {
       setSending(false)
     }
+  }
+
+  const behandelingVeld = (
+    <div className="flex flex-col gap-2">
+      <label htmlFor="contact-behandeling" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
+        Gewenste behandeling
+      </label>
+      <select
+        id="contact-behandeling"
+        name="treatment"
+        value={form.treatment}
+        onChange={handleChange}
+        className="bg-transparent border-b border-border py-3 font-sans text-sm text-foreground outline-none focus:border-[color:var(--rose-gold)] transition-colors duration-200 cursor-pointer"
+      >
+        <option value="">Maak een keuze</option>
+        <option value="gezichtsbehandeling">Gezichtsbehandeling</option>
+        <option value="laserontharing">Laserontharing</option>
+        <option value="consult">Gratis intakegesprek</option>
+        <option value="overig">Overig</option>
+      </select>
+    </div>
+  )
+
+  /** Het kader op de plek van de agenda, zolang er nog niets te kiezen valt. */
+  function agendaUitleg(tekst: ReactNode) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          Wanneer schikt het u?
+        </p>
+        <div
+          className="flex items-start gap-3 border border-dashed px-4 py-4"
+          style={{
+            borderColor: "color-mix(in oklch, var(--rose-gold) 40%, transparent)",
+          }}
+        >
+          <CalendarDays
+            size={18}
+            className="mt-0.5 shrink-0"
+            style={{ color: "var(--rose-gold)" }}
+            aria-hidden="true"
+          />
+          <p className="font-sans text-sm leading-relaxed text-muted-foreground">{tekst}</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -200,6 +261,10 @@ export function ContactSection({
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                {zelfBoeken && behandelingVeld}
+
+                {formulierVelden && (
+                <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="contact-naam" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
@@ -249,25 +314,10 @@ export function ContactSection({
                     placeholder="uw@email.nl"
                   />
                 </div>
+                </>
+                )}
 
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="contact-behandeling" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
-                    Gewenste behandeling
-                  </label>
-                  <select
-                    id="contact-behandeling"
-                    name="treatment"
-                    value={form.treatment}
-                    onChange={handleChange}
-                    className="bg-transparent border-b border-border py-3 font-sans text-sm text-foreground outline-none focus:border-[color:var(--rose-gold)] transition-colors duration-200 cursor-pointer"
-                  >
-                    <option value="">Maak een keuze</option>
-                    <option value="gezichtsbehandeling">Gezichtsbehandeling</option>
-                    <option value="laserontharing">Laserontharing</option>
-                    <option value="consult">Gratis intakegesprek</option>
-                    <option value="overig">Overig</option>
-                  </select>
-                </div>
+                {!zelfBoeken && behandelingVeld}
 
                 {/* De datumkeuze hangt af van de behandeling: laserontharing
                     begint met een intake, en bij "overig" hoort een bericht en
@@ -277,48 +327,50 @@ export function ContactSection({
                     er moet gebeuren. */}
                 {metAgenda &&
                   (geladen && afspraak ? (
-                    <AfspraakKiezer
-                      afspraak={afspraak}
-                      datum={datum}
-                      onDatum={kiesDatum}
-                      dagdeel={dagdeel}
-                      onDagdeel={setDagdeel}
-                    />
+                    zelfBoeken ? (
+                      agendaUitleg(
+                        <>
+                          Kies{" "}
+                          <a href="#agenda" className="underline underline-offset-2 hover:text-foreground">
+                            hieronder in de agenda
+                          </a>{" "}
+                          een dag en tijd voor uw {afspraak.naam.toLowerCase()}.
+                        </>
+                      )
+                    ) : (
+                      <AfspraakKiezer
+                        afspraak={afspraak}
+                        datum={datum}
+                        onDatum={kiesDatum}
+                        dagdeel={dagdeel}
+                        onDagdeel={setDagdeel}
+                      />
+                    )
                   ) : (
-                    <div className="flex flex-col gap-3">
-                      <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                        Wanneer schikt het u?
-                      </p>
-                      <div
-                        className="flex items-start gap-3 border border-dashed px-4 py-4"
-                        style={{
-                          borderColor: "color-mix(in oklch, var(--rose-gold) 40%, transparent)",
-                        }}
-                      >
-                        <CalendarDays
-                          size={18}
-                          className="mt-0.5 shrink-0"
-                          style={{ color: "var(--rose-gold)" }}
-                          aria-hidden="true"
-                        />
-                        <p className="font-sans text-sm leading-relaxed text-muted-foreground">
-                          {form.treatment === "overig" ? (
-                            <>
-                              Bij &ldquo;overig&rdquo; plannen we geen datum vooruit.
-                              Laat hieronder uw vraag achter, dan nemen we contact
-                              met u op.
-                            </>
-                          ) : (
-                            <>
-                              Kies hierboven een behandeling, dan verschijnt hier de
-                              kalender en kiest u zelf een dag die u schikt.
-                            </>
-                          )}
-                        </p>
-                      </div>
-                    </div>
+                    agendaUitleg(
+                      form.treatment === "overig" ? (
+                        <>
+                          Bij &ldquo;overig&rdquo; plannen we geen datum vooruit.
+                          Laat hieronder uw vraag achter, dan nemen we contact
+                          met u op.
+                        </>
+                      ) : zelfBoeken ? (
+                        <>
+                          Kies hierboven een behandeling, dan verschijnt hier de
+                          agenda en kiest u zelf een dag en tijd. Voor een vraag
+                          zonder afspraak kiest u &ldquo;overig&rdquo;.
+                        </>
+                      ) : (
+                        <>
+                          Kies hierboven een behandeling, dan verschijnt hier de
+                          kalender en kiest u zelf een dag die u schikt.
+                        </>
+                      )
+                    )
                   ))}
 
+                {formulierVelden && (
+                <>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="contact-bericht" className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground">
                     Bericht
@@ -362,10 +414,21 @@ export function ContactSection({
                   </Link>
                   .
                 </p>
+                </>
+                )}
               </form>
             )}
           </div>
         </div>
+
+        {/* De agenda van Cal.com staat over de volle breedte: in de smalle
+            kolom van het formulier wordt hij een lange lijst tijden, breed
+            past hij met kalender en tijden naast elkaar op één scherm. */}
+        {zelfBoeken && geladen && afspraak && (
+          <div id="agenda" className="mt-16 scroll-mt-28">
+            <CalAgenda key={form.treatment} afspraak={afspraak} behandeling={form.treatment} />
+          </div>
+        )}
       </div>
     </section>
   )
